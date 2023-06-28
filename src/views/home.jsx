@@ -10,7 +10,7 @@ const FeedPostMedia = ({post}) => {
     return ''
   }
   if (mediaInfo.type === 'image') {
-    return <div className='media-wrapper'><img className='media' src={mediaInfo.url} /></div>
+    return <div className='media-wrapper'><img className='media' src={mediaInfo.url} alt='' /></div>
   }
   if (mediaInfo.type === 'video') {
     return <video className='media' src={mediaInfo.url} />
