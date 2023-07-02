@@ -3,6 +3,7 @@ import useDefaultSubplebbits from '../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import utils from '../utils'
+import { Link } from 'react-router-dom'
 
 const FeedPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -22,13 +23,14 @@ const FeedPostMedia = ({post}) => {
 }
 
 const FeedPost = ({post, index}) => {
-  console.log(post)
   const evenOrOdd = index % 2 === 0 ? 'even' : 'odd'
   let hostname
   try {
     hostname = new URL(post?.link).hostname
   }
   catch (e) {}
+
+  const href = `/p/${post.subplebbitAddress}/c/${post.cid}`
 
   return <div className={`feed-post ${evenOrOdd}`}>
     <div className='score'>
@@ -44,7 +46,9 @@ const FeedPost = ({post, index}) => {
       <span className='subplebbit'> to {post?.subplebbitAddress}</span>
     </div>
     <div className='footer'>
-      <span className='replies'>{post?.replyCount} comments</span>
+      <Link to={href} className='replies'>
+        {post?.replyCount} comments
+      </Link>
     </div>
     <FeedPostMedia post={post} />
   </div>
@@ -55,7 +59,6 @@ function Home() {
   const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
   const sortType = 'hot'
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
-  console.log({defaultSubplebbits, feed, hasMore})
 
   let Loading
   if (hasMore) {

@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Home from './views/home'
 import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
@@ -47,6 +47,10 @@ const Css = () => {
     .feed-post .media {
       height: 50vh;
     }
+
+    .post .media {
+      max-width: 100vw;
+    }
   `}</style>)
 }
 
@@ -54,13 +58,13 @@ function App() {
   return (
     <div className="app">
       <Css/>
-      <Switch>
-        <Route exact path="/" component={ Home } />
-        <Route exact path="/p/settings" component={ Settings } />
-        <Route exact path="/p/:subplebbitAddress" component={ Subplebbit } />
-        <Route exact path='/p/:subplebbitAddress/c/:commentCid' component={ Post }/>
-        <Route exact path="*" component={ NotFound } />
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={ <Home/> } />
+        <Route exact path="/p/settings" element={ <Settings/> } />
+        <Route exact path="/p/:subplebbitAddress" element={ <Subplebbit/> } />
+        <Route exact path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
+        <Route exact path="*" element={ <NotFound/> } />
+      </Routes>
     </div>
   )
 }
