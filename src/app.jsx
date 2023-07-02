@@ -57,6 +57,14 @@ const Css = () => {
     .post .media {
       max-width: 100vw;
     }
+
+    .reply {
+      padding: 0.25em 0;
+    }
+
+    .replies {
+      margin: 0 0 0 0.5em;
+    }
   `}</style>)
 }
 

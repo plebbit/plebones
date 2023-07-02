@@ -46,7 +46,7 @@ const FeedPost = ({post, index}) => {
       <span className='subplebbit'> to {post?.subplebbitAddress}</span>
     </div>
     <div className='footer'>
-      <Link to={href} className='replies'>
+      <Link to={href} className='reply-count'>
         {post?.replyCount} comments
       </Link>
     </div>

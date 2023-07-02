@@ -19,6 +19,22 @@ const FeedPostMedia = ({post}) => {
   return ''
 }
 
+const Reply = ({reply}) => {
+  const replies = reply?.replies?.pages?.topAll?.comments || ''
+  return (
+    <div className='reply'>
+      <div className='score'>
+        {(reply?.upvoteCount - reply?.downvoteCount) || 0}
+      </div>
+      <div className='header'>{reply.author.shortAddress} {utils.getFormattedTime(reply?.timestamp)}</div>
+      <div className='content'>{reply.content}</div>
+      <div className='replies'>
+        {replies?.map?.(reply => <Reply reply={reply}/>)}
+      </div>
+    </div>
+  )
+}
+
 function Post() {
   const {commentCid} = useParams()
   const post = useComment({commentCid})
@@ -28,6 +44,9 @@ function Post() {
     hostname = new URL(post?.link).hostname
   }
   catch (e) {}
+
+  console.log(post)
+  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply reply={reply}/>) || ''
 
   return (
     <div className="post">
@@ -46,9 +65,10 @@ function Post() {
         <span className='subplebbit'> to {post?.subplebbitAddress}</span>
       </div>
       <div className='footer'>
-        <span className='replies'>{post?.replyCount} comments</span>
+        <span className='reply-count'>{post?.replyCount} comments</span>
       </div>
       <FeedPostMedia post={post} />
+      {replies}
     </div>
   )
 }
