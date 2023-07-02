@@ -28,6 +28,12 @@ const Css = () => {
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* remove default link styles */
+    a {
+      color: unset;
+      text-decoration: unset;
+    }
+
     .app {
       background-color: ${colors.dark1};
       color: ${colors.light2};
