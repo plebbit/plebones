@@ -1,6 +1,7 @@
 import {useComment} from '@plebbit/plebbit-react-hooks'
 import utils from '../utils'
 import { useParams } from 'react-router-dom'
+import {useEffect} from 'react'
 
 const FeedPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -29,7 +30,7 @@ const Reply = ({reply}) => {
       <div className='header'>{reply.author.shortAddress} {utils.getFormattedTime(reply?.timestamp)}</div>
       <div className='content'>{reply.content}</div>
       <div className='replies'>
-        {replies?.map?.(reply => <Reply reply={reply}/>)}
+        {replies?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>)}
       </div>
     </div>
   )
@@ -45,8 +46,10 @@ function Post() {
   }
   catch (e) {}
 
-  console.log(post)
-  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply reply={reply}/>) || ''
+  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>) || ''
+
+  // scroll to top on first load
+  useEffect(() => window.scrollTo(0,0), [])
 
   return (
     <div className="post">
@@ -68,7 +71,9 @@ function Post() {
         <span className='reply-count'>{post?.replyCount} comments</span>
       </div>
       <FeedPostMedia post={post} />
-      {replies}
+      <div className='replies'>
+        {replies}
+      </div>
     </div>
   )
 }
