@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './views/home'
+import HomeNoModal from './views/home-no-modal'
 import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
 import Post from './views/post'
@@ -74,6 +75,7 @@ function App() {
       <Css/>
       <Routes>
         <Route exact path="/" element={ <Home/> } />
+        <Route exact path="/no-modal" element={ <HomeNoModal/> } />
         <Route exact path="/p/settings" element={ <Settings/> } />
         <Route exact path="/p/:subplebbitAddress" element={ <Subplebbit/> } />
         <Route exact path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>

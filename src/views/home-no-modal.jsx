@@ -1,4 +1,6 @@
-import { useMemo } from 'react'
+/* this file is an example of using react-virtuoso with restoreStateFrom */
+
+import { useMemo, useRef } from 'react'
 import useDefaultSubplebbits from '../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
@@ -54,6 +56,8 @@ const FeedPost = ({post, index}) => {
   </div>
 }
 
+let lastVirtuosoState
+
 function Home() {
   const defaultSubplebbits = useDefaultSubplebbits()
   const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
@@ -64,6 +68,17 @@ function Home() {
   if (hasMore) {
     Loading = () => 'Loading...'
   }
+
+  const virtuosoRef = useRef()
+  // TODO: don't use in production like this, 
+  // make sure this event is only set once
+  window.addEventListener('scroll', () => {
+    virtuosoRef.current?.getState((snapshot) => {
+      if (snapshot?.ranges?.length) {
+        lastVirtuosoState = snapshot
+      }
+    })
+  })
 
   return (
     <div className="home">
@@ -78,6 +93,9 @@ function Home() {
         useWindowScroll={ true }
         components={ {Footer: Loading } }
         endReached={ loadMore }
+        ref={virtuosoRef}
+        restoreStateFrom={lastVirtuosoState}
+        initialScrollTop={lastVirtuosoState?.scrollTop}
       />
 
     </div>
