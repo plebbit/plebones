@@ -16,10 +16,10 @@ const FeedPostMedia = ({post}) => {
     return <div className='media-wrapper'><img className='media' src={mediaInfo.url} alt='' /></div>
   }
   if (mediaInfo.type === 'video') {
-    return <video className='media' src={mediaInfo.url} />
+    return <video className='media' controls={true} autoplay={false} src={mediaInfo.url} />
   }
   if (mediaInfo.type === 'audio') {
-    return <audio className='media' src={mediaInfo.url} />
+    return <audio className='media' controls={true} autoplay={false} src={mediaInfo.url} />
   }
   return ''
 }
@@ -52,17 +52,20 @@ const FeedPost = ({post, index}) => {
         {post?.replyCount} comments
       </Link>
     </div>
-    <FeedPostMedia post={post} />
+    <Link to={href} className='reply-count'>
+      <FeedPostMedia post={post} />
+    </Link>
   </div>
 }
 
 let lastVirtuosoState
+let lastFeed
 
 function Home() {
   const defaultSubplebbits = useDefaultSubplebbits()
   const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
   const sortType = 'hot'
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
   let Loading
   if (hasMore) {
@@ -76,9 +79,16 @@ function Home() {
     virtuosoRef.current?.getState((snapshot) => {
       if (snapshot?.ranges?.length) {
         lastVirtuosoState = snapshot
+        lastFeed = feed
       }
     })
   })
+
+  console.log({subplebbitAddresses, sortType, feed})
+
+  if (lastFeed?.length > feed?.length) {
+    feed = lastFeed
+  }
 
   return (
     <div className="home">
