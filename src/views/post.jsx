@@ -2,6 +2,7 @@ import {useComment} from '@plebbit/plebbit-react-hooks'
 import utils from '../utils'
 import { useParams } from 'react-router-dom'
 import {useEffect} from 'react'
+import { Link } from 'react-router-dom'
 
 const FeedPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -59,7 +60,7 @@ function Post() {
         {(post?.upvoteCount - post?.downvoteCount) || 0}
       </div>
       <div className='header'>
-        <span className='title'>{post?.title || post?.content || '-'}</span>
+        <Link to={post?.link} target={post?.link ? '_blank' : undefined} className='title'>{post?.title || post?.content || '-'}</Link>
         {hostname && <span className='hostname'>{' '}{hostname}</span>}
       </div>
       <div className='content'>
