@@ -90,6 +90,10 @@ const Css = () => {
       max-width: 100vw;
     }
 
+    .media-wrapper {
+      background-color: #161616;
+    }
+
     .reply {
       padding: 0 0 2px 0;
     }
@@ -115,10 +119,6 @@ const Css = () => {
       right: 0;
       font-size: 10px;
       color: ${colors.dark3};
-    }
-
-    .media-wrapper {
-      background-color: #161616;
     }
   `}</style>)
 }
