@@ -74,8 +74,8 @@ const Css = () => {
 function App() {
   return (
     <div className="app">
-      {commitRef}
       <Css/>
+      {commitRef}
       <Routes>
         <Route exact path="/" element={ <Home/> } />
         <Route exact path="/no-modal" element={ <HomeNoModal/> } />
