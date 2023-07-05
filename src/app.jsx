@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import Home from './views/home'
+// import Home from './views/home'
 import HomeNoModal from './views/home-no-modal'
 import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
@@ -12,7 +12,7 @@ const colors = {
   dark1: '#181818',
   dark2: '#212121',
   dark3: '#3d3d3d',
-  light1: '#ffffff',
+  light1: '#f1f1f1',
   light2: '#aaaaaa'
 }
 
@@ -29,6 +29,7 @@ const Css = () => {
       font-family: verdana, arial, helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      font-size: 10px;
     }
 
     /* remove default link styles */
@@ -40,7 +41,7 @@ const Css = () => {
     .app {
       background-color: ${colors.dark1};
       color: ${colors.light2};
-      padding: 0 0.25em;
+      padding: 0 2px;
 
       /* fix scrolling glitch */
       overflow-y: hidden;
@@ -50,11 +51,35 @@ const Css = () => {
     }
 
     .feed-post {
-      padding: 0.25em 0;
+      padding: 2px 0;
+    }
+
+    .feed-post .text-wrapper, .post .text-wrapper {
+      /* put score in left column */
+      display: flex; 
+      flex-direction: row;
+    }
+
+    .feed-post .score, .post .score {
+      font-size: 13px;
+      padding: 0 2px 0 0;
+    }
+
+    .upvote, .downvote {
+      transform: scaleY(0.5);
     }
 
     .feed-post .media {
       height: 50vh;
+    }
+
+    .feed-post .title, .post .title {
+      color: ${colors.light1};
+      font-size: 16px;
+    }
+
+    .feed-post .footer, .post .footer {
+      font-weight: bold;
     }
 
     .post .media {
@@ -62,11 +87,30 @@ const Css = () => {
     }
 
     .reply {
-      padding: 0.25em 0;
+      padding: 0 0 2px 0;
+    }
+
+    .reply .score {
+      font-size: 10px;
+    }
+
+    .reply .downvote, .reply .upvote {
+      display: inline;
+    }
+
+    .reply .header, .reply .score {
+      display: inline;
     }
 
     .replies {
-      margin: 0 0 0 0.5em;
+      margin: 0 0 0 4px;
+    }
+
+    .commit-ref {
+      position: absolute;
+      right: 0;
+      font-size: 10px;
+      color: ${colors.dark3};
     }
   `}</style>)
 }
@@ -77,7 +121,7 @@ function App() {
       <Css/>
       <div className='commit-ref'>{commitRef}</div>
       <Routes>
-        <Route exact path="/" element={ <Home/> } />
+        <Route exact path="/" element={ <HomeNoModal/> } />
         <Route exact path="/no-modal" element={ <HomeNoModal/> } />
         <Route exact path="/p/settings" element={ <Settings/> } />
         <Route exact path="/p/:subplebbitAddress" element={ <Subplebbit/> } />

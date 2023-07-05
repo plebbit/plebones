@@ -25,10 +25,15 @@ const Reply = ({reply}) => {
   const replies = reply?.replies?.pages?.topAll?.comments || ''
   return (
     <div className='reply'>
-      <div className='score'>
-        {(reply?.upvoteCount - reply?.downvoteCount) || 0}
+      <div className='header-wrapper'>
+        <div className='score'>
+          <div className='upvote'>⯅</div>
+          {(reply?.upvoteCount - reply?.downvoteCount) || 0}
+          <div className='downvote'>⯆</div>
+        </div>
+        <div className='header'>{reply.author.shortAddress} {utils.getFormattedTime(reply?.timestamp)}</div>
       </div>
-      <div className='header'>{reply.author.shortAddress} {utils.getFormattedTime(reply?.timestamp)}</div>
+
       <div className='content'>{reply.content}</div>
       <div className='replies'>
         {replies?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>)}
@@ -54,22 +59,28 @@ function Post() {
 
   return (
     <div className="post">
-      Post
-
-      <div className='score'>
-        {(post?.upvoteCount - post?.downvoteCount) || 0}
-      </div>
-      <div className='header'>
-        <Link to={post?.link} target={post?.link ? '_blank' : undefined} className='title'>{post?.title || post?.content || '-'}</Link>
-        {hostname && <span className='hostname'>{' '}{hostname}</span>}
-      </div>
-      <div className='content'>
-        <span className='timestamp'>{utils.getFormattedTime(post?.timestamp)}</span>
-        <span className='author'> by {post?.author?.shortAddress}</span>
-        <span className='subplebbit'> to {post?.subplebbitAddress}</span>
-      </div>
-      <div className='footer'>
-        <span className='reply-count'>{post?.replyCount} comments</span>
+      <div className='text-wrapper'>
+        <div className='column'>
+          <div className='score'>
+            <div className='upvote'>⯅</div>
+            {(post?.upvoteCount - post?.downvoteCount) || 0}
+            <div className='downvote'>⯆</div>
+          </div>
+        </div>
+        <div className='column'>
+          <div className='header'>
+            <Link to={post?.link} target={post?.link ? '_blank' : undefined} className='title'>{post?.title || post?.content || '-'}</Link>
+            {hostname && <span className='hostname'>{' '}{hostname}</span>}
+          </div>
+          <div className='content'>
+            <span className='timestamp'>{utils.getFormattedTime(post?.timestamp)}</span>
+            <span className='author'> by {post?.author?.shortAddress}</span>
+            <span className='subplebbit'> to {post?.subplebbitAddress}</span>
+          </div>
+          <div className='footer'>
+            <span className='reply-count'>{post?.replyCount} comments</span>
+          </div>
+        </div>
       </div>
       <FeedPostMedia post={post} />
       <div className='replies'>

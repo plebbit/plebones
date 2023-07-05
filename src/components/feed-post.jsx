@@ -32,22 +32,30 @@ const FeedPost = ({post, index}) => {
   const externalLink = !mediaInfo && post?.link
 
   return <div className={`feed-post ${evenOrOdd}`}>
-    <div className='score'>
-      {(post?.upvoteCount - post?.downvoteCount) || 0}
-    </div>
-    <div className='header'>
-      <Link to={externalLink || internalLink} target={externalLink ? '_blank' : undefined} className='title'>{post?.title || post?.content || '-'}</Link>
-      {hostname && <span className='hostname'>{' '}{hostname}</span>}
-    </div>
-    <div className='content'>
-      <span className='timestamp'>{utils.getFormattedTime(post?.timestamp)}</span>
-      <span className='author'> by {post?.author?.shortAddress}</span>
-      <span className='subplebbit'> to {post?.subplebbitAddress}</span>
-    </div>
-    <div className='footer'>
-      <Link to={internalLink} className='reply-count'>
-        {post?.replyCount} comments
-      </Link>
+    <div className='text-wrapper'>
+      <div className='column'>
+        <div className='score'>
+          <div className='upvote'>⯅</div>
+          {(post?.upvoteCount - post?.downvoteCount) || 0}
+          <div className='downvote'>⯆</div>
+        </div>
+      </div>
+      <div className='column'>
+        <div className='header'>
+          <Link to={externalLink || internalLink} target={externalLink ? '_blank' : undefined} className='title'>{post?.title || post?.content || '-'}</Link>
+          {hostname && <span className='hostname'>{' '}{hostname}</span>}
+        </div>
+        <div className='content'>
+          <span className='timestamp'>{utils.getFormattedTime(post?.timestamp)}</span>
+          <span className='author'> by {post?.author?.shortAddress}</span>
+          <span className='subplebbit'> to {post?.subplebbitAddress}</span>
+        </div>
+        <div className='footer'>
+          <Link to={internalLink} className='reply-count'>
+            {post?.replyCount} comments
+          </Link>
+        </div>
+      </div>
     </div>
     <Link to={internalLink} className='reply-count'>
       <FeedPostMedia mediaInfo={mediaInfo} />

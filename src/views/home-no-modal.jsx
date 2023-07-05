@@ -32,8 +32,6 @@ function Home() {
 
   return (
     <div className="home">
-      Home
-
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }
