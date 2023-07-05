@@ -6,6 +6,8 @@ import Subplebbit from './views/subplebbit'
 import Post from './views/post'
 import NotFound from './views/not-found'
 
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : ''
+
 const colors = {
   dark1: '#181818',
   dark2: '#212121',
@@ -72,6 +74,7 @@ const Css = () => {
 function App() {
   return (
     <div className="app">
+      {commitRef}
       <Css/>
       <Routes>
         <Route exact path="/" element={ <Home/> } />
