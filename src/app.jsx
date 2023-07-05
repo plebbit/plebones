@@ -63,13 +63,20 @@ const Css = () => {
     .feed-post .score, .post .score {
       font-size: 13px;
       padding: 0 2px 0 0;
+
+      /* fix the arrow positions */
+      transform: translateY(-8px);
+      text-align: center;
+      height: 0;
     }
 
     .downvote {
+      /* fix the arrow positions */
       transform: scaleY(0.5) translateY(-50%);
     }
 
     .upvote {
+      /* fix the arrow positions */
       transform: scaleY(0.5) translateY(50%);
     }
 
@@ -103,7 +110,10 @@ const Css = () => {
     }
 
     .reply .downvote, .reply .upvote {
-      display: inline;
+      display: inline-block;
+      /* fix the arrow positions */
+      height: 0px;
+      transform: scaleY(0.5) translateY(6px);
     }
 
     .reply .header, .reply .score {

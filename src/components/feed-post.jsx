@@ -36,7 +36,9 @@ const FeedPost = ({post, index}) => {
       <div className='column'>
         <div className='score'>
           <div className='upvote'>⯅</div>
-          {(post?.upvoteCount - post?.downvoteCount) || 0}
+          <div className='number'>
+            {(post?.upvoteCount - post?.downvoteCount) || 0}
+          </div>
           <div className='downvote'>⯆</div>
         </div>
       </div>
