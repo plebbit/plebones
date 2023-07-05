@@ -7,7 +7,6 @@ import { Virtuoso } from 'react-virtuoso'
 import FeedPost from '../components/feed-post'
 
 let lastVirtuosoState
-let lastFeed
 
 function Home() {
   const defaultSubplebbits = useDefaultSubplebbits()
@@ -27,16 +26,15 @@ function Home() {
     virtuosoRef.current?.getState((snapshot) => {
       if (snapshot?.ranges?.length) {
         lastVirtuosoState = snapshot
-        lastFeed = feed
       }
     })
   })
 
-  console.log({subplebbitAddresses, sortType, feed})
+  console.log(subplebbitAddresses, sortType, feed)
 
-  if (lastFeed?.length > feed?.length) {
-    feed = lastFeed
-  }
+  // if (lastFeed?.length > feed?.length) {
+  //   feed = lastFeed
+  // }
 
   return (
     <div className="home">
