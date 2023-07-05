@@ -65,8 +65,12 @@ const Css = () => {
       padding: 0 2px 0 0;
     }
 
-    .upvote, .downvote {
-      transform: scaleY(0.5);
+    .downvote {
+      transform: scaleY(0.5) translateY(-50%);
+    }
+
+    .upvote {
+      transform: scaleY(0.5) translateY(50%);
     }
 
     .feed-post .media {
@@ -111,6 +115,10 @@ const Css = () => {
       right: 0;
       font-size: 10px;
       color: ${colors.dark3};
+    }
+
+    .media-wrapper {
+      background-color: #161616;
     }
   `}</style>)
 }
