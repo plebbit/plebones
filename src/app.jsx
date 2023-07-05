@@ -75,7 +75,7 @@ function App() {
   return (
     <div className="app">
       <Css/>
-      {commitRef}
+      <div className='commit-ref'>{commitRef}</div>
       <Routes>
         <Route exact path="/" element={ <Home/> } />
         <Route exact path="/no-modal" element={ <HomeNoModal/> } />
