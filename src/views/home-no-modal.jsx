@@ -30,12 +30,6 @@ function Home() {
     })
   })
 
-  console.log(subplebbitAddresses, sortType, feed)
-
-  // if (lastFeed?.length > feed?.length) {
-  //   feed = lastFeed
-  // }
-
   return (
     <div className="home">
       Home
