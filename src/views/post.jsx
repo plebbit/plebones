@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const FeedPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
   if (!mediaInfo) {
-    return ''
+    return <div className='no-media'></div>
   }
   if (mediaInfo.type === 'image') {
     return <div className='media-wrapper'><img className='media' src={mediaInfo.url} alt='' /></div>
@@ -18,7 +18,7 @@ const FeedPostMedia = ({post}) => {
   if (mediaInfo.type === 'audio') {
     return <audio className='media' controls={true} autoplay={false} src={mediaInfo.url} />
   }
-  return ''
+  return <div className='no-media'></div>
 }
 
 const Reply = ({reply}) => {
@@ -31,7 +31,10 @@ const Reply = ({reply}) => {
           {(reply?.upvoteCount - reply?.downvoteCount) || 0}
           <div className='downvote'>⯆</div>
         </div>
-        <div className='header'>{reply.author.shortAddress} {utils.getFormattedTime(reply?.timestamp)}</div>
+        <div className='header'>
+          <span className='author-address'>{reply.author.shortAddress}</span>
+          <span className='timestamp'> {utils.getFormattedTime(reply?.timestamp)}</span>
+        </div>
       </div>
 
       <div className='content'>{reply.content}</div>

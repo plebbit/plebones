@@ -114,6 +114,10 @@ const Css = () => {
       font-size: 10px;
     }
 
+    .reply .content {
+      font-size: 12px;
+    }
+
     .reply .downvote, .reply .upvote {
       display: inline-block;
       /* fix the arrow positions */
@@ -138,6 +142,11 @@ const Css = () => {
     /* each top level reply should have a space after */
     .post > .replies > .reply {
       padding: 0 0 2px 0;
+    }
+
+    /* empty space between title and replies when there is no media */
+    .post .no-media {
+      height: 2px
     }
 
     .commit-ref {
