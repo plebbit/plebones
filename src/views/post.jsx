@@ -34,7 +34,6 @@ const Reply = ({reply}) => {
         <div className='header'>
           <span className='author-address'>{reply.author.shortAddress}</span>
           <span className='timestamp'> {utils.getFormattedTime(reply?.timestamp)}</span>
-          <span className="reply-button"> ⮪</span>
         </div>
       </div>
 
@@ -85,7 +84,6 @@ function Post() {
           </div>
           <div className='footer'>
             <span className='reply-count'>{post?.replyCount} comments</span>
-            <span className="reply-button"> ⮪</span>
           </div>
         </div>
       </div>
