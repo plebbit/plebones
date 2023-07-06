@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const FeedPostMedia = ({mediaInfo}) => {
   if (!mediaInfo) {
-    return ''
+    return <div className='no-media'></div>
   }
   if (mediaInfo.type === 'image') {
     return <div className='media-wrapper'><img className='media' src={mediaInfo.url} alt='' /></div>
@@ -14,7 +14,7 @@ const FeedPostMedia = ({mediaInfo}) => {
   if (mediaInfo.type === 'audio') {
     return <audio className='media' controls={true} autoplay={false} src={mediaInfo.url} />
   }
-  return ''
+  return <div className='no-media'></div>
 }
 
 const FeedPost = ({post, index}) => {
@@ -22,7 +22,7 @@ const FeedPost = ({post, index}) => {
 
   let hostname
   try {
-    hostname = new URL(post?.link).hostname
+    hostname = new URL(post?.link).hostname.replace(/^www\./, '')
   }
   catch (e) {}
 
@@ -59,7 +59,7 @@ const FeedPost = ({post, index}) => {
         </div>
       </div>
     </div>
-    <Link to={internalLink} className='reply-count'>
+    <Link to={internalLink}>
       <FeedPostMedia mediaInfo={mediaInfo} />
     </Link>
   </div>

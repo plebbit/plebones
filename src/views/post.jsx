@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
-const FeedPostMedia = ({post}) => {
+const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
   if (!mediaInfo) {
     return <div className='no-media'></div>
@@ -51,7 +51,7 @@ function Post() {
 
   let hostname
   try {
-    hostname = new URL(post?.link).hostname
+    hostname = new URL(post?.link).hostname.replace(/^www\./, '')
   }
   catch (e) {}
 
@@ -87,7 +87,7 @@ function Post() {
           </div>
         </div>
       </div>
-      <FeedPostMedia post={post} />
+      <PostMedia post={post} />
       <div className='replies'>
         {replies}
       </div>
