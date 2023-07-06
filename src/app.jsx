@@ -30,6 +30,9 @@ const Css = () => {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       font-size: 10px;
+
+      /* fix scroll too fast white flash */
+      background-color: ${colors.dark1};
     }
 
     /* remove default link styles */
