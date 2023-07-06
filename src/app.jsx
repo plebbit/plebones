@@ -152,6 +152,7 @@ const Css = () => {
     .commit-ref {
       position: absolute;
       right: 0;
+      bottom: 0;
       font-size: 10px;
       color: ${colors.dark3};
     }
