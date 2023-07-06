@@ -68,7 +68,7 @@ const Css = () => {
       padding: 0 2px 0 0;
 
       /* fix the arrow positions */
-      transform: translateY(-8px);
+      transform: translateY(-9.5px);
       text-align: center;
       height: 0;
     }
@@ -118,7 +118,7 @@ const Css = () => {
       display: inline-block;
       /* fix the arrow positions */
       height: 0px;
-      transform: scaleY(0.5) translateY(6px);
+      transform: scaleY(0.5) translateY(7.5px);
     }
 
     .reply .header, .reply .score {
