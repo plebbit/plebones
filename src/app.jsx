@@ -85,6 +85,9 @@ const Css = () => {
 
     .feed-post .media {
       height: 50vh;
+
+      /* undo the app post padding */
+      margin: 0 0 0 -2px;
     }
 
     .feed-post .title, .post .title {
@@ -98,6 +101,9 @@ const Css = () => {
 
     .post .media {
       max-width: 100vw;
+
+      /* undo the app post padding */
+      margin: 0 0 0 -2px;
     }
 
     .media-wrapper {
@@ -119,18 +125,19 @@ const Css = () => {
       display: inline;
     }
 
+    /* add indent to each nested reply */
     .replies {
       padding: 0 0 0 4px;
     }
 
-    /* the first replies should have no padding on the side*/
+    /* the first replies should have no indent */
     .post > .replies {
-      padding: 2px 0 0 0;
+      padding: 0;
     }
 
-    /* TODO: bugged, causes nested replies to have multiple padding */
-    .reply {
-      padding: 0 0 2px 0;
+    /* each top level reply should have a space after */
+    .post > .replies > .reply {
+      padding: 0 0 4px 0;
     }
 
     .commit-ref {
