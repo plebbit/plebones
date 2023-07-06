@@ -115,14 +115,14 @@ const Css = () => {
     }
 
     .reply .content {
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .reply .downvote, .reply .upvote {
       display: inline-block;
       /* fix the arrow positions */
       height: 0px;
-      transform: scaleY(0.5) translateY(7.5px);
+      transform: scaleY(0.5) translateY(6.5px);
     }
 
     .reply .header, .reply .score {
