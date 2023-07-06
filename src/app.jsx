@@ -53,7 +53,7 @@ const Css = () => {
       min-height: 100vh;
     }
 
-    .feed-post {
+    .feed-post, .post {
       padding: 2px 0;
     }
 
@@ -104,10 +104,6 @@ const Css = () => {
       background-color: #161616;
     }
 
-    .reply {
-      padding: 0 0 2px 0;
-    }
-
     .reply .score {
       font-size: 10px;
     }
@@ -124,7 +120,17 @@ const Css = () => {
     }
 
     .replies {
-      margin: 0 0 0 4px;
+      padding: 0 0 0 4px;
+    }
+
+    /* the first replies should have no padding on the side*/
+    .post > .replies {
+      padding: 2px 0 0 0;
+    }
+
+    /* TODO: bugged, causes nested replies to have multiple padding */
+    .reply {
+      padding: 0 0 2px 0;
     }
 
     .commit-ref {
