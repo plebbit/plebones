@@ -137,7 +137,7 @@ const Css = () => {
 
     /* each top level reply should have a space after */
     .post > .replies > .reply {
-      padding: 0 0 4px 0;
+      padding: 0 0 2px 0;
     }
 
     .commit-ref {
