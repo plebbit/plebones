@@ -186,7 +186,7 @@ const Css = () => {
     }
 
     .commit-ref {
-      position: absolute;
+      position: fixed;
       right: 0;
       bottom: 0;
       font-size: 10px;
