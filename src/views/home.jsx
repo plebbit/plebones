@@ -3,13 +3,15 @@ import useDefaultSubplebbits from '../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import FeedPost from '../components/feed-post'
+import {useParams} from 'react-router-dom'
 
-let lastVirtuosoState
+const lastVirtuosoStates = {}
 
 function Home() {
+  const params = useParams()
   const defaultSubplebbits = useDefaultSubplebbits()
   const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
-  const sortType = 'hot'
+  const sortType = params?.sortType || 'hot'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
   let Loading
@@ -22,7 +24,7 @@ function Home() {
   useEffect(() => {
     const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
       if (snapshot?.ranges?.length) {
-        lastVirtuosoState = snapshot
+        lastVirtuosoStates[sortType] = snapshot
       }
     })
     window.addEventListener('scroll', setLastVirtuosoState)
@@ -42,8 +44,8 @@ function Home() {
         components={ {Footer: Loading } }
         endReached={ loadMore }
         ref={virtuosoRef}
-        restoreStateFrom={lastVirtuosoState}
-        initialScrollTop={lastVirtuosoState?.scrollTop}
+        restoreStateFrom={lastVirtuosoStates[sortType]}
+        initialScrollTop={lastVirtuosoStates[sortType]?.scrollTop}
       />
 
     </div>

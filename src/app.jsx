@@ -164,11 +164,11 @@ function App() {
       <Css/>
       <div className='commit-ref'>{commitRef}</div>
       <Routes>
-        <Route exact path="/" element={ <Home/> } />
-        <Route exact path="/p/settings" element={ <Settings/> } />
-        <Route exact path="/p/:subplebbitAddress" element={ <Subplebbit/> } />
-        <Route exact path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
-        <Route exact path="*" element={ <NotFound/> } />
+        <Route path="/:sortType?" element={ <Home/> } />
+        <Route path="/p/settings" element={ <Settings/> } />
+        <Route path="/p/:subplebbitAddress" element={ <Subplebbit/> } />
+        <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
+        <Route path="*" element={ <NotFound/> } />
       </Routes>
     </div>
   )
