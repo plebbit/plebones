@@ -96,7 +96,7 @@ function Catalog() {
   const lastVirtuosoState = lastVirtuosoStates?.[sortType]
 
   return (
-    <div className="home">
+    <div className="catalog">
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ rows?.length || 0 }

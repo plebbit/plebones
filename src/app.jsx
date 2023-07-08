@@ -155,6 +155,13 @@ const Css = () => {
       flex-direction: row;
     }
 
+    /* if less than 4 columns (180 * 4) catalog should be centered */
+    @media (max-width: 720px) {
+      .catalog-row {
+        justify-content: center;
+      }
+    }
+
     .catalog-post {
       width: 180px;
       font-size: 11px;
