@@ -21,10 +21,11 @@ const CatalogPost = ({post}) => {
   const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
 
   let title = post.title || ''
-  if (title) {
+  const content = post.content || ''
+  if (title && content) {
     title += ': '
   }
-  title += (post.content || '')
+  title += content
   title = title.replace(/\n/g, '').substring(0, 100) || '-'
 
   const stats = `R: ${post?.replyCount} / S: ${(post?.upvoteCount - post?.downvoteCount) || 0}`
