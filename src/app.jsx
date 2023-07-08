@@ -53,7 +53,7 @@ const Css = () => {
       min-height: 100vh;
     }
 
-    .feed-post, .post {
+    .feed-post {
       padding: 2px 0;
     }
 
