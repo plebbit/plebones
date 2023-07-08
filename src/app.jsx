@@ -166,7 +166,7 @@ function App() {
       <Routes>
         <Route path="/:sortType?" element={ <Home/> } />
         <Route path="/p/settings" element={ <Settings/> } />
-        <Route path="/p/:subplebbitAddress" element={ <Subplebbit/> } />
+        <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
         <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
         <Route path="*" element={ <NotFound/> } />
       </Routes>

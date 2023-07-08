@@ -23,6 +23,7 @@ function Home() {
   const virtuosoRef = useRef()
   useEffect(() => {
     const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
+      // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
       if (snapshot?.ranges?.length) {
         lastVirtuosoStates[sortType] = snapshot
       }
@@ -30,7 +31,8 @@ function Home() {
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
-  }, [])
+  }, [sortType])
+  const lastVirtuosoState = lastVirtuosoStates?.[sortType]
 
   return (
     <div className="home">
@@ -44,8 +46,8 @@ function Home() {
         components={ {Footer: Loading } }
         endReached={ loadMore }
         ref={virtuosoRef}
-        restoreStateFrom={lastVirtuosoStates[sortType]}
-        initialScrollTop={lastVirtuosoStates[sortType]?.scrollTop}
+        restoreStateFrom={lastVirtuosoState}
+        initialScrollTop={lastVirtuosoState?.scrollTop}
       />
 
     </div>
