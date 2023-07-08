@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './views/home'
+import Catalog from './views/catalog'
 import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
 import Post from './views/post'
@@ -105,6 +106,7 @@ const Css = () => {
       margin: 0 0 0 -2px;
     }
 
+    /* make it darker so user knows a media is loading */
     .media-wrapper {
       background-color: #161616;
     }
@@ -148,6 +150,34 @@ const Css = () => {
       height: 2px
     }
 
+    .catalog-row {
+      display: flex; 
+      flex-direction: row;
+    }
+
+    .catalog-post {
+      width: 180px;
+      font-size: 11px;
+
+      /* fix text overflowing */
+      overflow: hidden;
+    }
+
+    .catalog-post .stats {
+      font-weight: bold;
+    }
+
+    .catalog-post .media {
+      height: 180px;
+    }
+
+    /* media and no media must be the same height, or the infinite scroll bugs out */
+    .catalog-post .media-wrapper, .catalog-post .no-media {
+      overflow: hidden;
+      width: 180px;
+      height: 180px;
+    }
+
     .commit-ref {
       position: absolute;
       right: 0;
@@ -165,6 +195,7 @@ function App() {
       <div className='commit-ref'>{commitRef}</div>
       <Routes>
         <Route path="/:sortType?" element={ <Home/> } />
+        <Route path="/catalog/:sortType?" element={ <Catalog /> } />
         <Route path="/p/settings" element={ <Settings/> } />
         <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
         <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
