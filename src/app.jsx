@@ -75,11 +75,13 @@ const Css = () => {
     }
 
     .downvote {
+      font-weight: bold;
       /* fix the arrow positions */
       transform: scaleY(-0.65) translateY(50%);
     }
 
     .upvote {
+      font-weight: bold;
       /* fix the arrow positions */
       transform: scaleY(0.65) translateY(50%);
     }
@@ -131,7 +133,7 @@ const Css = () => {
     }
 
     .reply .downvote {
-      transform: scaleY(-0.65) translateY(-14px);
+      transform: scaleY(-0.65) translateY(-14.5px);
     }
 
     .reply .header, .reply .score {
