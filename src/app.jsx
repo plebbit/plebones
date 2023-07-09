@@ -175,7 +175,7 @@ const Css = () => {
       font-weight: bold;
     }
 
-    .catalog-post .media, b.oard-post .media {
+    .catalog-post .media {
       height: 180px;
     }
 
@@ -194,7 +194,7 @@ const Css = () => {
       overflow: hidden;
     }
 
-    /* media and no media must be the same height, or the infinite scroll bugs out */
+    /* media must be the same height and width for board view, or the infinite scroll bugs out */
     .board-post .media-wrapper {
       overflow: hidden;
       width: 180px;
