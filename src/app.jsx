@@ -66,22 +66,21 @@ const Css = () => {
 
     .feed-post .score, .post .score {
       font-size: 13px;
-      padding: 0 2px 0 0;
+      padding: 0 5px 0 0;
 
       /* fix the arrow positions */
-      transform: translateY(-9.5px);
       text-align: center;
       height: 0;
     }
 
     .downvote {
-      /* fix the arrow positions */
-      transform: scaleY(0.5) translateY(-50%);
+      font-size: 13px;
+      transform: scale(1, -1);
     }
 
     .upvote {
-      /* fix the arrow positions */
-      transform: scaleY(0.5) translateY(50%);
+      font-size: 13px;
+      margin-bottom: -2px;
     }
 
     .feed-post .media {
@@ -122,9 +121,15 @@ const Css = () => {
 
     .reply .downvote, .reply .upvote {
       display: inline-block;
-      /* fix the arrow positions */
-      height: 0px;
-      transform: scaleY(0.5) translateY(6.5px);
+    }
+
+    .reply .downvote {
+      transform: scale(1, -1);
+      margin: 0 0 -1px 1px;
+    }
+
+    .reply .upvote {
+      margin: 0 2px 0 0;
     }
 
     .reply .header, .reply .score {

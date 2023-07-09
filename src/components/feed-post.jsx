@@ -35,11 +35,11 @@ const FeedPost = ({post, index}) => {
     <div className='text-wrapper'>
       <div className='column'>
         <div className='score'>
-          <div className='upvote'>⯅</div>
+          <div className='upvote'>⇧</div>
           <div className='number'>
             {(post?.upvoteCount - post?.downvoteCount) || 0}
           </div>
-          <div className='downvote'>⯆</div>
+          <div className='downvote'>⇧</div>
         </div>
       </div>
       <div className='column'>

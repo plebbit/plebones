@@ -27,9 +27,9 @@ const Reply = ({reply}) => {
     <div className='reply'>
       <div className='header-wrapper'>
         <div className='score'>
-          <div className='upvote'>⯅</div>
+          <div className='upvote'>⇧</div>
           {(reply?.upvoteCount - reply?.downvoteCount) || 0}
-          <div className='downvote'>⯆</div>
+          <div className='downvote'>⇧</div>
         </div>
         <div className='header'>
           <span className='author-address'>{reply.author.shortAddress}</span>
@@ -65,11 +65,11 @@ function Post() {
       <div className='text-wrapper'>
         <div className='column'>
           <div className='score'>
-            <div className='upvote'>⯅</div>
+            <div className='upvote'>⇧</div>
             <div className='number'>
               {(post?.upvoteCount - post?.downvoteCount) || 0}
             </div>
-            <div className='downvote'>⯆</div>
+            <div className='downvote'>⇧</div>
           </div>
         </div>
         <div className='column'>
