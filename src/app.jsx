@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './views/home'
 import Catalog from './views/catalog'
+import Board from './views/board'
 import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
 import Post from './views/post'
@@ -174,7 +175,7 @@ const Css = () => {
       font-weight: bold;
     }
 
-    .catalog-post .media {
+    .catalog-post .media, b.oard-post .media {
       height: 180px;
     }
 
@@ -183,6 +184,44 @@ const Css = () => {
       overflow: hidden;
       width: 180px;
       height: 180px;
+    }
+
+    .board-post {
+      padding: 0 0 20px 0;
+      font-size: 13px;
+
+      /* fix post too small for image */
+      overflow: hidden;
+    }
+
+    /* media and no media must be the same height, or the infinite scroll bugs out */
+    .board-post .media-wrapper {
+      overflow: hidden;
+      width: 180px;
+      height: 180px;
+      background-color: ${colors.dark1};
+      float: left;
+      margin: 0 14px 0 0;
+      text-align: right;
+    }
+
+    .board-post .media {
+      height: 180px;
+    }
+
+    .board-post .title {
+      font-weight: bold;
+      color: ${colors.light1};
+    }
+
+    .board-post .text-wrapper {
+      padding: 0 14px 0 14px;
+    }
+
+    .board-post .reply {
+      background-color: ${colors.dark2};
+      padding: 14px;
+      margin: 4px;
     }
 
     .commit-ref {
@@ -203,6 +242,7 @@ function App() {
       <Routes>
         <Route path="/:sortType?" element={ <Home/> } />
         <Route path="/catalog/:sortType?" element={ <Catalog /> } />
+        <Route path="/board/:sortType?" element={ <Board /> } />
         <Route path="/p/settings" element={ <Settings/> } />
         <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
         <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>

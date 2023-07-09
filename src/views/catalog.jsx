@@ -62,7 +62,7 @@ function Catalog() {
   const params = useParams()
   const defaultSubplebbits = useDefaultSubplebbits()
   const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
-  const sortType = params?.sortType || 'hot'
+  const sortType = params?.sortType || 'active'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
   // split feed into rows

@@ -13,7 +13,7 @@ const useDefaultSubplebbits = () => {
       try {
         const value = await fetch(
           'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json',
-          { cache: 'no-cache' }
+          // { cache: 'no-cache' }
         ).then(res => res.json())
         cache = value
         setValue(value)
