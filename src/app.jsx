@@ -66,21 +66,22 @@ const Css = () => {
 
     .feed-post .score, .post .score {
       font-size: 13px;
-      padding: 0 5px 0 0;
+      padding: 0 2px 0 0;
 
       /* fix the arrow positions */
+      transform: translateY(-4px);
       text-align: center;
       height: 0;
     }
 
     .downvote {
-      font-size: 13px;
-      transform: scale(1, -1);
+      /* fix the arrow positions */
+      transform: scaleY(-0.65) translateY(50%);
     }
 
     .upvote {
-      font-size: 13px;
-      margin-bottom: -2px;
+      /* fix the arrow positions */
+      transform: scaleY(0.65) translateY(50%);
     }
 
     .feed-post .media {
@@ -121,15 +122,16 @@ const Css = () => {
 
     .reply .downvote, .reply .upvote {
       display: inline-block;
-    }
-
-    .reply .downvote {
-      transform: scale(1, -1);
-      margin: 0 0 -1px 1px;
+      /* fix the arrow positions */
+      height: 0px;
     }
 
     .reply .upvote {
-      margin: 0 2px 0 0;
+      transform: scaleY(0.65) translateY(3px);
+    }
+
+    .reply .downvote {
+      transform: scaleY(-0.65) translateY(-14px);
     }
 
     .reply .header, .reply .score {
