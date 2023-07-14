@@ -1,15 +1,16 @@
 import { useMemo, useRef, useEffect } from 'react'
+import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
-import FeedPost from '../components/feed-post'
+import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 
 const lastVirtuosoStates = {}
 
-function Subplebbit() {
+function Home() {
   const params = useParams()
-  const subplebbitAddress = params.subplebbitAddress
-  const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress])
+  const defaultSubplebbits = useDefaultSubplebbits()
+  const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
   const sortType = params?.sortType || 'hot'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
@@ -24,21 +25,17 @@ function Subplebbit() {
     const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
       // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
       if (snapshot?.ranges?.length) {
-        if (!lastVirtuosoStates[subplebbitAddress]) {
-          lastVirtuosoStates[subplebbitAddress] = {}
-        }
-        lastVirtuosoStates[subplebbitAddress][sortType] = snapshot
+        lastVirtuosoStates[sortType] = snapshot
       }
     })
-    // TODO: doesn't work if the user hasn't scrolled
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
-  }, [subplebbitAddress, sortType])
-  const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress]?.[sortType]
+  }, [sortType])
+  const lastVirtuosoState = lastVirtuosoStates?.[sortType]
 
   return (
-    <div className="subplebbit">
+    <div>
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }
@@ -57,4 +54,4 @@ function Subplebbit() {
   )
 }
 
-export default Subplebbit
+export default Home

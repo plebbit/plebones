@@ -1,8 +1,8 @@
 import { useMemo, useRef, useEffect } from 'react'
-import useDefaultSubplebbits from '../hooks/use-default-subplebbits'
+import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
-import BoardPost from '../components/board-post'
+import BoardPost from '../../components/board-post'
 import {useParams} from 'react-router-dom'
 
 const lastVirtuosoStates = {}
@@ -35,7 +35,7 @@ function Board() {
   const lastVirtuosoState = lastVirtuosoStates?.[sortType]
 
   return (
-    <div className="board">
+    <div>
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }

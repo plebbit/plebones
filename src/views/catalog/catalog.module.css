@@ -1,0 +1,38 @@
+.row {
+  display: flex; 
+  flex-direction: row;
+}
+
+/* if less than 4 columns (180 * 4) catalog should be centered */
+@media (max-width: 720px) {
+  .row {
+    justify-content: center;
+  }
+}
+
+.post {
+  width: 180px;
+  font-size: 11px;
+
+  /* fix text overflowing */
+  overflow: hidden;
+}
+
+.postStats {
+  font-weight: bold;
+}
+
+.media {
+  height: 180px;
+}
+
+/* media and no media must be the same height, or the infinite scroll bugs out */
+.mediaWrapper, .noMedia {
+  overflow: hidden;
+  width: 180px;
+  height: 180px;
+}
+
+.mediaWrapper {
+  background-color: var(--dark1-1);
+}

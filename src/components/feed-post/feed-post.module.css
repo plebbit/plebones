@@ -1,0 +1,52 @@
+.feedPost {
+  padding: 2px 0;
+}
+
+.textWrapper {
+  /* put score in left column */
+  display: flex; 
+  flex-direction: row;
+}
+
+.title {
+  color: var(--light1);
+  font-size: 16px;
+}
+
+.footer {
+  font-weight: bold;
+}
+
+.score {
+  font-size: 13px;
+  padding: 0 2px 0 0;
+
+  /* fix the arrow positions */
+  transform: translateY(-4px);
+  text-align: center;
+  height: 0;
+}
+
+.downvote {
+  font-weight: bold;
+  /* fix the arrow positions */
+  transform: scaleY(-0.65) translateY(50%);
+}
+
+.upvote {
+  font-weight: bold;
+  /* fix the arrow positions */
+  transform: scaleY(0.65) translateY(50%);
+}
+
+.media {
+  height: 50vh;
+}
+
+.mediaWrapper {
+  height: 50vh;
+  background-color: var(--dark1-1);
+
+  /* undo the app post padding */
+  margin: 0 0 0 -2px;
+}

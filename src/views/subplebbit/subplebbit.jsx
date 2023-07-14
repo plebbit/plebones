@@ -1,16 +1,15 @@
 import { useMemo, useRef, useEffect } from 'react'
-import useDefaultSubplebbits from '../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
-import FeedPost from '../components/feed-post'
+import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 
 const lastVirtuosoStates = {}
 
-function Home() {
+function Subplebbit() {
   const params = useParams()
-  const defaultSubplebbits = useDefaultSubplebbits()
-  const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
+  const subplebbitAddress = params.subplebbitAddress
+  const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress])
   const sortType = params?.sortType || 'hot'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
@@ -25,17 +24,21 @@ function Home() {
     const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
       // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
       if (snapshot?.ranges?.length) {
-        lastVirtuosoStates[sortType] = snapshot
+        if (!lastVirtuosoStates[subplebbitAddress]) {
+          lastVirtuosoStates[subplebbitAddress] = {}
+        }
+        lastVirtuosoStates[subplebbitAddress][sortType] = snapshot
       }
     })
+    // TODO: doesn't work if the user hasn't scrolled
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
-  }, [sortType])
-  const lastVirtuosoState = lastVirtuosoStates?.[sortType]
+  }, [subplebbitAddress, sortType])
+  const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress]?.[sortType]
 
   return (
-    <div className="home">
+    <div>
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }
@@ -54,4 +57,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Subplebbit

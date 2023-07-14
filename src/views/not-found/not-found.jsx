@@ -1,7 +1,7 @@
 
 function NotFound() {
   return (
-    <div className="not-found">
+    <div>
       Not found
     </div>
   )

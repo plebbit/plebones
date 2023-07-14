@@ -1,20 +1,21 @@
 import { useMemo, useRef, useEffect } from 'react'
-import useDefaultSubplebbits from '../hooks/use-default-subplebbits'
+import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
-import useWindowWidth from '../hooks/use-window-width'
+import useWindowWidth from '../../hooks/use-window-width'
 import {useParams, Link} from 'react-router-dom'
-import utils from '../utils'
+import utils from '../../lib/utils'
+import styles from './catalog.module.css'
 
 const CatalogPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
   if (!mediaInfo) {
-    return <div className='no-media'></div>
+    return <div className={styles.noMedia}></div>
   }
   if (mediaInfo.type === 'image') {
-    return <div className='media-wrapper'><img className='media' src={mediaInfo.url} alt='' /></div>
+    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
   }
-  return <div className='no-media'></div>
+  return <div className={styles.noMedia}></div>
 }
 
 const CatalogPost = ({post}) => {
@@ -30,9 +31,9 @@ const CatalogPost = ({post}) => {
 
   const stats = `R: ${post?.replyCount} / S: ${(post?.upvoteCount - post?.downvoteCount) || 0}`
 
-  return <div className='catalog-post'>
-    <div className='stats'>{stats}</div>
-    <div className='title'>
+  return <div className={styles.post}>
+    <div className={styles.postStats}>{stats}</div>
+    <div className={styles.postTitle}>
       <Link to={internalLink}>{title}</Link>
     </div>
     <div>
@@ -48,7 +49,7 @@ const CatalogRow = ({row}) => {
   for (const post of row) {
     posts.push(<CatalogPost key={post?.cid} post={post} />)
   }
-  return <div className='catalog-row'>{posts}</div>
+  return <div className={styles.row}>{posts}</div>
 }
 
 const lastVirtuosoStates = {}
@@ -96,7 +97,7 @@ function Catalog() {
   const lastVirtuosoState = lastVirtuosoStates?.[sortType]
 
   return (
-    <div className="catalog">
+    <div>
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ rows?.length || 0 }

@@ -1,0 +1,94 @@
+.textWrapper {
+  /* put score in left column */
+  display: flex; 
+  flex-direction: row;
+}
+
+.score {
+  font-size: 13px;
+  padding: 0 2px 0 0;
+
+  /* fix the arrow positions */
+  transform: translateY(-4px);
+  text-align: center;
+  height: 0;
+}
+
+.downvote {
+  font-weight: bold;
+  /* fix the arrow positions */
+  transform: scaleY(-0.65) translateY(50%);
+}
+
+.upvote {
+  font-weight: bold;
+  /* fix the arrow positions */
+  transform: scaleY(0.65) translateY(50%);
+}
+
+.title {
+  color: var(--light1);
+  font-size: 16px;
+}
+
+.footer {
+  font-weight: bold;
+}
+
+.media {
+  max-width: 100vw;
+
+  /* undo the app post padding */
+  margin: 0 0 0 -2px;
+}
+
+/* make it darker so user knows a media is loading */
+.media-wrapper {
+  background-color: #161616;
+}
+
+.replyScore {
+  font-size: 10px;
+}
+
+.replyContent {
+  font-size: 13px;
+}
+
+.replyDownvote, .replyUpvote {
+  display: inline-block;
+  /* fix the arrow positions */
+  height: 0px;
+}
+
+.replyUpvote {
+  transform: scaleY(0.65) translateY(3px);
+}
+
+.replyDownvote {
+  transform: scaleY(-0.65) translateY(-14.5px);
+}
+
+.replyHeader, .replyScore {
+  display: inline;
+}
+
+/* add indent to each nested reply */
+.replies {
+  padding: 0 0 0 4px;
+}
+
+/* the first replies should have no indent */
+.post > .replies {
+  padding: 0;
+}
+
+/* each top level reply should have a space after */
+.post > .replies > .reply {
+  padding: 0 0 2px 0;
+}
+
+/* empty space between title and replies when there is no media */
+.no-media {
+  height: 2px
+}
