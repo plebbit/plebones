@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './views/home'
+import TextOnly from './views/text-only'
 import Catalog from './views/catalog'
 import Board from './views/board'
 import Settings from './views/settings'
@@ -25,6 +26,7 @@ function App() {
       <div className={styles.commitRef}>{commitRef}</div>
       <Routes>
         <Route path="/:sortType?" element={ <Home/> } />
+        <Route path="/text-only/:sortType?" element={ <TextOnly/> } />
         <Route path="/catalog/:sortType?" element={ <Catalog /> } />
         <Route path="/board/:sortType?" element={ <Board /> } />
         <Route path="/p/settings" element={ <Settings/> } />

@@ -1,0 +1,45 @@
+.post {
+  height: 42px;
+}
+
+.textWrapper {
+  /* put score in left column */
+  display: flex; 
+  flex-direction: row;
+}
+
+.header {
+  white-space: nowrap;
+}
+
+.title {
+  color: var(--light1);
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.footer {
+  font-weight: bold;
+}
+
+.score {
+  font-size: 13px;
+  padding: 0 2px 0 0;
+
+  /* fix the arrow positions */
+  transform: translateY(-4px);
+  text-align: center;
+  height: 0;
+}
+
+.downvote {
+  font-weight: bold;
+  /* fix the arrow positions */
+  transform: scaleY(-0.65) translateY(50%);
+}
+
+.upvote {
+  font-weight: bold;
+  /* fix the arrow positions */
+  transform: scaleY(0.65) translateY(50%);
+}
