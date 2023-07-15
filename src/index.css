@@ -1,33 +1,3 @@
-/* no theme */
-:root {
-  --dark1: #000000;
-  --dark1-1: #000000;
-  --dark2: #000000;
-  --dark3: #000000;
-  --light1: #ffffff;
-  --light2: #ffffff;
-}
-
-/* dark mode theme */
-:root .dark {
-  --dark1: #181818;
-  --dark1-1: #161616;
-  --dark2: #212121;
-  --dark3: #3d3d3d;
-  --light1: #f1f1f1;
-  --light2: #aaaaaa;
-}
-
-/* light mode theme */
-:root .light {
-  --dark1: #ffffff;
-  --dark1-1: #ffffff;
-  --dark2: #ffffff;
-  --dark3: #ffffff;
-  --light1: #0000ff;
-  --light2: #888888;
-}
-
 html, body {
   /* no horizontal scrolling */
   max-width: 100%;
