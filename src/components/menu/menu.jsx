@@ -1,25 +1,46 @@
 import { Link } from 'react-router-dom'
 import styles from './menu.module.css'
-import {useParams} from 'react-router-dom'
+import {useParams, useMatch, useNavigate} from 'react-router-dom'
 
 const Menu = () => {
-  const {commentCid} = useParams()
+  const params = useParams()
+  const isCatalogSortType = useMatch('/catalog/:sortType')
+  const isCatalog = useMatch('/catalog') || isCatalogSortType
+  const navigate = useNavigate()
 
   // dont show menu on post page because it looks ugly
-  if (commentCid) {
+  if (params.commentCid) {
     return ''
   }
 
+  let catalogLink = '/catalog'
+  let feedLink = '/'
+  if (params.sortType) {
+    catalogLink += `/${params.sortType}`
+    feedLink += params.sortType
+  }
+
+  const changeSortType = (event) => {
+    const sortType = event.target.value
+    let link = `/${sortType}`
+    if (isCatalog) {
+      link = `/catalog${link}`
+    }
+    navigate(link)
+  }
+
+  const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
+
   return <div className={styles.menu}>
-    <select name="sortType">
-      <option value="hot">hot</option>
-      <option value="new">new</option>
-      <option value="topAll">top</option>
-      <option value="active">active</option>
-      <option value="controversialAll">controversial</option>
+    <select onChange={changeSortType}>
+      <option value="hot" selected={selectedSortType === 'hot'}>hot</option>
+      <option value="new" selected={selectedSortType === 'new'}>new</option>
+      <option value="topAll" selected={selectedSortType === 'topAll'}>top</option>
+      <option value="active" selected={selectedSortType === 'active'}>active</option>
+      <option value="controversialAll" selected={selectedSortType === 'controversialAll'}>controversial</option>
     </select>
     {' '}
-    <Link to='/catalog' className={styles.title}>catalog</Link>
+    <Link to={!isCatalog ? catalogLink : feedLink} className={styles.title}>{!isCatalog ? 'catalog' : 'feed'}</Link>
     {' '}
     settings
   </div>
