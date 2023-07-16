@@ -73,7 +73,7 @@ function Post() {
         <div className={styles.column}>
           <div className={styles.header}>
             <Link to={post?.link} target={post?.link ? '_blank' : undefined} className={styles.title}>{post?.title || post?.content || '-'}</Link>
-            {hostname && <span className={styles.hostname}>{' '}{hostname}</span>}
+            {hostname && <Link to={post?.link} target='_blank'> {hostname}</Link>}
           </div>
           <div className={styles.content}>
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>

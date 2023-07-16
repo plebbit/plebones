@@ -44,8 +44,8 @@ const FeedPost = ({post, index}) => {
       </div>
       <div className={styles.column}>
         <div className={styles.header}>
-          <Link to={externalLink || internalLink} target={externalLink ? '_blank' : undefined} className={styles.title}>{post?.title || post?.content || '-'}</Link>
-          {hostname && <span className={styles.header}>{' '}{hostname}</span>}
+          <Link to={internalLink} className={styles.title}>{post?.title || post?.content || '-'}</Link>
+          {hostname && <Link to={externalLink} target='_blank'> {hostname}</Link>}
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
