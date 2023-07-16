@@ -12,6 +12,9 @@
   background-color: var(--dark1);
   color: var(--light2);
 
+  /* looks better because the form is first on the left */
+  text-align: right;
+
   /* fix borders */
   outline: unset;
   border: unset;
