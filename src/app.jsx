@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Outlet } from 'react-router-dom'
 import Home from './views/home'
 import TextOnly from './views/text-only'
 import Catalog from './views/catalog'
@@ -22,20 +22,26 @@ function App() {
     document.body.classList.add(theme)
   }, [theme])
 
+  const layout = <div>
+    <Menu />
+    <Outlet />
+    <div className={styles.commitRef}>{commitRef}</div>
+  </div>
+
   return (
     <div className={[styles.app, theme].join(' ')}>
       <Routes>
-        <Route path="/:sortType?" element={ <Home/> } />
-        <Route path="/text-only/:sortType?" element={ <TextOnly/> } />
-        <Route path="/catalog/:sortType?" element={ <Catalog /> } />
-        <Route path="/board/:sortType?" element={ <Board /> } />
-        <Route path="/p/settings" element={ <Settings/> } />
-        <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
-        <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
-        <Route path="*" element={ <NotFound/> } />
+        <Route element={layout}>
+          <Route path="/:sortType?" element={ <Home/> } />
+          <Route path="/text-only/:sortType?" element={ <TextOnly/> } />
+          <Route path="/catalog/:sortType?" element={ <Catalog /> } />
+          <Route path="/board/:sortType?" element={ <Board /> } />
+          <Route path="/p/settings" element={ <Settings/> } />
+          <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
+          <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
+          <Route path="*" element={ <NotFound/> } />
+        </Route>
       </Routes>
-      <div className={styles.commitRef}>{commitRef}</div>
-      <Menu />
     </div>
   )
 }

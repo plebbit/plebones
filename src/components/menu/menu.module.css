@@ -1,21 +1,28 @@
 .menu {
-  font-size: 16px;
+  color: var(--light2);
   background-color: var(--dark1);
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 0 2px;
+  text-align: right;
+}
+
+.menu, .menu select {
+  font-size: 12px;
 }
 
 .menu select {
   background-color: var(--dark1);
   color: var(--light2);
-  font-size: 16px;
 
-  /* trim to only the first char */
-  width: 31px;
+  /* trim extra chars */
+  width: 17px;
 
   /* fix borders */
-  border-color: var(--dark1);
   outline: unset;
+  border: unset;
+
+  /* remove icon */
+  appearance: unset;
+}
+
+.menu option {
+  color: var(--light2);
 }
