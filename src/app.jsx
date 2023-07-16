@@ -10,6 +10,7 @@ import NotFound from './views/not-found'
 import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
 import {useEffect} from 'react'
+import Menu from './components/menu'
 const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : ''
 
 function App() {
@@ -23,7 +24,6 @@ function App() {
 
   return (
     <div className={[styles.app, theme].join(' ')}>
-      <div className={styles.commitRef}>{commitRef}</div>
       <Routes>
         <Route path="/:sortType?" element={ <Home/> } />
         <Route path="/text-only/:sortType?" element={ <TextOnly/> } />
@@ -34,6 +34,8 @@ function App() {
         <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
         <Route path="*" element={ <NotFound/> } />
       </Routes>
+      <div className={styles.commitRef}>{commitRef}</div>
+      <Menu />
     </div>
   )
 }
