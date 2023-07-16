@@ -12,9 +12,6 @@
   background-color: var(--dark1);
   color: var(--light2);
 
-  /* trim extra chars */
-  width: 17px;
-
   /* fix borders */
   outline: unset;
   border: unset;

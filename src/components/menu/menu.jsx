@@ -36,8 +36,8 @@ const Menu = () => {
       <option value="hot" selected={selectedSortType === 'hot'}>hot</option>
       <option value="new" selected={selectedSortType === 'new'}>new</option>
       <option value="topAll" selected={selectedSortType === 'topAll'}>top</option>
-      <option value="active" selected={selectedSortType === 'active'}>active</option>
-      <option value="controversialAll" selected={selectedSortType === 'controversialAll'}>controversial</option>
+      <option value="active" selected={selectedSortType === 'active'}>acti</option>
+      <option value="controversialAll" selected={selectedSortType === 'controversialAll'}>con</option>
     </select>
     {' '}
     <Link to={!isCatalog ? catalogLink : feedLink} className={styles.title}>{!isCatalog ? 'catalog' : 'feed'}</Link>
