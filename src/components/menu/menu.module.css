@@ -10,7 +10,12 @@
 .menu select {
   background-color: var(--dark1);
   color: var(--light2);
-  border-color: var(--dark1);
   font-size: 16px;
+
+  /* trim to only the first char */
   width: 31px;
+
+  /* fix borders */
+  border-color: var(--dark1);
+  outline: unset;
 }
