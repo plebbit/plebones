@@ -18,6 +18,9 @@
 
   /* remove icon */
   appearance: unset;
+
+  /* firefox adds padding */
+  padding: 0;
 }
 
 .menu option {
