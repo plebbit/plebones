@@ -4,28 +4,6 @@
   flex-direction: row;
 }
 
-.score {
-  font-size: 13px;
-  padding: 0 2px 0 0;
-
-  /* fix the arrow positions */
-  transform: translateY(-4px);
-  text-align: center;
-  height: 0;
-}
-
-.downvote {
-  font-weight: bold;
-  /* fix the arrow positions */
-  transform: scaleY(-0.65) translateY(50%);
-}
-
-.upvote {
-  font-weight: bold;
-  /* fix the arrow positions */
-  transform: scaleY(0.65) translateY(50%);
-}
-
 .title {
   color: var(--light1);
   font-size: 16px;
@@ -43,39 +21,45 @@
 }
 
 /* make it darker so user knows a media is loading */
-.media-wrapper {
+.mediaWrapper {
   background-color: #161616;
 }
 
-.replyScore {
-  font-size: 10px;
+.score {
+  font-size: 13px;
+
+  /* fix the arrow positions */
+  text-align: center;
+  width: 24px;
+
+  /* if the number is too big */
+  overflow: hidden;
+}
+
+.downvote, .upvote {
+  /* fix the arrow positions */
+  height: 12px;
+}
+
+.downvote {
+  /* inverse the arrow to make it a downvote */
+  transform: scaleY(-1);
+
+  /* fix the arrow positions */
+  height: 13px;
+}
+
+.downvote svg path, .upvote svg path, .replyUpvote svg path, .replyDownvote svg path {
+  fill: var(--light2);
 }
 
 .replyContent {
   font-size: 13px;
 }
 
-.replyDownvote, .replyUpvote {
-  display: inline-block;
-  /* fix the arrow positions */
-  height: 0px;
-}
-
-.replyUpvote {
-  transform: scaleY(0.65) translateY(3px);
-}
-
-.replyDownvote {
-  transform: scaleY(-0.65) translateY(-14.5px);
-}
-
-.replyHeader, .replyScore {
-  display: inline;
-}
-
 /* add indent to each nested reply */
 .replies {
-  padding: 0 0 0 4px;
+  padding: 0 0 0 8px;
 }
 
 /* the first replies should have no indent */
@@ -85,10 +69,31 @@
 
 /* each top level reply should have a space after */
 .post > .replies > .reply {
-  padding: 0 0 2px 0;
+  margin: 0 0 8px 0;
+}
+
+.replyWrapper {
+  margin: 0 0 3px 0;
 }
 
 /* empty space between title and replies when there is no media */
-.no-media {
-  height: 2px
+.noMedia {
+  height: 8px
+}
+
+/* different bg colors for each nesting level */
+.post > .replies {
+  background-color: var(--dark1);
+}
+.post > .replies > .reply > .replies {
+  background-color: var(--dark2);
+}
+.post > .replies > .reply > .replies .reply > .replies {
+  background-color: var(--dark1);
+}
+.post > .replies > .reply > .replies .reply > .replies > .reply > .replies {
+  background-color: var(--dark2);
+}
+.post > .replies > .reply > .replies .reply > .replies > .reply > .replies > .reply > .replies {
+  background-color: var(--dark1);
 }

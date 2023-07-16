@@ -1,6 +1,7 @@
 import utils from '../../lib/utils'
 import { Link } from 'react-router-dom'
 import styles from './feed-post.module.css'
+import Arrow from '../arrow'
 
 const FeedPostMedia = ({mediaInfo}) => {
   if (!mediaInfo) {
@@ -34,11 +35,11 @@ const FeedPost = ({post, index}) => {
     <div className={styles.textWrapper}>
       <div className={styles.column}>
         <div className={styles.score}>
-          <div className={styles.upvote}>⇧</div>
+          <div className={styles.upvote}><Arrow /></div>
           <div className={styles.scoreNumber}>
             {(post?.upvoteCount - post?.downvoteCount) || 0}
           </div>
-          <div className={styles.downvote}>⇧</div>
+          <div className={styles.downvote}><Arrow /></div>
         </div>
       </div>
       <div className={styles.column}>

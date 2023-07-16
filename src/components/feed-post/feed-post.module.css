@@ -19,24 +19,30 @@
 
 .score {
   font-size: 13px;
-  padding: 0 2px 0 0;
 
   /* fix the arrow positions */
-  transform: translateY(-4px);
   text-align: center;
-  height: 0;
+  width: 24px;
+
+  /* if the number is too big */
+  overflow: hidden;
+}
+
+.downvote, .upvote {
+  /* fix the arrow positions */
+  height: 12px;
 }
 
 .downvote {
-  font-weight: bold;
+  /* inverse the arrow to make it a downvote */
+  transform: scaleY(-1);
+
   /* fix the arrow positions */
-  transform: scaleY(-0.65) translateY(50%);
+  height: 13px;
 }
 
-.upvote {
-  font-weight: bold;
-  /* fix the arrow positions */
-  transform: scaleY(0.65) translateY(50%);
+.downvote svg path, .upvote svg path {
+  fill: var(--light2);
 }
 
 .media {

@@ -3,6 +3,7 @@ import utils from '../../lib/utils'
 import { useParams } from 'react-router-dom'
 import {useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import Arrow from '../../components/arrow'
 import styles from './post.module.css'
 
 const PostMedia = ({post}) => {
@@ -26,19 +27,15 @@ const Reply = ({reply}) => {
   const replies = reply?.replies?.pages?.topAll?.comments || ''
   return (
     <div className={styles.reply}>
-      <div className={styles.replyHeaderWrapper}>
-        <div className={styles.replyScore}>
-          <div className={styles.replyUpvote}>⇧</div>
-          {(reply?.upvoteCount - reply?.downvoteCount) || 0}
-          <div className={styles.replyDownvote}>⇧</div>
-        </div>
+      <div className={styles.replyWrapper}>
         <div className={styles.replyHeader}>
-          <span className={styles.replyAuthor}>{reply.author.shortAddress}</span>
+          <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
+          <span className={styles.replyAuthor}> {reply.author.shortAddress}</span>
           <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
         </div>
-      </div>
 
-      <div className={styles.replyContent}>{reply.content}</div>
+        <div className={styles.replyContent}>{reply.content}</div>
+      </div>
       <div className={styles.replies}>
         {replies?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>)}
       </div>
@@ -66,11 +63,11 @@ function Post() {
       <div className={styles.textWrapper}>
         <div className={styles.column}>
           <div className={styles.score}>
-            <div className={styles.upvote}>⇧</div>
+            <div className={styles.upvote}><Arrow /></div>
             <div className={styles.scoreNumber}>
               {(post?.upvoteCount - post?.downvoteCount) || 0}
             </div>
-            <div className={styles.downvote}>⇧</div>
+            <div className={styles.downvote}><Arrow /></div>
           </div>
         </div>
         <div className={styles.column}>
