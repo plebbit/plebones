@@ -2,6 +2,9 @@
   color: var(--light2);
   background-color: var(--dark1);
   text-align: right;
+
+  /* menus are buttons so it's annoying to select them by accident */
+  user-select: none;
 }
 
 .menu, .menu select {

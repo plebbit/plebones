@@ -43,6 +43,8 @@ const Menu = () => {
     {' '}
     <Link to={!isCatalog ? catalogLink : feedLink} className={styles.title}>{!isCatalog ? 'catalog' : 'feed'}</Link>
     {' '}
+    submit
+    {' '}
     <Settings />
   </div>
 }
