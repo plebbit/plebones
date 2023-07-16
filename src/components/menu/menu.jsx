@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styles from './menu.module.css'
 import {useParams, useMatch, useNavigate} from 'react-router-dom'
+import Settings from './settings'
 
 const Menu = () => {
   const params = useParams()
@@ -42,7 +43,7 @@ const Menu = () => {
     {' '}
     <Link to={!isCatalog ? catalogLink : feedLink} className={styles.title}>{!isCatalog ? 'catalog' : 'feed'}</Link>
     {' '}
-    settings
+    <Settings />
   </div>
 }
 

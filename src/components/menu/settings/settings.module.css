@@ -1,0 +1,15 @@
+.settings {
+  text-align: left;
+
+  /* container */
+  padding: 0 2px;
+  background-color: var(--dark1);
+  height: 400px;
+  width: 300px;
+
+  /* needs z index to be above virtuoso */
+  z-index: 1;
+
+  /* remove outline when selected */
+  outline: unset;
+}

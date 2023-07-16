@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
     "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#1abe9497483d01f3afcb569dfe85e7395f998cc4",
-    "ext-name": "^5.0.0",
+    "ext-name": "5.0.0",
     "javascript-time-ago": "2.5.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
