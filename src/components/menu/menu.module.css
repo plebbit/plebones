@@ -7,6 +7,11 @@
   user-select: none;
 }
 
+.menu > select, .menu > span, .menu > div {
+  /* make menu cursors like links */
+  cursor: pointer;
+}
+
 .menu, .menu select {
   font-size: 12px;
 }
