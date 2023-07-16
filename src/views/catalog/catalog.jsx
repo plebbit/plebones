@@ -29,7 +29,8 @@ const CatalogPost = ({post}) => {
   title += content
   title = title.replace(/\n/g, '').substring(0, 100) || '-'
 
-  const stats = `R: ${post?.replyCount} / S: ${(post?.upvoteCount - post?.downvoteCount) || 0}`
+  // TODO: count images in replies as I: ${imageCount}
+  const stats = `R: ${post?.replyCount} / I: 0`
 
   return <div className={styles.post}>
     <div className={styles.postStats}>{stats}</div>

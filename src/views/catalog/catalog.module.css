@@ -1,6 +1,7 @@
 .row {
   display: flex; 
   flex-direction: row;
+  justify-content: center;
 }
 
 /* if less than 4 columns (180 * 4) catalog should be centered */
