@@ -12,16 +12,23 @@ import {
   FloatingFocusManager,
   useId
 } from "@floating-ui/react"
-import styles from './settings.module.css'
+import styles from './account-menu.module.css'
+import {useAccount} from '@plebbit/plebbit-react-hooks'
 
-function Popover() {
+function AccountMenu() {
+  const account = useAccount()
+  let authorAddress = account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)
+  if (authorAddress && !authorAddress.match('.')) {
+    authorAddress = authorAddress.substring(0, 8)
+  }
+
   const [isOpen, setIsOpen] = useState(false)
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
     middleware: [
-      offset(10),
+      offset(2),
       flip({ fallbackAxisSideDirection: "end" }),
       shift()
     ],
@@ -43,18 +50,26 @@ function Popover() {
   return (
     <>
       <span ref={refs.setReference} {...getReferenceProps()}>
-        settings
+        u/{authorAddress}
       </span>
       {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div
-            className={styles.settings}
+            className={styles.accountMenu}
             ref={refs.setFloating}
             style={floatingStyles}
             aria-labelledby={headingId}
             {...getFloatingProps()}
           >
-            plebbit options
+            <div className={styles.menuItem}>
+              <select value='Account 1'>
+                <option value="Account 1">Account 1</option>
+                <option value="Account 2">Account 2</option>
+              </select>
+            </div>
+            <div className={styles.menuItem}>create account</div>
+            <div className={styles.menuItem}>edit account</div>
+            <div className={styles.menuItem}>settings</div>
           </div>
         </FloatingFocusManager>
       )}
@@ -62,4 +77,4 @@ function Popover() {
   )
 }
 
-export default Popover
+export default AccountMenu

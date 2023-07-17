@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import styles from './menu.module.css'
 import {useParams, useMatch, useNavigate} from 'react-router-dom'
-import Settings from './settings'
+import AccountMenu from './account-menu'
 
 const Menu = () => {
   const params = useParams()
@@ -33,19 +33,19 @@ const Menu = () => {
   const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
 
   return <div className={styles.menu}>
-    <select onChange={changeSortType}>
-      <option value="hot" selected={selectedSortType === 'hot'}>hot</option>
-      <option value="new" selected={selectedSortType === 'new'}>new</option>
-      <option value="topAll" selected={selectedSortType === 'topAll'}>top</option>
-      <option value="active" selected={selectedSortType === 'active'}>active</option>
-      <option value="controversialAll" selected={selectedSortType === 'controversialAll'}>cont</option>
+    <select className={styles.sortType}  onChange={changeSortType} value={selectedSortType}>
+      <option value="hot">hot</option>
+      <option value="new">new</option>
+      <option value="topAll">top</option>
+      <option value="active">active</option>
+      <option value="controversialAll">cont</option>
     </select>
     {' '}
     <Link to={!isCatalog ? catalogLink : feedLink} className={styles.title}>{!isCatalog ? 'catalog' : 'feed'}</Link>
     {' '}
     <span>submit</span>
     {' '}
-    <Settings />
+    <AccountMenu />
   </div>
 }
 

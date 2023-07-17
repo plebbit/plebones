@@ -16,7 +16,7 @@
   font-size: 12px;
 }
 
-.menu select {
+.menu .sortType {
   background-color: var(--dark1);
   color: var(--light2);
 
@@ -37,6 +37,6 @@
   font-family: verdana, arial, helvetica, sans-serif;
 }
 
-.menu option {
+.menu .sortType option {
   color: var(--light2);
 }
