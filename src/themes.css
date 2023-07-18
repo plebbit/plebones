@@ -20,10 +20,10 @@
 
 /* light mode theme */
 :root .light {
-  --dark1: #ffffff;
-  --dark1-1: #ffffff;
-  --dark2: #ffffff;
-  --dark3: #ffffff;
-  --light1: #0000ff;
-  --light2: #888888;
+  --dark1: #f1f1f1;
+  --dark1-1: #f4f4f4;
+  --dark2: #e9e9e9;
+  --dark3: #cccccc;
+  --light1: #0f0f0f;
+  --light2: #606060;
 }
