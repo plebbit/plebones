@@ -7,6 +7,9 @@ import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
 import Post from './views/post'
 import NotFound from './views/not-found'
+import Profile from './views/profile'
+import About from './views/about'
+
 import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
 import {useEffect} from 'react'
@@ -37,6 +40,8 @@ function App() {
           <Route path="/catalog/:sortType?" element={ <Catalog /> } />
           <Route path="/board/:sortType?" element={ <Board /> } />
           <Route path="/settings" element={ <Settings/> } />
+          <Route path="/profile" element={ <Profile/> } />
+          <Route path="/about" element={ <About/> } />
           <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
           <Route path="*" element={ <NotFound/> } />

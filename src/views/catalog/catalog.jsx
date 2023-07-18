@@ -33,7 +33,9 @@ const CatalogPost = ({post}) => {
   const stats = `R: ${post?.replyCount}`
 
   return <div className={styles.post}>
-    <div className={styles.postStats}>{stats}</div>
+    <div className={styles.postHeader}>
+      <span className={styles.postStats}>{stats}</span>
+    </div>
     <div className={styles.postTitle}>
       <Link to={internalLink}>{title}</Link>
     </div>

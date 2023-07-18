@@ -33,19 +33,28 @@ const Menu = () => {
   const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
 
   return <div className={styles.menu}>
-    <select className={styles.sortType}  onChange={changeSortType} value={selectedSortType}>
-      <option value="hot">hot</option>
-      <option value="new">new</option>
-      <option value="topAll">top</option>
-      <option value="active">active</option>
-      <option value="controversialAll">cont</option>
-    </select>
-    {' '}
-    <Link to={!isCatalog ? catalogLink : feedLink} className={styles.title}>{!isCatalog ? 'catalog' : 'feed'}</Link>
-    {' '}
-    <span>submit</span>
-    {' '}
-    <AccountMenu />
+    <span className={styles.leftMenu}></span>
+
+    <span className={styles.rightMenu}>
+      <select className={[styles.feedName, styles.menuItem].join(' ')} value='p/all'>
+        <option value="p/all">p/all</option>
+        <option value="home">home</option>
+      </select>
+      {' '}
+      <select className={[styles.sortType, styles.menuItem].join(' ')}  onChange={changeSortType} value={selectedSortType}>
+        <option value="hot">hot</option>
+        <option value="new">new</option>
+        <option value="topAll">top</option>
+        <option value="active">active</option>
+        <option value="controversialAll">cont</option>
+      </select>
+      {' '}
+      <Link to={!isCatalog ? catalogLink : feedLink} className={styles.menuItem}>{!isCatalog ? 'catalog' : 'feed'}</Link>
+      {' '}
+      <span className={styles.menuItem}>submit</span>
+      {' '}
+      <AccountMenu/>
+    </span>
   </div>
 }
 

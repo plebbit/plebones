@@ -1,7 +1,7 @@
 import utils from '../../lib/utils'
 import { Link } from 'react-router-dom'
 import styles from './feed-post.module.css'
-import Arrow from '../arrow'
+import Arrow from '../icons/arrow'
 
 const FeedPostMedia = ({mediaInfo}) => {
   if (!mediaInfo) {
@@ -53,7 +53,7 @@ const FeedPost = ({post, index}) => {
           <span className={styles.subplebbit}> to {post?.subplebbitAddress}</span>
         </div>
         <div className={styles.footer}>
-          <Link to={internalLink} className={styles.replyCount}>
+          <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
             {post?.replyCount} comments
           </Link>
         </div>

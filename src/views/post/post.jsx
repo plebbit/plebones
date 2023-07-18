@@ -3,7 +3,7 @@ import utils from '../../lib/utils'
 import { useParams } from 'react-router-dom'
 import {useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import Arrow from '../../components/arrow'
+import Arrow from '../../components/icons/arrow'
 import styles from './post.module.css'
 
 const PostMedia = ({post}) => {
@@ -81,7 +81,10 @@ function Post() {
             <span className={styles.subplebbit}> to {post?.subplebbitAddress}</span>
           </div>
           <div className={styles.footer}>
-            <span className={styles.replyCount}>{post?.replyCount} comments</span>
+            <span className={[styles.replyCount, styles.button].join(' ')}>{post?.replyCount} comments</span>
+            <span className={styles.button}>
+              reply
+            </span>
           </div>
         </div>
       </div>

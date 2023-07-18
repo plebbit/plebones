@@ -1,31 +1,39 @@
 .menu {
   color: var(--light2);
   background-color: var(--dark1);
-  text-align: right;
+  font-size: 12px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   /* menus are buttons so it's annoying to select them by accident */
   user-select: none;
 }
 
-.menu > select, .menu > span, .menu > div {
+.leftMenu {
+  text-align: left;
+}
+
+.rightMenu {
+  text-align: right;
+}
+
+.menuItem {
   /* make menu cursors like links */
   cursor: pointer;
 }
 
-.menu, .menu select {
-  font-size: 12px;
-}
-
-.menu .sortType {
+select.sortType, select.feedName {
   background-color: var(--dark1);
   color: var(--light2);
-
-  /* looks better because the form is first on the left */
-  text-align: right;
+  text-align: left;
 
   /* fix borders */
   outline: unset;
-  border: unset;
+  /*  border: unset;*/
+  /* compensate for the select border */
+  margin: -1px 0 0 0;
 
   /* remove icon */
   appearance: unset;
@@ -35,8 +43,11 @@
 
   /* firefox messes the font */
   font-family: verdana, arial, helvetica, sans-serif;
+
+  /* must specify font size of select again for some reason */
+  font-size: 12px;
 }
 
-.menu .sortType option {
+.sortType option, .feedName option {
   color: var(--light2);
 }

@@ -49,8 +49,30 @@
   height: 13px;
 }
 
-.downvote svg path, .upvote svg path, .replyUpvote svg path, .replyDownvote svg path {
+.downvote svg path, .upvote svg path, .replyUpvote svg path, .replyDownvote svg path, .moreButton svg path {
   fill: var(--light2);
+}
+
+.button {
+  padding: 0 8px 0 0;
+
+  /* make menu cursors like links */
+  cursor: pointer;
+
+  /* buttons are annoying to select them by accident */
+  user-select: none;
+}
+
+.moreButton {
+  font-size: 16px;
+  line-height: 0;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+.replyCount {
+  /* allow selecting comment count */
+  user-select: auto;
 }
 
 .replyContent {
