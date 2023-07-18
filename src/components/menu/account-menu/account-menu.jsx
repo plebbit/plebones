@@ -13,9 +13,13 @@ import {
   useId
 } from "@floating-ui/react"
 import styles from './account-menu.module.css'
-import {useAccount} from '@plebbit/plebbit-react-hooks'
+import {useAccount, useAccounts, createAccount} from '@plebbit/plebbit-react-hooks'
+
+let lastCreatedAccountTimestsamp
 
 function AccountMenu() {
+  const {accounts} = useAccounts()
+  const accountsOptions = accounts.map(account => <option value={account?.id}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)}</option>)
   const account = useAccount()
   let authorAddress = account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)
   if (authorAddress && !authorAddress.match('.')) {
@@ -47,6 +51,16 @@ function AccountMenu() {
 
   const headingId = useId()
 
+  const _createAccount = () => {
+    if (lastCreatedAccountTimestsamp > Date.now() - 10000) {
+      console.log(`you're doing this too much`)
+      return
+    }
+    createAccount()
+    console.log('creating account...')
+    lastCreatedAccountTimestsamp = Date.now()
+  }
+
   return (
     <>
       <span ref={refs.setReference} {...getReferenceProps()}>
@@ -62,12 +76,11 @@ function AccountMenu() {
             {...getFloatingProps()}
           >
             <div className={styles.menuItem}>
-              <select value='Account 1'>
-                <option value="Account 1">Account 1</option>
-                <option value="Account 2">Account 2</option>
+              <select value={accounts?.[0]?.id}>
+                {accountsOptions}
               </select>
             </div>
-            <div className={styles.menuItem}>create account</div>
+            <div className={styles.menuItem} onClick={() => _createAccount()}>create account</div>
             <div className={styles.menuItem}>edit account</div>
             <div className={styles.menuItem}>settings</div>
           </div>
