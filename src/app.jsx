@@ -36,7 +36,7 @@ function App() {
           <Route path="/text-only/:sortType?" element={ <TextOnly/> } />
           <Route path="/catalog/:sortType?" element={ <Catalog /> } />
           <Route path="/board/:sortType?" element={ <Board /> } />
-          <Route path="/p/settings" element={ <Settings/> } />
+          <Route path="/settings" element={ <Settings/> } />
           <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
           <Route path="*" element={ <NotFound/> } />

@@ -2,7 +2,7 @@
 function NotFound() {
   return (
     <div>
-      Not found
+      not found
     </div>
   )
 }

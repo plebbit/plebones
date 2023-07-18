@@ -12,7 +12,8 @@
     "react-dom": "18.2.0",
     "react-router-dom": "6.14.1",
     "react-scripts": "5.0.1",
-    "react-virtuoso": "4.3.0"
+    "react-virtuoso": "4.3.0",
+    "stringify-object": "5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

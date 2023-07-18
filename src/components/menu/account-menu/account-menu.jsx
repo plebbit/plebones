@@ -14,12 +14,13 @@ import {
 } from "@floating-ui/react"
 import styles from './account-menu.module.css'
 import {useAccount, useAccounts, createAccount} from '@plebbit/plebbit-react-hooks'
+import {Link} from 'react-router-dom'
 
 let lastCreatedAccountTimestsamp
 
 function AccountMenu() {
   const {accounts} = useAccounts()
-  const accountsOptions = accounts.map(account => <option value={account?.id}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)}</option>)
+  const accountsOptions = accounts.map(account => <option value={account?.id}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
   const account = useAccount()
   let authorAddress = account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)
   if (authorAddress && !authorAddress.match('.')) {
@@ -56,9 +57,9 @@ function AccountMenu() {
       console.log(`you're doing this too much`)
       return
     }
+    lastCreatedAccountTimestsamp = Date.now()
     createAccount()
     console.log('creating account...')
-    lastCreatedAccountTimestsamp = Date.now()
   }
 
   return (
@@ -81,8 +82,7 @@ function AccountMenu() {
               </select>
             </div>
             <div className={styles.menuItem} onClick={() => _createAccount()}>create account</div>
-            <div className={styles.menuItem}>edit account</div>
-            <div className={styles.menuItem}>settings</div>
+            <div className={styles.menuItem}><Link to='/settings'>settings</Link></div>
           </div>
         </FloatingFocusManager>
       )}
