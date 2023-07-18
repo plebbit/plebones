@@ -44,7 +44,6 @@ function AccountMenu() {
   const headingId = useId()
 
   // plebbit stuff
-
   const {accounts} = useAccounts()
   const accountsOptions = accounts.map(account => <option value={account?.id}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
   accountsOptions[accountsOptions.length] = <option value='createAccount'>+create</option>
@@ -58,6 +57,10 @@ function AccountMenu() {
     if (event.target.value === 'createAccount') {
       createAccount()
     }
+  }
+
+  const onMenuLinkClick = () => {
+    setIsOpen(false)
   }
 
   return (
@@ -79,9 +82,9 @@ function AccountMenu() {
                 {accountsOptions}
               </select>
             </div>
-            <div className={styles.menuItem}><Link to='/profile'>profile</Link></div>
-            <div className={styles.menuItem}><Link to='/settings'>settings</Link></div>
-            <div className={styles.menuItem}><Link to='/about'>about</Link></div>
+            <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/profile'>profile</Link></div>
+            <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/settings'>settings</Link></div>
+            <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/about'>about</Link></div>
           </div>
         </FloatingFocusManager>
       )}
