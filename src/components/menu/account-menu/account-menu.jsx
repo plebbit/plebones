@@ -16,17 +16,8 @@ import styles from './account-menu.module.css'
 import {useAccount, useAccounts, createAccount} from '@plebbit/plebbit-react-hooks'
 import {Link} from 'react-router-dom'
 
-let lastCreatedAccountTimestsamp
-
 function AccountMenu() {
-  const {accounts} = useAccounts()
-  const accountsOptions = accounts.map(account => <option value={account?.id}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
-  const account = useAccount()
-  let authorAddress = account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)
-  if (authorAddress && !authorAddress.match('.')) {
-    authorAddress = authorAddress.substring(0, 8)
-  }
-
+  // modal stuff
   const [isOpen, setIsOpen] = useState(false)
 
   const { refs, floatingStyles, context } = useFloating({
@@ -52,14 +43,21 @@ function AccountMenu() {
 
   const headingId = useId()
 
-  const _createAccount = () => {
-    if (lastCreatedAccountTimestsamp > Date.now() - 10000) {
-      console.log(`you're doing this too much`)
-      return
+  // plebbit stuff
+
+  const {accounts} = useAccounts()
+  const accountsOptions = accounts.map(account => <option value={account?.id}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
+  accountsOptions[accountsOptions.length] = <option value='createAccount'>+create</option>
+  const account = useAccount()
+  let authorAddress = account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)
+  if (authorAddress && !authorAddress.match('.')) {
+    authorAddress = authorAddress.substring(0, 8)
+  }
+
+  const onAccountSelectChange = (event) => {
+    if (event.target.value === 'createAccount') {
+      createAccount()
     }
-    lastCreatedAccountTimestsamp = Date.now()
-    createAccount()
-    console.log('creating account...')
   }
 
   return (
@@ -77,12 +75,13 @@ function AccountMenu() {
             {...getFloatingProps()}
           >
             <div className={styles.menuItem}>
-              <select value={accounts?.[0]?.id}>
+              <select onChange={onAccountSelectChange} value={accounts?.[0]?.id}>
                 {accountsOptions}
               </select>
             </div>
-            <div className={styles.menuItem} onClick={() => _createAccount()}>create account</div>
+            <div className={styles.menuItem}><Link to='/profile'>profile</Link></div>
             <div className={styles.menuItem}><Link to='/settings'>settings</Link></div>
+            <div className={styles.menuItem}><Link to='/about'>about</Link></div>
           </div>
         </FloatingFocusManager>
       )}
