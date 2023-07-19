@@ -81,7 +81,7 @@ function Catalog() {
   if (hasMore) {
     Loading = () => 'loading...'
   }
-  if (!subplebbitAddresses?.length === 0) {
+  if (subplebbitAddresses?.length === 0) {
     Loading = () => 'not subscribed to anything'
   }
 
