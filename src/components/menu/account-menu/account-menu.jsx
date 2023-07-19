@@ -13,7 +13,7 @@ import {
   useId
 } from "@floating-ui/react"
 import styles from './account-menu.module.css'
-import {useAccount, useAccounts, createAccount} from '@plebbit/plebbit-react-hooks'
+import {useAccount, useAccounts, createAccount, setActiveAccount} from '@plebbit/plebbit-react-hooks'
 import {Link} from 'react-router-dom'
 
 function AccountMenu() {
@@ -45,7 +45,7 @@ function AccountMenu() {
 
   // plebbit stuff
   const {accounts} = useAccounts()
-  const accountsOptions = accounts.map(account => <option value={account?.id}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
+  const accountsOptions = accounts.map(account => <option value={account?.name}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
   accountsOptions[accountsOptions.length] = <option value='createAccount'>+create</option>
   const account = useAccount()
   let authorAddress = account?.author?.shortAddress?.toLowerCase?.().substring(0, 8)
@@ -55,7 +55,10 @@ function AccountMenu() {
 
   const onAccountSelectChange = async (event) => {
     if (event.target.value === 'createAccount') {
-      await createAccount()
+      createAccount()
+    }
+    else {
+      setActiveAccount(event.target.value)
     }
   }
 
