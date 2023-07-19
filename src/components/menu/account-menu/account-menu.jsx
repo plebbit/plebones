@@ -53,9 +53,9 @@ function AccountMenu() {
     authorAddress = authorAddress.substring(0, 8)
   }
 
-  const onAccountSelectChange = (event) => {
+  const onAccountSelectChange = async (event) => {
     if (event.target.value === 'createAccount') {
-      createAccount()
+      await createAccount()
     }
   }
 

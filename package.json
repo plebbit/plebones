@@ -5,15 +5,17 @@
   "dependencies": {
     "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#1abe9497483d01f3afcb569dfe85e7395f998cc4",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#45a2f1b88e240fef0c3a0bf74da3d2882f2419bb",
     "ext-name": "5.0.0",
     "javascript-time-ago": "2.5.9",
+    "json-stringify-pretty-compact": "4.0.0",
+    "memoizee": "0.4.15",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.14.1",
     "react-scripts": "5.0.1",
     "react-virtuoso": "4.3.0",
-    "stringify-object": "5.0.0"
+    "use-debounce": "9.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

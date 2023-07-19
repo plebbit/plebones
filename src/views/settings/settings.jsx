@@ -1,22 +1,24 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import styles from './settings.module.css'
 import {useAccount, setAccount, deleteAccount} from '@plebbit/plebbit-react-hooks'
-import stringifyObject from 'stringify-object'
-
-let lastDeletedAccountTimestsamp
+import stringify from "json-stringify-pretty-compact"
 
 function Settings() {
   const account = useAccount()
+  const accountJson = useMemo(() => stringify({...account, plebbit: undefined, karma: undefined, unreadNotificationCount: undefined}), [account])
 
-  const json = useMemo(() => stringifyObject(
-    JSON.parse(JSON.stringify({...account, plebbit: undefined, karma: undefined, unreadNotificationCount: undefined})), 
-    {indent: '  ', singleQuotes: false})
-  , [account])
+  const [text, setText] = useState('')
 
-  const _setAccount = async () => {
+  // set the initial account json
+  useEffect(() => {
+    setText(accountJson)
+  }, [accountJson])
+
+  const saveAccount = async () => {
     try {
-      const newAccount = JSON.parse(document.querySelector('#editAccount').textContent)
+      const newAccount = JSON.parse(text)
       await setAccount(newAccount)
+      alert(`saved`)
     }
     catch (e) {
       console.error(e)
@@ -25,22 +27,17 @@ function Settings() {
   }
 
   const _deleteAccount = (accountName) => {
-    if (lastDeletedAccountTimestsamp > Date.now() - 10000) {
-      console.log(`you're doing this too much`)
-      return
-    }
     if (!accountName) {
       return
     }
-    lastDeletedAccountTimestsamp = Date.now()
     deleteAccount(accountName)
     console.log('deleting account...')
   }
 
   return (
     <div className={styles.settings}>
-      <textarea autocorrect='off' id='editAccount' rows="32" value={json} />
-      <button>save</button>
+      <textarea onChange={(e) => setText(e.target.value)} autocorrect='off' id='editAccount' rows="32" value={text} />
+      <button onClick={saveAccount}>save</button>
       <button onClick={() => _deleteAccount(account?.name)} >delete account u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</button>
     </div>
   )

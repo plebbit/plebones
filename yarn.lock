@@ -2375,13 +2375,13 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#77a05093408982086c02afea24e1d1923e1ae8a8":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#e0c04caa13c165a2c6cbcbb8bd71193b4062af22":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#77a05093408982086c02afea24e1d1923e1ae8a8"
+  resolved "https://github.com/plebbit/plebbit-js.git#e0c04caa13c165a2c6cbcbb8bd71193b4062af22"
   dependencies:
     "@adraffy/ens-normalize" "1.8.3"
     "@keyv/sqlite" "3.6.2"
-    "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
+    "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger#9525ca9539479918931c3b334e8d490d1c87e507"
     "@types/node-fetch" "2.6.2"
     "@types/proper-lockfile" "4.1.2"
     "@types/uuid" "8.3.4"
@@ -2409,7 +2409,7 @@
     open-graph-scraper "5.2.3"
     p-limit "3.1.0"
     peer-id "0.16.0"
-    proper-lockfile "github:plebbit/node-proper-lockfile"
+    proper-lockfile "github:plebbit/node-proper-lockfile#d8b63817f9ea3304d3e048976d72b3108ec076ff"
     retry "0.13.1"
     safe-stable-stringify "2.4.1"
     sha1-uint8array "0.10.3"
@@ -2421,7 +2421,7 @@
     uuid "9.0.0"
     viem "1.0.7"
 
-"@plebbit/plebbit-logger@github:plebbit/plebbit-logger":
+"@plebbit/plebbit-logger@github:plebbit/plebbit-logger#9525ca9539479918931c3b334e8d490d1c87e507":
   version "0.0.1"
   uid "9525ca9539479918931c3b334e8d490d1c87e507"
   resolved "https://codeload.github.com/plebbit/plebbit-logger/tar.gz/9525ca9539479918931c3b334e8d490d1c87e507"
@@ -2434,11 +2434,11 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#1abe9497483d01f3afcb569dfe85e7395f998cc4":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#45a2f1b88e240fef0c3a0bf74da3d2882f2419bb":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#1abe9497483d01f3afcb569dfe85e7395f998cc4"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#45a2f1b88e240fef0c3a0bf74da3d2882f2419bb"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#77a05093408982086c02afea24e1d1923e1ae8a8"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#e0c04caa13c165a2c6cbcbb8bd71193b4062af22"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
@@ -6111,11 +6111,6 @@ get-iterator@^1.0.2:
   resolved "https://registry.yarnpkg.com/get-iterator/-/get-iterator-1.0.2.tgz#cd747c02b4c084461fac14f48f6b45a80ed25c82"
   integrity sha512-v+dm9bNVfOYsY1OrhaCrmyOcYoSeVvbt+hHZ0Au+T+p1y+0Uyj9aMaGIeUTT6xdpRbWzDeYKvfOslPhggQMcsg==
 
-get-own-enumerable-keys@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/get-own-enumerable-keys/-/get-own-enumerable-keys-1.0.0.tgz#59bbda0f7e7469c8c74086e08f79f1381b203899"
-  integrity sha512-PKsK2FSrQCyxcGHsGrLDcK0lx+0Ke+6e8KFFozA9/fIQLhQzPaRvJFdcz7+Axg3jUH/Mq+NI4xa5u/UT2tQskA==
-
 get-own-enumerable-property-symbols@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/get-own-enumerable-property-symbols/-/get-own-enumerable-property-symbols-3.0.2.tgz#b5fde77f22cbe35f390b4e089922c50bce6ef664"
@@ -7035,11 +7030,6 @@ is-obj@^1.0.1:
   resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
   integrity sha512-l4RyHgRqGN4Y3+9JHVrNqO+tN0rV5My76uW5/nuO4K1b6vw5G8d/cmFjP9tRfEsdhZNt0IFdZuK/c2Vr4Nb+Qg==
 
-is-obj@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-3.0.0.tgz#b0889f1f9f8cb87e87df53a8d1230a2250f8b9be"
-  integrity sha512-IlsXEHOjtKhpN8r/tRFj2nDyTmHvcfNeu/nrRIcXE17ROeatXchkojffa1SpdqW4cr/Fj6QkEf/Gn4zf6KKvEQ==
-
 is-path-inside@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/is-path-inside/-/is-path-inside-3.0.3.tgz#d231362e53a07ff2b0e0ea7fed049161ffd16283"
@@ -7082,11 +7072,6 @@ is-regexp@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-regexp/-/is-regexp-1.0.0.tgz#fd2d883545c46bac5a633e7b9a09e87fa2cb5069"
   integrity sha512-7zjFAPO4/gwyQAAgRRmqeEeyIICSdmCqa3tsVHMdBzaXXRiqopZL4Cyghg/XulGWrtABTpbnYYzzIRffLkP4oA==
-
-is-regexp@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/is-regexp/-/is-regexp-3.1.0.tgz#0235eab9cda5b83f96ac4a263d8c32c9d5ad7422"
-  integrity sha512-rbku49cWloU5bSMI+zaRaXdQHXnthP6DZ/vLnfdSKyL4zUzuWnomtOEiZZOd+ioQ+avFo/qau3KPTc7Fjy1uPA==
 
 is-root@^2.1.0:
   version "2.1.0"
@@ -7897,6 +7882,11 @@ json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==
+
+json-stringify-pretty-compact@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/json-stringify-pretty-compact/-/json-stringify-pretty-compact-4.0.0.tgz#cf4844770bddee3cb89a6170fe4b00eee5dbf1d4"
+  integrity sha512-3CNZ2DnrpByG9Nqj6Xo8vqbjT4F6N+tb4Gb28ESAZjYZ5yqvmc56J+/kuIwkaAMOyblTQhUW7PxMkUb8Q36N3Q==
 
 json5@^1.0.2:
   version "1.0.2"
@@ -9820,7 +9810,7 @@ prop-types@^15.8.1:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-"proper-lockfile@github:plebbit/node-proper-lockfile":
+"proper-lockfile@github:plebbit/node-proper-lockfile#d8b63817f9ea3304d3e048976d72b3108ec076ff":
   version "4.1.2"
   resolved "https://codeload.github.com/plebbit/node-proper-lockfile/tar.gz/d8b63817f9ea3304d3e048976d72b3108ec076ff"
   dependencies:
@@ -10999,15 +10989,6 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-stringify-object@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-5.0.0.tgz#d5b05649fedaf8860640471641f70906fea7f351"
-  integrity sha512-zaJYxz2FtcMb4f+g60KsRNFOpVMUyuJgA51Zi5Z1DOTC3S59+OQiVOzE9GZt0x72uBGWKsQIuBKeF9iusmKFsg==
-  dependencies:
-    get-own-enumerable-keys "^1.0.0"
-    is-obj "^3.0.0"
-    is-regexp "^3.1.0"
-
 stringify-object@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-3.3.0.tgz#703065aefca19300d3ce88af4f5b3956d7556629"
@@ -11662,6 +11643,11 @@ url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+use-debounce@9.0.4:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-9.0.4.tgz#51d25d856fbdfeb537553972ce3943b897f1ac85"
+  integrity sha512-6X8H/mikbrt0XE8e+JXRtZ8yYVvKkdYRfmIhWZYsP8rcNs9hk3APV8Ua2mFkKRLcJKVdnX2/Vwrmg2GWKUQEaQ==
 
 use-sync-external-store@1.2.0:
   version "1.2.0"
