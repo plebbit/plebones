@@ -44,6 +44,7 @@ function AccountMenu() {
   const headingId = useId()
 
   // plebbit stuff
+  const account = useAccount()
   const {accounts} = useAccounts()
   const accountsOptions = accounts.map(account => <option value={account?.name}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
   accountsOptions[accountsOptions.length] = <option value='createAccount'>+create</option>
@@ -81,7 +82,7 @@ function AccountMenu() {
             {...getFloatingProps()}
           >
             <div className={styles.menuItem}>
-              <select onChange={onAccountSelectChange} value={accounts?.[0]?.id}>
+              <select onChange={onAccountSelectChange} value={account?.name}>
                 {accountsOptions}
               </select>
             </div>
