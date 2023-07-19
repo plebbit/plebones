@@ -15,7 +15,7 @@ function Subplebbit() {
 
   let Loading
   if (hasMore) {
-    Loading = () => 'Loading...'
+    Loading = () => 'loading...'
   }
 
   // save last virtuoso state on each scroll

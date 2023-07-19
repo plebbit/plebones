@@ -1,5 +1,7 @@
 import { Route, Routes, Outlet } from 'react-router-dom'
 import Home from './views/home'
+import Subscriptions from './views/subscriptions'
+import SubscriptionsCatalog from './views/subscriptions-catalog'
 import TextOnly from './views/text-only'
 import Catalog from './views/catalog'
 import Board from './views/board'
@@ -36,6 +38,8 @@ function App() {
       <Routes>
         <Route element={layout}>
           <Route path="/:sortType?" element={ <Home/> } />
+          <Route path="/p/subscriptions/:sortType?" element={ <Subscriptions/> } />
+          <Route path="/p/subscriptions/catalog/:sortType?" element={ <SubscriptionsCatalog/> } />
           <Route path="/text-only/:sortType?" element={ <TextOnly/> } />
           <Route path="/catalog/:sortType?" element={ <Catalog /> } />
           <Route path="/board/:sortType?" element={ <Board /> } />

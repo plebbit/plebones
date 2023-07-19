@@ -1,11 +1,10 @@
 import { useMemo, useRef, useEffect } from 'react'
-import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
-import {useFeed} from '@plebbit/plebbit-react-hooks'
+import {useFeed, useAccount} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import useWindowWidth from '../../hooks/use-window-width'
 import {useParams, Link} from 'react-router-dom'
 import utils from '../../lib/utils'
-import styles from './catalog.module.css'
+import styles from './subscriptions-catalog.module.css'
 
 const CatalogPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -64,8 +63,8 @@ function Catalog() {
   const windowWidth = useWindowWidth()
   const columnCount = Math.floor(windowWidth / columnWidth)
   const params = useParams()
-  const defaultSubplebbits = useDefaultSubplebbits()
-  const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
+  const account = useAccount()
+  const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'active'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
@@ -81,6 +80,9 @@ function Catalog() {
   let Loading
   if (hasMore) {
     Loading = () => 'loading...'
+  }
+  if (!subplebbitAddresses?.length === 0) {
+    Loading = () => 'not subscribed to anything'
   }
 
   // save last virtuoso state on each scroll

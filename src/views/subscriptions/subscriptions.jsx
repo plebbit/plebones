@@ -1,22 +1,24 @@
-import { useMemo, useRef, useEffect } from 'react'
-import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
-import {useFeed} from '@plebbit/plebbit-react-hooks'
+import { useRef, useEffect } from 'react'
+import {useFeed, useAccount} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 
 const lastVirtuosoStates = {}
 
-function Home() {
+function Subscriptions() {
   const params = useParams()
-  const defaultSubplebbits = useDefaultSubplebbits()
-  const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
+  const account = useAccount()
+  const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'hot'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
   let Loading
   if (hasMore) {
     Loading = () => 'loading...'
+  }
+  if (!subplebbitAddresses?.length === 0) {
+    Loading = () => 'not subscribed to anything'
   }
 
   // save last virtuoso state on each scroll
@@ -54,4 +56,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Subscriptions

@@ -5,14 +5,16 @@
   padding: 0 2px;
   background-color: var(--dark1);
 
+  /* menus are buttons so it's annoying to select them by accident */
+  user-select: none;
+}
+
+.modal {
   /* needs z index to be above virtuoso */
   z-index: 1;
 
   /* remove outline when selected */
   outline: unset;
-
-  /* menus are buttons so it's annoying to select them by accident */
-  user-select: none;
 }
 
 .menuItem {

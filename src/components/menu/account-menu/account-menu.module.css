@@ -4,7 +4,9 @@
   /* container */
   padding: 0 2px;
   background-color: var(--dark1);
+}
 
+.modal {
   /* needs z index to be above virtuoso */
   z-index: 1;
 

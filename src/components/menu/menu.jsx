@@ -1,44 +1,45 @@
 import { Link } from 'react-router-dom'
 import styles from './menu.module.css'
-import {useParams, useMatch, useNavigate} from 'react-router-dom'
+import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import AccountMenu from './account-menu'
 
 const Menu = () => {
-  const params = useParams()
-  const isCatalogSortType = useMatch('/catalog/:sortType')
-  const isCatalog = useMatch('/catalog') || isCatalogSortType
   const navigate = useNavigate()
+  const params = useParams()
+  const pathNames = useLocation()?.pathname?.split?.('/')
 
   // dont show menu on post page because it looks ugly
   if (params.commentCid) {
     return ''
   }
 
-  let catalogLink = '/catalog'
-  let feedLink = '/'
-  if (params.sortType) {
-    catalogLink += `/${params.sortType}`
-    feedLink += params.sortType
-  }
+  const isCatalog = pathNames[1] === 'catalog' || pathNames[3] === 'catalog'
+  const feedName = pathNames[1] === 'p' ? pathNames[2] : undefined
+  const feedLink = createFeedLink(feedName, params.sortType)
+  const catalogLink = createCatalogLink(feedName, params.sortType)
 
   const changeSortType = (event) => {
     const sortType = event.target.value
-    let link = `/${sortType}`
-    if (isCatalog) {
-      link = `/catalog${link}`
-    }
+    const link = isCatalog ? createCatalogLink(feedName, sortType) : createFeedLink(feedName, sortType)
+    navigate(link)
+  }
+
+  const changeFeedName = (event) => {
+    const feedName = event.target.value
+    const link = isCatalog ? createCatalogLink(feedName, params.sortType) : createFeedLink(feedName, params.sortType)
     navigate(link)
   }
 
   const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
+  const selectedFeedName = feedName
 
   return <div className={styles.menu}>
     <span className={styles.leftMenu}></span>
 
     <span className={styles.rightMenu}>
-      <select className={[styles.feedName, styles.menuItem].join(' ')} value='p/all'>
-        <option value="p/all">p/all</option>
-        <option value="home">home</option>
+      <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
+        <option value="all">p/all</option>
+        <option value="subscriptions">p/subs</option>
       </select>
       {' '}
       <select className={[styles.sortType, styles.menuItem].join(' ')}  onChange={changeSortType} value={selectedSortType}>
@@ -56,6 +57,31 @@ const Menu = () => {
       <AccountMenu/>
     </span>
   </div>
+}
+
+const createFeedLink = (feedName, sortType) => {
+  let feedLink = ''
+  if (feedName && feedName !== 'all') {
+    feedLink = `/p/${feedName}`
+  }
+  if (sortType) {
+    feedLink += `/${sortType}`
+  }
+  if (feedLink === '') {
+    feedLink = '/'
+  }
+  return feedLink
+}
+
+const createCatalogLink = (feedName, sortType) => {
+  let catalogLink = '/catalog'
+  if (feedName && feedName !== 'all') {
+    catalogLink = `/p/${feedName}/catalog`
+  }
+  if (sortType) {
+    catalogLink += `/${sortType}`
+  }
+  return catalogLink
 }
 
 export default Menu
