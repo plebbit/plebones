@@ -18,7 +18,7 @@ function Subscriptions() {
     Loading = () => 'loading...'
   }
   if (subplebbitAddresses?.length === 0) {
-    Loading = () => 'not subscribed to anything'
+    Loading = () => 'no subscriptions'
   }
 
   // save last virtuoso state on each scroll
