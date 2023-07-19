@@ -29,7 +29,6 @@ const FeedPost = ({post, index}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
 
   const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
-  const externalLink = !mediaInfo && post?.link
 
   return <div className={styles.feedPost}>
     <div className={styles.textWrapper}>
@@ -45,7 +44,7 @@ const FeedPost = ({post, index}) => {
       <div className={styles.column}>
         <div className={styles.header}>
           <Link to={internalLink} className={styles.title}>{post?.title || post?.content || '-'}</Link>
-          {hostname && <Link to={externalLink} target='_blank'> {hostname}</Link>}
+          {hostname && <Link to={post?.link} target='_blank'> {hostname}</Link>}
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
