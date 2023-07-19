@@ -44,7 +44,6 @@ function AccountMenu() {
   const headingId = useId()
 
   // plebbit stuff
-  const account = useAccount()
   const {accounts} = useAccounts()
   const accountsOptions = accounts.map(account => <option value={account?.name}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
   accountsOptions[accountsOptions.length] = <option value='createAccount'>+create</option>
