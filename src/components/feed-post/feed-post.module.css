@@ -81,3 +81,7 @@
   /* allow selecting comment count */
   user-select: auto;
 }
+
+.hidden {
+  opacity: 0;
+}

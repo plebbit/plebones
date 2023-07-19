@@ -21,6 +21,7 @@ function AccountMenu() {
   const [isOpen, setIsOpen] = useState(false)
 
   const { refs, floatingStyles, context } = useFloating({
+    placement: 'bottom',
     open: isOpen,
     onOpenChange: setIsOpen,
     middleware: [

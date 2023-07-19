@@ -5,6 +5,8 @@ import {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from './post.module.css'
+import PostTools from '../../components/post-tools'
+import {useBlock} from '@plebbit/plebbit-react-hooks'
 
 const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -55,6 +57,8 @@ function Post() {
 
   const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>) || ''
 
+  const {blocked: hidden} = useBlock({cid: post?.cid})
+
   // scroll to top on first load
   useEffect(() => window.scrollTo(0,0), [])
 
@@ -64,13 +68,15 @@ function Post() {
         <div className={styles.column}>
           <div className={styles.score}>
             <div className={styles.upvote}><Arrow /></div>
-            <div className={styles.scoreNumber}>
-              {(post?.upvoteCount - post?.downvoteCount) || 0}
-            </div>
+              <PostTools post={post}>
+                <div className={styles.scoreNumber}>
+                  {(post?.upvoteCount - post?.downvoteCount) || 0}
+                </div>
+              </PostTools>
             <div className={styles.downvote}><Arrow /></div>
           </div>
         </div>
-        <div className={styles.column}>
+        <div className={[styles.column, hidden && styles.hidden].join(' ')}>
           <div className={styles.header}>
             <Link to={post?.link} target={post?.link ? '_blank' : undefined} className={styles.title}>{post?.title || post?.content || '-'}</Link>
             {hostname && <Link to={post?.link} target='_blank'> {hostname}</Link>}
@@ -88,7 +94,9 @@ function Post() {
           </div>
         </div>
       </div>
-      <PostMedia post={post} />
+      <div className={hidden && styles.hidden}>
+        <PostMedia post={post} />
+      </div>
       <div className={styles.replies}>
         {replies}
       </div>
