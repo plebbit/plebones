@@ -36,7 +36,7 @@ function Settings() {
 
   return (
     <div className={styles.settings}>
-      <textarea onChange={(e) => setText(e.target.value)} autocorrect='off' id='editAccount' rows="32" value={text} />
+      <textarea onChange={(e) => setText(e.target.value)} autocorrect='off' rows="32" value={text} />
       <button onClick={saveAccount}>save</button>
       <button onClick={() => _deleteAccount(account?.name)} >delete account u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</button>
     </div>
