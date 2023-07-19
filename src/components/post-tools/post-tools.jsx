@@ -26,9 +26,9 @@ const Menu = ({post}) => {
   const toggleBlockAuthor = () => !authorBlocked ? blockAuthor() : unblockAuthor()
 
   return <div className={styles.postToolsMenu}>
-    <div onClick={toggleSubscribe} className={styles.menuItem}>{!subscribed ? 'join' : 'leave'} p/{post?.subplebbitAddress || ''}</div>
+    <div onClick={toggleSubscribe} className={styles.menuItem}>{!subscribed ? 'join' : 'leave'} p/{post?.shortSubplebbitAddress || post?.subplebbitAddress || ''}</div>
     <div onClick={toggleHide} className={styles.menuItem}>{!hidden ? 'hide' : 'unhide'}</div>
-    <div onClick={toggleBlockSubplebbit} className={styles.menuItem}>{!subplebbitBlocked ? 'block' : 'unblock'} p/{post?.subplebbitAddress || ''}</div>
+    <div onClick={toggleBlockSubplebbit} className={styles.menuItem}>{!subplebbitBlocked ? 'block' : 'unblock'} p/{post?.shortSubplebbitAddress || post?.subplebbitAddress || ''}</div>
     <div onClick={toggleBlockAuthor} className={styles.menuItem}>{!authorBlocked ? 'block' : 'unblock'} u/{post?.author?.shortAddress || ''}</div>
   </div>
 }

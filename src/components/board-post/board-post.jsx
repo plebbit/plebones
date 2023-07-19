@@ -49,7 +49,7 @@ const BoardPost = ({post, index}) => {
         <Link to={internalLink} className={styles.title}>{post?.title || '-'}</Link>
         <span className={styles.timestamp}> {utils.getFormattedTime(post?.timestamp)}</span>
         <span className={styles.author}> by {post?.author?.shortAddress}</span>
-        <span className={styles.subplebbit}> to {post?.subplebbitAddress}</span>
+        <span className={styles.subplebbit}> to {post?.shortSubplebbitAddress || post?.subplebbitAddress}</span>
       </div>
       <div className={styles.content}>
         {externalLink}
