@@ -54,7 +54,7 @@ const Menu = () => {
       {' '}
       <span className={styles.menuItem}>submit</span>
       {' '}
-      <AccountMenu/>
+      <AccountMenu className={styles.menuItem}/>
     </span>
   </div>
 }

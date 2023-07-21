@@ -43,7 +43,7 @@ const Menu = ({onMenuLinkClick}) => {
   </div>
 }
 
-function AccountMenu() {
+function AccountMenu({className}) {
   // modal stuff
   const [isOpen, setIsOpen] = useState(false)
 
@@ -82,7 +82,7 @@ function AccountMenu() {
 
   return (
     <>
-      <span ref={refs.setReference} {...getReferenceProps()}>
+      <span className={className} ref={refs.setReference} {...getReferenceProps()}>
         u/{authorAddress}
       </span>
       {isOpen && (
