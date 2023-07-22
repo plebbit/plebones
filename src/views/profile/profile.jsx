@@ -2,7 +2,7 @@
 function Profile() {
   return (
     <div>
-      profile
+      coming soon...
     </div>
   )
 }

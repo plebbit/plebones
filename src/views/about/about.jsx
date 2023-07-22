@@ -2,7 +2,7 @@
 function About() {
   return (
     <div>
-      about
+      coming soon...
     </div>
   )
 }
