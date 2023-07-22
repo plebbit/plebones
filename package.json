@@ -5,7 +5,7 @@
   "dependencies": {
     "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#1db6f9aa2822f7940ce87cfb36051ea431bc1c82",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#83ad0f290e60889cf1f4597db2229940697f2bc6",
     "ext-name": "5.0.0",
     "javascript-time-ago": "2.5.9",
     "json-stringify-pretty-compact": "4.0.0",
