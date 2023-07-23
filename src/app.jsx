@@ -16,7 +16,6 @@ import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
 import {useEffect} from 'react'
 import Menu from './components/menu'
-const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : ''
 
 function App() {
   const [theme] = useTheme()
@@ -30,7 +29,6 @@ function App() {
   const layout = <div>
     <Menu />
     <Outlet />
-    <div className={styles.commitRef}>{commitRef}</div>
   </div>
 
   return (

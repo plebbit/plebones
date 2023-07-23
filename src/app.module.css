@@ -14,11 +14,3 @@
   /* even if app is empty, fill to bottom */
   min-height: 100vh;
 }
-
-.commitRef {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  font-size: 10px;
-  color: var(--dark3);
-}

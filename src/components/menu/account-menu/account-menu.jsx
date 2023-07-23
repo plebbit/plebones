@@ -15,6 +15,9 @@ import {
 import styles from './account-menu.module.css'
 import {useAccount, useAccounts, createAccount, setActiveAccount} from '@plebbit/plebbit-react-hooks'
 import {Link} from 'react-router-dom'
+import packageJson from '../../../../package.json'
+const commitRef = process?.env?.REACT_APP_COMMIT_REF?.slice(0, 7)
+const version = commitRef || `v${packageJson.version}`
 
 const Menu = ({onMenuLinkClick}) => {
   const {accounts} = useAccounts()
@@ -40,6 +43,7 @@ const Menu = ({onMenuLinkClick}) => {
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/profile'>profile</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/settings'>settings</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/about'>about</Link></div>
+    <div className={styles.version}>{version}</div>
   </div>
 }
 

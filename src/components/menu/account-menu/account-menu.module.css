@@ -19,3 +19,11 @@
   /* make menu cursors like links */
   cursor: pointer;
 }
+
+.version {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  font-size: 10px;
+  color: var(--dark3);
+}
