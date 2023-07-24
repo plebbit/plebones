@@ -1,5 +1,6 @@
 import { Route, Routes, Outlet } from 'react-router-dom'
 import Home from './views/home'
+import HomeModal from './views/home-modal'
 import Subscriptions from './views/subscriptions'
 import SubscriptionsCatalog from './views/subscriptions-catalog'
 import TextOnly from './views/text-only'
@@ -35,6 +36,7 @@ function App() {
     <div className={[styles.app, theme].join(' ')}>
       <Routes>
         <Route element={layout}>
+          <Route path="/home-modal" element={ <HomeModal/> } />
           <Route path="/:sortType?" element={ <Home/> } />
           <Route path="/p/subscriptions/:sortType?" element={ <Subscriptions/> } />
           <Route path="/p/subscriptions/catalog/:sortType?" element={ <SubscriptionsCatalog/> } />

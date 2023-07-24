@@ -1,0 +1,125 @@
+.textWrapper {
+  /* put score in left column */
+  display: flex; 
+  flex-direction: row;
+}
+
+.title {
+  color: var(--light1);
+  font-size: 16px;
+}
+
+.footer {
+  font-weight: bold;
+}
+
+.media {
+  max-width: 100vw;
+
+  /* undo the app post padding */
+  margin: 0 0 0 -2px;
+}
+
+/* make it darker so user knows a media is loading */
+.mediaWrapper {
+  background-color: #161616;
+}
+
+.score {
+  font-size: 13px;
+
+  /* fix the arrow positions */
+  text-align: center;
+  width: 24px;
+
+  /* if the number is too big */
+  overflow: hidden;
+}
+
+.downvote, .upvote {
+  /* fix the arrow positions */
+  height: 12px;
+}
+
+.downvote {
+  /* inverse the arrow to make it a downvote */
+  transform: scaleY(-1);
+
+  /* fix the arrow positions */
+  height: 13px;
+}
+
+.downvote svg path, .upvote svg path, .replyUpvote svg path, .replyDownvote svg path, .moreButton svg path {
+  fill: var(--light2);
+}
+
+.button {
+  padding: 0 8px 0 0;
+
+  /* make menu cursors like links */
+  cursor: pointer;
+
+  /* buttons are annoying to select them by accident */
+  user-select: none;
+}
+
+.moreButton {
+  font-size: 16px;
+  line-height: 0;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+.replyCount {
+  /* allow selecting comment count */
+  user-select: auto;
+}
+
+.replyContent {
+  font-size: 13px;
+}
+
+/* add indent to each nested reply */
+.replies {
+  padding: 0 0 0 8px;
+}
+
+/* the first replies should have no indent */
+.post > .replies {
+  padding: 0;
+}
+
+/* each top level reply should have a space after */
+.post > .replies > .reply {
+  margin: 0 0 8px 0;
+}
+
+.replyWrapper {
+  margin: 0 0 3px 0;
+}
+
+/* empty space between title and replies when there is no media */
+.noMedia {
+  height: 8px
+}
+
+/* different bg colors for each nesting level */
+.post > .replies {
+  background-color: var(--dark1);
+}
+.post > .replies > .reply > .replies {
+  background-color: var(--dark2);
+}
+.post > .replies > .reply > .replies .reply > .replies {
+  background-color: var(--dark1);
+}
+.post > .replies > .reply > .replies .reply > .replies > .reply > .replies {
+  background-color: var(--dark2);
+}
+.post > .replies > .reply > .replies .reply > .replies > .reply > .replies > .reply > .replies {
+  background-color: var(--dark1);
+}
+
+.hidden {
+  opacity: 0;
+}
