@@ -36,7 +36,8 @@ function App() {
     <div className={[styles.app, theme].join(' ')}>
       <Routes>
         <Route element={layout}>
-          <Route path="/home-modal" element={ <HomeModal/> } />
+          <Route path="/modal/:sortType?" element={ <HomeModal/> } />
+          <Route path="/modal/p/:subplebbitAddress/c/:commentCid" element={ <HomeModal/> } />
           <Route path="/:sortType?" element={ <Home/> } />
           <Route path="/p/subscriptions/:sortType?" element={ <Subscriptions/> } />
           <Route path="/p/subscriptions/catalog/:sortType?" element={ <SubscriptionsCatalog/> } />

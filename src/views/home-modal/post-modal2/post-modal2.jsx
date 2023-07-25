@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   useFloating,
   useDismiss,
@@ -10,17 +11,10 @@ import {
 } from "@floating-ui/react"
 import styles from './post-modal.module.css'
 import Post from '../post'
-import {useParams, useNavigate} from 'react-router-dom'
-import {useComment} from '@plebbit/plebbit-react-hooks'
 
-function PostModal({children}) {
-  const params = useParams()
-  const post = useComment({commentCid: params.commentCid})
-
+function PostModal({children, post}) {
   // modal stuff
-  const isOpen = !!params.commentCid
-  const navigate = useNavigate()
-  const setIsOpen = () => navigate(-1)
+  const [isOpen, setIsOpen] = useState(false)
 
   const { refs, context } = useFloating({
     open: isOpen,
@@ -45,9 +39,9 @@ function PostModal({children}) {
         {children}
       </span>
       {isOpen && (
-        <FloatingOverlay className={styles.overlay} lockScroll>
           <FloatingFocusManager context={context}>
             <div
+              className={styles.modal}
               ref={refs.setFloating}
               aria-labelledby={headingId}
               {...getFloatingProps()}
@@ -55,7 +49,6 @@ function PostModal({children}) {
               <Post post={post}/>
             </div>
           </FloatingFocusManager>
-        </FloatingOverlay>
       )}
     </>
   )

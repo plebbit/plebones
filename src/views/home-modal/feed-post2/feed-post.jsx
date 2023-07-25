@@ -4,6 +4,7 @@ import styles from './feed-post.module.css'
 import Arrow from '../../../components/icons/arrow'
 import PostTools from '../../../components/post-tools'
 import {useBlock} from '@plebbit/plebbit-react-hooks'
+import PostModal from '../post-modal'
 
 const FeedPostMedia = ({mediaInfo}) => {
   if (!mediaInfo) {
@@ -30,8 +31,6 @@ const FeedPost = ({post, index}) => {
 
   const mediaInfo = utils.getCommentMediaInfo(post)
 
-  const internalLink = `/modal/p/${post.subplebbitAddress}/c/${post.cid}`
-
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
   return <div className={styles.feedPost}>
@@ -49,7 +48,9 @@ const FeedPost = ({post, index}) => {
       </div>
       <div className={[styles.column, hidden && styles.hidden].join(' ')}>
         <div className={styles.header}>
-          <Link to={internalLink} className={styles.title}>{post?.title || post?.content || '-'}</Link>
+          <PostModal post={post}>
+            <Link className={styles.title}>{post?.title || post?.content || '-'}</Link>
+          </PostModal>
           {hostname && <Link to={post?.link} target='_blank'> {hostname}</Link>}
         </div>
         <div className={styles.content}>
@@ -58,15 +59,19 @@ const FeedPost = ({post, index}) => {
           <span className={styles.subplebbit}> to {post?.shortSubplebbitAddress}</span>
         </div>
         <div className={styles.footer}>
-          <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
-            {post?.replyCount} comments
-          </Link>
+          <PostModal post={post}>
+            <Link className={[styles.button, styles.replyCount].join(' ')}>
+              {post?.replyCount} comments
+            </Link>
+          </PostModal>
         </div>
       </div>
     </div>
-    <Link className={hidden && styles.hidden} to={internalLink}>
-      <FeedPostMedia mediaInfo={mediaInfo} />
-    </Link>
+    <PostModal post={post}>
+      <Link className={hidden && styles.hidden}>
+        <FeedPostMedia mediaInfo={mediaInfo} />
+      </Link>
+    </PostModal>
   </div>
 }
 

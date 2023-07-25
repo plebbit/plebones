@@ -4,7 +4,8 @@ import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import FeedPost from './feed-post'
 import {useParams} from 'react-router-dom'
-
+import PostModal from './post-modal'
+ 
 const lastVirtuosoStates = {}
 
 function Home() {
@@ -36,6 +37,7 @@ function Home() {
 
   return (
     <div>
+      <PostModal />
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }
