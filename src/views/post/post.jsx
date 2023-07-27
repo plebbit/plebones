@@ -7,6 +7,7 @@ import Arrow from '../../components/icons/arrow'
 import styles from './post.module.css'
 import PostTools from '../../components/post-tools'
 import {useBlock} from '@plebbit/plebbit-react-hooks'
+import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 
 const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -58,6 +59,10 @@ function Post() {
   const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
+
+  // keep track of unread reply counts
+  const [, setRepliesToRead] = useUnreadReplyCount(post)
+  useEffect(() => setRepliesToRead(), [post?.replyCount, setRepliesToRead])
 
   // scroll to top on first load
   useEffect(() => window.scrollTo(0,0), [])

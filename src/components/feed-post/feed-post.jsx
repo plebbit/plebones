@@ -4,6 +4,7 @@ import styles from './feed-post.module.css'
 import Arrow from '../icons/arrow'
 import PostTools from '../post-tools'
 import {useBlock} from '@plebbit/plebbit-react-hooks'
+import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 
 const FeedPostMedia = ({mediaInfo}) => {
   if (!mediaInfo) {
@@ -34,6 +35,8 @@ const FeedPost = ({post, index}) => {
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
+  const [unreadReplyCount] = useUnreadReplyCount(post)
+
   return <div className={styles.feedPost}>
     <div className={styles.textWrapper}>
       <div className={styles.column}>
@@ -59,7 +62,7 @@ const FeedPost = ({post, index}) => {
         </div>
         <div className={styles.footer}>
           <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
-            {post?.replyCount} comments
+            {post?.replyCount} comments {typeof unreadReplyCount === 'number' ? `(${unreadReplyCount} new)` : ''}
           </Link>
         </div>
       </div>
