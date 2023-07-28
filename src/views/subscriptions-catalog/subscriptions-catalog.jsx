@@ -30,14 +30,15 @@ const CatalogPost = ({post}) => {
   title = title.replace(/\n/g, '').substring(0, 100) || '-'
 
   const [unreadReplyCount] = useUnreadReplyCount(post)
-  const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `/${unreadReplyCount}` : ''
+  const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `+${unreadReplyCount}` : ''
 
   // TODO: count images in replies as R: ${replyCount} / I: ${imageCount}
-  const stats = `R: ${post?.replyCount}${unreadReplyCountText}`
+  const stats = `R: ${post?.replyCount}`
 
   return <div className={styles.post}>
     <div className={styles.postHeader}>
       <span className={styles.postStats}>{stats}</span>
+      <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
     </div>
     <div className={styles.postTitle}>
       <Link to={internalLink}>{title}</Link>
