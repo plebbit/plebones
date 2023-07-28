@@ -30,12 +30,12 @@ const useUnreadReplyCount = (post) => {
   const readReplyCount = useReadReplyCountsStore(state => state.readReplyCounts[post?.cid])
   const setReadReplyCount = useReadReplyCountsStore(state => state.setReadReplyCount)
   const setRepliesToRead = () => {
-    if (post?.cid && post?.replyCount) {
+    if (post?.cid && typeof post?.replyCount === 'number') {
       setReadReplyCount(post.cid, post.replyCount)
     }
   }
   let unreadReplyCount
-  if (post?.replyCount > 0 && typeof readReplyCount === 'number') {
+  if (typeof post?.replyCount === 'number' && typeof readReplyCount === 'number') {
     unreadReplyCount = post.replyCount - readReplyCount
   }
   return [unreadReplyCount, setRepliesToRead]

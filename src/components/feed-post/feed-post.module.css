@@ -82,6 +82,10 @@
   user-select: auto;
 }
 
+.unreadReplyCount {
+  font-weight: normal;
+}
+
 .hidden {
   opacity: 0;
 }

@@ -36,6 +36,7 @@ const FeedPost = ({post, index}) => {
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
   const [unreadReplyCount] = useUnreadReplyCount(post)
+  const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `+${unreadReplyCount}` : ''
 
   return <div className={styles.feedPost}>
     <div className={styles.textWrapper}>
@@ -62,7 +63,7 @@ const FeedPost = ({post, index}) => {
         </div>
         <div className={styles.footer}>
           <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
-            {post?.replyCount} comments {typeof unreadReplyCount === 'number' ? `(${unreadReplyCount} new)` : ''}
+            {post?.replyCount} comments <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
           </Link>
         </div>
       </div>
