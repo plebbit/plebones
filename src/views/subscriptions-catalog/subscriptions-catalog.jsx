@@ -5,6 +5,7 @@ import useWindowWidth from '../../hooks/use-window-width'
 import {useParams, Link} from 'react-router-dom'
 import utils from '../../lib/utils'
 import styles from './subscriptions-catalog.module.css'
+import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 
 const CatalogPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -28,8 +29,11 @@ const CatalogPost = ({post}) => {
   title += content
   title = title.replace(/\n/g, '').substring(0, 100) || '-'
 
+  const [unreadReplyCount] = useUnreadReplyCount(post)
+  const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `/${unreadReplyCount}` : ''
+
   // TODO: count images in replies as R: ${replyCount} / I: ${imageCount}
-  const stats = `R: ${post?.replyCount}`
+  const stats = `R: ${post?.replyCount}${unreadReplyCountText}`
 
   return <div className={styles.post}>
     <div className={styles.postHeader}>
