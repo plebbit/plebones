@@ -44,17 +44,19 @@ function PostModal({children}) {
       <span className={styles.postModalButton} ref={refs.setReference} {...getReferenceProps()}>
         {children}
       </span>
-      <FloatingOverlay className={[styles.overlay, !isOpen ? styles.closed : undefined].join(' ')} lockScroll>
-        <FloatingFocusManager context={context}>
-          <div
-            ref={refs.setFloating}
-            aria-labelledby={headingId}
-            {...getFloatingProps()}
-          >
-            <Post post={post}/>
-          </div>
-        </FloatingFocusManager>
-      </FloatingOverlay>
+      {isOpen && (
+        <FloatingOverlay className={styles.overlay} lockScroll>
+          <FloatingFocusManager context={context}>
+            <div
+              ref={refs.setFloating}
+              aria-labelledby={headingId}
+              {...getFloatingProps()}
+            >
+              <Post post={post}/>
+            </div>
+          </FloatingFocusManager>
+        </FloatingOverlay>
+      )}
     </>
   )
 }

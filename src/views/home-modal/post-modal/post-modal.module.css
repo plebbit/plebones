@@ -13,6 +13,10 @@
   background-color: var(--dark1);
 }
 
+.closed {
+  display: none;
+}
+
 .overlay {
   /* needs z index to be above virtuoso */
   z-index: 1;
