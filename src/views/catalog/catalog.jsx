@@ -60,6 +60,25 @@ const CatalogRow = ({row}) => {
   return <div className={styles.row}>{posts}</div>
 }
 
+const useFeedRows = (feed, columnCount) => {
+  const rowsRef = useRef()
+  return useMemo(() => {
+    const rows = []
+    for (let i = 0; i < feed.length; i += columnCount) {
+      // if previous rows have the row, use the previous row so it uses the same array and avoids rerenders
+      if (rowsRef.current[rows.length] && rowsRef.current[rows.length].length === columnCount) {
+        rows.push(rowsRef.current[rows.length])
+      }
+      else {
+        rows.push(feed.slice(i, i + columnCount))
+      }
+    }
+    // save ref to get access to the previous rows next render
+    rowsRef.current = rows
+    return rows
+  }, [feed, columnCount])
+}
+
 const lastVirtuosoStates = {}
 
 // column width in px
@@ -75,13 +94,7 @@ function Catalog() {
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
   // split feed into rows
-  const rows = useMemo(() => {
-    const rows = []
-    for (let i = 0; i < feed.length; i += columnCount) {
-      rows.push(feed.slice(i, i + columnCount))
-    }
-    return rows
-  }, [feed, columnCount])
+  const rows = useFeedRows(feed, columnCount)
 
   let Loading
   if (hasMore) {
