@@ -1,8 +1,6 @@
 import {
   useFloating,
   useDismiss,
-  useRole,
-  useClick,
   useInteractions,
   FloatingFocusManager,
   FloatingOverlay,
@@ -27,35 +25,27 @@ function PostModal({children}) {
     onOpenChange: setIsOpen,
   })
 
-  const click = useClick(context)
-  const dismiss = useDismiss(context)
-  const role = useRole(context)
+  const dismiss = useDismiss(context, {
+    // don't close modal when user clicks outside
+    outsidePress: false
+  })
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    click,
-    dismiss,
-    role
-  ])
+  const { getFloatingProps } = useInteractions([dismiss])
 
   const headingId = useId()
 
   return (
-    <>
-      <span className={styles.postModalButton} ref={refs.setReference} {...getReferenceProps()}>
-        {children}
-      </span>
-      <FloatingOverlay className={[styles.overlay, !isOpen ? styles.closed : undefined].join(' ')} lockScroll>
-        <FloatingFocusManager context={context}>
-          <div
-            ref={refs.setFloating}
-            aria-labelledby={headingId}
-            {...getFloatingProps()}
-          >
-            <Post post={post}/>
-          </div>
-        </FloatingFocusManager>
-      </FloatingOverlay>
-    </>
+    <FloatingOverlay className={[styles.overlay, !isOpen ? styles.closed : undefined].join(' ')} lockScroll>
+      <FloatingFocusManager context={context}>
+        <div
+          ref={refs.setFloating}
+          aria-labelledby={headingId}
+          {...getFloatingProps()}
+        >
+          <Post post={post}/>
+        </div>
+      </FloatingFocusManager>
+    </FloatingOverlay>
   )
 }
 
