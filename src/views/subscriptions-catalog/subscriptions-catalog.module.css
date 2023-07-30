@@ -33,7 +33,7 @@
 }
 
 /* media and no media must be the same height, or the infinite scroll bugs out */
-.mediaWrapper, .noMedia {
+.mediaWrapper {
   overflow: hidden;
   width: 180px;
   height: 180px;
