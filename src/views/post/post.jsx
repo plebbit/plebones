@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from './post.module.css'
 import PostTools from '../../components/post-tools'
-import {useBlock} from '@plebbit/plebbit-react-hooks'
+import {useBlock, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 
 const PostMedia = ({post}) => {
@@ -27,13 +27,15 @@ const PostMedia = ({post}) => {
 }
 
 const Reply = ({reply}) => {
+  // show the unverified author address for a few ms until the verified arrives
+  const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const replies = reply?.replies?.pages?.topAll?.comments || ''
   return (
     <div className={styles.reply}>
       <div className={styles.replyWrapper}>
         <div className={styles.replyHeader}>
           <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
-          <span className={styles.replyAuthor}> {reply.author.shortAddress}</span>
+          <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
           <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
         </div>
 
@@ -59,6 +61,9 @@ function Post() {
   const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
+
+  // show the unverified author address for a few ms until the verified arrives
+  const {shortAuthorAddress} = useAuthorAddress({comment: post})
 
   // keep track of unread reply counts
   const [, setRepliesToRead] = useUnreadReplyCount(post)
@@ -88,7 +93,7 @@ function Post() {
           </div>
           <div className={styles.content}>
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
-            <span className={styles.author}> by {post?.author?.shortAddress}</span>
+            <span className={styles.author}> by {shortAuthorAddress || post?.author?.shortAddress}</span>
             <span className={styles.subplebbit}> to {post?.subplebbitAddress}</span>
           </div>
           <div className={styles.footer}>

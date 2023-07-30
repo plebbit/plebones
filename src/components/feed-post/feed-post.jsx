@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from './feed-post.module.css'
 import Arrow from '../icons/arrow'
 import PostTools from '../post-tools'
-import {useBlock} from '@plebbit/plebbit-react-hooks'
+import {useBlock, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 
 const FeedPostMedia = ({mediaInfo}) => {
@@ -38,6 +38,9 @@ const FeedPost = ({post, index}) => {
   const [unreadReplyCount] = useUnreadReplyCount(post)
   const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `+${unreadReplyCount}` : ''
 
+  // show the unverified author address for a few ms until the verified arrives
+  const {shortAuthorAddress} = useAuthorAddress({comment: post})
+
   return <div className={styles.feedPost}>
     <div className={styles.textWrapper}>
       <div className={styles.column}>
@@ -58,7 +61,7 @@ const FeedPost = ({post, index}) => {
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
-          <span className={styles.author}> by {post?.author?.shortAddress}</span>
+          <span className={styles.author}> by {shortAuthorAddress || post?.author?.shortAddress}</span>
           <span className={styles.subplebbit}> to {post?.shortSubplebbitAddress}</span>
         </div>
         <div className={styles.footer}>
