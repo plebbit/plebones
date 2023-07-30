@@ -42,3 +42,8 @@
 .mediaWrapper {
   background-color: var(--dark1-1);
 }
+
+/* add some padding to rows when there's no image */
+.noMedia {
+  height: 2px;
+}
