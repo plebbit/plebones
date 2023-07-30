@@ -10,6 +10,7 @@ import styles from './post-modal.module.css'
 import Post from '../post'
 import {useParams, useNavigate} from 'react-router-dom'
 import {useComment} from '@plebbit/plebbit-react-hooks'
+import {useEffect} from 'react'
 
 function PostModal({children}) {
   const params = useParams()
@@ -33,6 +34,19 @@ function PostModal({children}) {
   const { getFloatingProps } = useInteractions([dismiss])
 
   const headingId = useId()
+
+  // turn off virtuoso scrolling
+  useEffect(() => {
+    if (isOpen) {
+      document.documentElement.style['overflow-y'] = 'hidden'
+    }
+    else {
+      document.documentElement.style['overflow-y'] = 'visible'
+    }
+    return () => {
+      document.documentElement.style['overflow-y'] = 'visible'
+    }
+  }, [isOpen])
 
   return (
     <FloatingOverlay className={[styles.overlay, !isOpen ? styles.closed : undefined].join(' ')} lockScroll>

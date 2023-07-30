@@ -3,13 +3,15 @@ import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import FeedPost from './feed-post'
-import {useParams} from 'react-router-dom'
+import {useParams, useLocation} from 'react-router-dom'
 import PostModal from './post-modal'
  
 const lastVirtuosoStates = {}
 
 function Home() {
   const params = useParams()
+  // dont load the feed if the user loads the post page directly
+  const isFirstLocationAndIsPost = useLocation().key === 'default' && params.commentCid
   const defaultSubplebbits = useDefaultSubplebbits()
   const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
   const sortType = params?.sortType || 'hot'
@@ -38,7 +40,7 @@ function Home() {
   return (
     <div>
       <PostModal />
-      <Virtuoso
+      {!isFirstLocationAndIsPost && <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }
         data={ feed }
@@ -50,8 +52,7 @@ function Home() {
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}
         initialScrollTop={lastVirtuosoState?.scrollTop}
-      />
-
+      />}
     </div>
   )
 }
