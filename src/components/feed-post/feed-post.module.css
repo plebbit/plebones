@@ -34,6 +34,9 @@
 
   /* buttons are annoying to select them by accident */
   user-select: none;
+
+  /* votes are buttons */
+  cursor: pointer;
 }
 
 .downvote {

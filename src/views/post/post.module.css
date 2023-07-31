@@ -39,6 +39,12 @@
 .downvote, .upvote {
   /* fix the arrow positions */
   height: 12px;
+
+  /* buttons are annoying to select them by accident */
+  user-select: none;
+
+  /* votes are buttons */
+  cursor: pointer;
 }
 
 .downvote {
