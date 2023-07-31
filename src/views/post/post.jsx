@@ -8,6 +8,8 @@ import styles from './post.module.css'
 import PostTools from '../../components/post-tools'
 import {useBlock, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
+import useUpvote from '../../hooks/use-upvote'
+import useDownvote from '../../hooks/use-downvote'
 
 const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -18,10 +20,10 @@ const PostMedia = ({post}) => {
     return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
   }
   if (mediaInfo.type === 'video') {
-    return <video className={styles.media} controls={true} autoplay={false} src={mediaInfo.url} />
+    return <video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
   }
   if (mediaInfo.type === 'audio') {
-    return <audio className={styles.media} controls={true} autoplay={false} src={mediaInfo.url} />
+    return <audio className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
   }
   return <div className={styles.noMedia}></div>
 }
@@ -62,6 +64,9 @@ function Post() {
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
+  const [upvoted, upvote] = useUpvote(post)
+  const [downvoted, downvote] = useDownvote(post)
+
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: post})
 
@@ -77,13 +82,13 @@ function Post() {
       <div className={styles.textWrapper}>
         <div className={styles.column}>
           <div className={styles.score}>
-            <div className={styles.upvote}><Arrow /></div>
+            <div onClick={upvote} className={[styles.upvote, upvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>
               <PostTools post={post}>
                 <div className={styles.scoreNumber}>
                   {(post?.upvoteCount - post?.downvoteCount) || 0}
                 </div>
               </PostTools>
-            <div className={styles.downvote}><Arrow /></div>
+            <div onClick={downvote} className={[styles.downvote, downvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>
           </div>
         </div>
         <div className={[styles.column, hidden && styles.hidden].join(' ')}>

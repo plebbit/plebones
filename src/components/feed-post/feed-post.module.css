@@ -48,6 +48,10 @@
   fill: var(--light2);
 }
 
+.voteSelected svg path {
+  fill: var(--light1);
+}
+
 .media {
   height: 50vh;
 }

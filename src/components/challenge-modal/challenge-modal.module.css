@@ -1,0 +1,54 @@
+.modal {
+  /* needs z index to be above virtuoso */
+  z-index: 1;
+
+  /* remove outline when selected */
+  outline: unset;
+
+  /* position centered */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.challenge {
+  padding: 0 2px;
+}
+
+.challenge, .challenge button, .challenge input {
+  font-size: 13px;
+  background-color: var(--dark1);
+  color: var(--light2);
+}
+
+.challenge button {
+  /* the length of the "previous" button which is the longest */
+  width: 66px;
+}
+
+.challengeInput {
+  width: 100%;
+
+  /* cancel padding and border spacing */
+  padding-top: 0;
+  padding-top-bottom: 0;
+  box-sizing: border-box;
+}
+
+.challengeMediaWrapper {
+  width: 480px;
+  /* cancel the modal 2px sides padding */
+  max-width: calc(100vw - 4px);
+  max-height: 50vh;
+}
+
+.challengeMedia {
+  width: 100%;
+}
+
+.challengeFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

@@ -13,10 +13,10 @@ const FeedPostMedia = ({mediaInfo}) => {
     return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
   }
   if (mediaInfo.type === 'video') {
-    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoplay={false} src={mediaInfo.url} /></div>
+    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></div>
   }
   if (mediaInfo.type === 'audio') {
-    return <audio className={styles.media} controls={true} autoplay={false} src={mediaInfo.url} />
+    return <audio className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
   }
   return <div className={styles.noMedia}></div>
 }

@@ -17,6 +17,7 @@ import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
 import {useEffect} from 'react'
 import Menu from './components/menu'
+import ChallengeModal from './components/challenge-modal'
 
 function App() {
   const [theme] = useTheme()
@@ -28,6 +29,7 @@ function App() {
   }, [theme])
 
   const layout = <div>
+    <ChallengeModal />
     <Menu />
     <Outlet />
   </div>

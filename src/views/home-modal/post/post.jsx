@@ -14,10 +14,10 @@ const PostMedia = ({post}) => {
     return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
   }
   if (mediaInfo.type === 'video') {
-    return <video className={styles.media} controls={true} autoplay={false} src={mediaInfo.url} />
+    return <video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
   }
   if (mediaInfo.type === 'audio') {
-    return <audio className={styles.media} controls={true} autoplay={false} src={mediaInfo.url} />
+    return <audio className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
   }
   return <div className={styles.noMedia}></div>
 }

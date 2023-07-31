@@ -53,6 +53,10 @@
   fill: var(--light2);
 }
 
+.voteSelected svg path {
+  fill: var(--light1);
+}
+
 .button {
   padding: 0 8px 0 0;
 
