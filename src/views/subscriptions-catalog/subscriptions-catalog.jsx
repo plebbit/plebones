@@ -15,6 +15,9 @@ const CatalogPostMedia = ({post}) => {
   if (mediaInfo.type === 'image') {
     return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
   }
+  if (mediaInfo.type === 'video') {
+    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></div>
+  }
   return <div className={styles.noMedia}></div>
 }
 
@@ -65,7 +68,7 @@ const useFeedRows = (feed, columnCount) => {
     const rows = []
     for (let i = 0; i < feed.length; i += columnCount) {
       // if previous rows have the row, use the previous row so it uses the same array and avoids rerenders
-      if (rowsRef.current[rows.length] && rowsRef.current[rows.length].length === columnCount) {
+      if (rowsRef.current?.[rows.length] && rowsRef.current[rows.length].length === columnCount) {
         rows.push(rowsRef.current[rows.length])
       }
       else {

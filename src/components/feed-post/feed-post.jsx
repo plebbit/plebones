@@ -19,7 +19,7 @@ const FeedPostMedia = ({mediaInfo}) => {
     return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></div>
   }
   if (mediaInfo.type === 'audio') {
-    return <audio className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
+    return <audio controls={true} autoPlay={false} src={mediaInfo.url} />
   }
   return <div className={styles.noMedia}></div>
 }
