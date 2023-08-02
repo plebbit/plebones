@@ -13,8 +13,8 @@ import {
   useId
 } from "@floating-ui/react"
 import styles from './submit.module.css'
-import {usePublishComment} from '@plebbit/plebbit-react-hooks'
-import {Link} from 'react-router-dom'
+// import {usePublishComment} from '@plebbit/plebbit-react-hooks'
+// import {Link} from 'react-router-dom'
 import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits'
 
 const Submit = ({onSubmit}) => {
