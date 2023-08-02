@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import styles from './menu.module.css'
 import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import AccountMenu from './account-menu'
+import Submit from './submit'
 
 const Menu = () => {
   const navigate = useNavigate()
@@ -52,7 +53,7 @@ const Menu = () => {
       {' '}
       <Link to={!isCatalog ? catalogLink : feedLink} className={styles.menuItem}>{!isCatalog ? 'catalog' : 'feed'}</Link>
       {' '}
-      <span className={styles.menuItem}>submit</span>
+      <Submit className={styles.menuItem}/>
       {' '}
       <AccountMenu className={styles.menuItem}/>
     </span>
