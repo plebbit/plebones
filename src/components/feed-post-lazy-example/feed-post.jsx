@@ -61,7 +61,7 @@ const FeedPost = ({post, index}) => {
       </div>
       <div className={styles.column}>
         <div className={styles.header}>
-          <Link to={externalLink || internalLink} target={externalLink ? '_blank' : undefined} className={styles.title}>{post?.title || post?.content || '-'}</Link>
+          <Link to={externalLink || internalLink} target={externalLink ? '_blank' : undefined} rel='noreferrer' className={styles.title}>{post?.title || post?.content || '-'}</Link>
           {hostname && <span className={styles.header}>{' '}{hostname}</span>}
         </div>
         <div className={styles.content}>

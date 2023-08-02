@@ -62,7 +62,7 @@ const FeedPost = ({post, index}) => {
       <div className={[styles.column, hidden ? styles.hidden : undefined].join(' ')}>
         <div className={styles.header}>
           <Link to={internalLink} className={styles.title}>{post?.title || post?.content || '-'}</Link>
-          {hostname && <Link to={post?.link} target='_blank'> {hostname}</Link>}
+          {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>

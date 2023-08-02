@@ -69,8 +69,8 @@ function Post({post}) {
         </div>
         <div className={[styles.column, hidden && styles.hidden].join(' ')}>
           <div className={styles.header}>
-            <Link to={post?.link} target={post?.link ? '_blank' : undefined} className={styles.title}>{post?.title || post?.content || '-'}</Link>
-            {hostname && <Link to={post?.link} target='_blank'> {hostname}</Link>}
+            <Link to={post?.link} target={post?.link ? '_blank' : undefined} rel='noreferrer' className={styles.title}>{post?.title || post?.content || '-'}</Link>
+            {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
           </div>
           <div className={styles.content}>
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>

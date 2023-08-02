@@ -51,7 +51,7 @@ const FeedPost = ({post, index}) => {
           <PostModal post={post}>
             <Link className={styles.title}>{post?.title || post?.content || '-'}</Link>
           </PostModal>
-          {hostname && <Link to={post?.link} target='_blank'> {hostname}</Link>}
+          {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
