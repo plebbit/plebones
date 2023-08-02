@@ -13,9 +13,8 @@
   /* cancel the modal 2px sides padding */
   max-width: calc(100vw - 4px);
   max-height: 50vh;
-}
 
-.submit, .submit button, .submit input .submit textarea {
+  /* design */
   font-size: 13px;
   background-color: var(--dark1);
   color: var(--light2);
@@ -25,17 +24,22 @@
   text-align: right;
 }
 
-.submitSelect {
-
+.submitTitle, .submitContent, .submitSelectSubplebbit {
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.submitTitle, .submitContent, .submitSelect {
-  width: 100%;
-
-  /* cancel padding and border spacing */
-  padding-top: 0;
-  padding-top-bottom: 0;
-  box-sizing: border-box;
+.submitTitle, .submitContent, .submitSelectSubplebbit, .submitButton {
   background-color: var(--dark1);
   color: var(--light2);
+
+  /* must redefine for some reason */
+  font-size: 13px;
+  background-color: var(--dark1);
+  color: var(--light2);
+  font-family: verdana, arial, helvetica, sans-serif;
+}
+
+.submitTitle, .submitContent {
+  font-family: monospace;
 }

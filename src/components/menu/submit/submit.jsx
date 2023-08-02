@@ -28,12 +28,12 @@ const Submit = ({onSubmit}) => {
 
   return <div className={styles.submit}>
     <div>
-      <select className={styles.submitSelect} onChange={onSubplebbitSelectChange} value={'p/'}>
+      <select className={styles.submitSelectSubplebbit} onChange={onSubplebbitSelectChange} value={'p/'}>
         {subplebbitsOptions}
       </select>
     </div>
     <div><input className={styles.submitTitle} placeholder='title' /></div>
-    <div><textarea rows={6} className={styles.submitContent} placeholder='content' /></div>
+    <div><textarea rows={6} className={styles.submitContent} placeholder='link' /></div>
     <div className={styles.submitButtonWrapper}><button className={styles.submitButton}>submit</button></div>
   </div>
 }
