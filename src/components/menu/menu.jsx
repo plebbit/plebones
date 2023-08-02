@@ -4,6 +4,8 @@ import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import AccountMenu from './account-menu'
 import Submit from './submit'
 
+const pages = new Set(['profile', 'settings', 'about'])
+
 const Menu = () => {
   const navigate = useNavigate()
   const params = useParams()
@@ -15,6 +17,7 @@ const Menu = () => {
   }
 
   const isCatalog = pathNames[1] === 'catalog' || pathNames[3] === 'catalog'
+  const showCatalogLink = !isCatalog && !pages.has(pathNames[1])
   const feedName = pathNames[1] === 'p' ? pathNames[2] : undefined
   const feedLink = createFeedLink(feedName, params.sortType)
   const catalogLink = createCatalogLink(feedName, params.sortType)
@@ -51,7 +54,7 @@ const Menu = () => {
         <option value="controversialAll">cont</option>
       </select>
       {' '}
-      <Link to={!isCatalog ? catalogLink : feedLink} className={styles.menuItem}>{!isCatalog ? 'catalog' : 'feed'}</Link>
+      <Link to={showCatalogLink ? catalogLink : feedLink} className={styles.menuItem}>{showCatalogLink ? 'catalog' : 'feed'}</Link>
       {' '}
       <Submit className={styles.menuItem}/>
       {' '}
