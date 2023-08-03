@@ -3,7 +3,6 @@ import createStore from 'zustand'
 const useChallengesStore = createStore((setState, getState) => ({
   challenges: [],
   addChallenge: (challenge) => {
-    console.log({challenge})
     setState(state => ({challenges: [...state.challenges, challenge]}))
   },
   removeChallenge: () => setState(state => {

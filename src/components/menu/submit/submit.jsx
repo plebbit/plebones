@@ -13,28 +13,78 @@ import {
   useId
 } from "@floating-ui/react"
 import styles from './submit.module.css'
-// import {usePublishComment} from '@plebbit/plebbit-react-hooks'
-// import {Link} from 'react-router-dom'
+import {usePublishComment} from '@plebbit/plebbit-react-hooks'
 import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits'
+import createStore from 'zustand'
+import challengesStore from '../../../hooks/use-challenges'
+const {addChallenge} = challengesStore.getState()
+
+const useSubmitStore = createStore((setState, getState) => ({
+  subplebbitAddress: undefined,
+  title: undefined,
+  content: undefined,
+  publishCommentOptions: undefined,
+  setSubmitStore: ({subplebbitAddress, title, content}) => setState(state => {
+    const nextState = {...state}
+    if (subplebbitAddress !== undefined) {
+      nextState.subplebbitAddress = subplebbitAddress
+    }
+    if (title !== undefined) {
+      nextState.title = title
+    }
+    if (content !== undefined) {
+      nextState.content = content
+    }
+    nextState.publishCommentOptions = {
+      ...nextState,
+      onChallenge: (...args) => addChallenge(args),
+      onChallengeVerification: console.log,
+      onError: error => {
+        console.error(error)
+        alert(error.message)
+      }
+    }
+    // plebones only has 1 input for link or content, detect if is link before publishing
+    if (isLink(nextState.publishCommentOptions.content)) {
+      nextState.publishCommentOptions.link = nextState.publishCommentOptions.content
+      delete nextState.publishCommentOptions.content
+    }
+    return nextState
+  }),
+  resetSubmitStore: () => setState(state => ({subplebbitAddress: undefined, title: undefined, content: undefined, publishCommentOptions: undefined}))
+}))
 
 const Submit = ({onSubmit}) => {
   const defaultSubplebbits = useDefaultSubplebbits()
-  const subplebbitsOptions = defaultSubplebbits.map(subplebbit => <option value={subplebbit?.address}>p/{subplebbit?.address || ''}</option>)
-  subplebbitsOptions.unshift(<option value='p/'>p/</option>)
+  const subplebbitsOptions = defaultSubplebbits.map(subplebbit => <option key={subplebbit?.address} value={subplebbit?.address}>p/{subplebbit?.address || ''}</option>)
+  subplebbitsOptions.unshift(<option key='p/' value='p/'>p/</option>)
 
-  const onSubplebbitSelectChange = async (event) => {
-    // set subplebbit
+  const {subplebbitAddress, title, content, publishCommentOptions, setSubmitStore, resetSubmitStore} = useSubmitStore()
+  const {publishComment} = usePublishComment(publishCommentOptions)
+
+  const onPublish = () => {
+    if (!subplebbitAddress || !title || !content) {
+      alert(`missing subplebbit, title or content`)
+      return
+    }
+    onSubmit?.()
+    publishComment()
+    resetSubmitStore({})
   }
 
   return <div className={styles.submit}>
     <div>
-      <select className={styles.submitSelectSubplebbit} onChange={onSubplebbitSelectChange} value={'p/'}>
+      <select 
+        onChange={(e) => setSubmitStore({subplebbitAddress: e.target.value})} 
+        defaultValue={subplebbitAddress || 'p/'} 
+        className={styles.submitSelectSubplebbit}
+      >
         {subplebbitsOptions}
       </select>
     </div>
-    <div><input className={styles.submitTitle} placeholder='title' /></div>
-    <div><textarea rows={6} className={styles.submitContent} placeholder='link' /></div>
-    <div className={styles.submitButtonWrapper}><button className={styles.submitButton}>submit</button></div>
+    <div><input onChange={(e) => setSubmitStore({title: e.target.value})} defaultValue={title} className={styles.submitTitle} placeholder='title' /></div>
+    <div><textarea onChange={(e) => setSubmitStore({content: e.target.value})} defaultValue={content} rows={6} className={styles.submitContent} placeholder='link' /></div>
+    <div className={styles.submitButtonWrapper}><button onClick={onPublish} className={styles.submitButton}>submit</button></div>
   </div>
 }
 
@@ -88,6 +138,22 @@ function SubmitModal({className}) {
       )}
     </>
   )
+}
+
+const isLink = (content) => {
+  if (!content) {
+    return false
+  }
+  content = content.trim()
+  if (
+    // starts with https://
+    /^https:\/\//i.test(content) && 
+    // doesn't contain spaces or line breaks
+    !/[ \n]/.test(content)
+  ) {
+    return true
+  }
+  return false
 }
 
 export default SubmitModal
