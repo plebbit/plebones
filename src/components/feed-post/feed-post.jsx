@@ -46,14 +46,18 @@ const FeedPost = ({post, index}) => {
   const [upvoted, upvote] = useUpvote(post)
   const [downvoted, downvote] = useDownvote(post)
 
+  const scoreNumber = (post?.upvoteCount - post?.downvoteCount) || 0
+  const largeScoreNumber = String(scoreNumber).length > 3
+  const negativeScoreNumber = scoreNumber < 0
+
   return <div className={styles.feedPost}>
     <div className={styles.textWrapper}>
       <div className={styles.column}>
         <div className={styles.score}>
           <div onClick={upvote} className={[styles.upvote, upvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>
           <PostTools post={post}>
-            <div className={styles.scoreNumber}>
-              {(post?.upvoteCount - post?.downvoteCount) || 0}
+            <div className={[styles.scoreNumber, largeScoreNumber ? styles.largeScoreNumber : undefined, negativeScoreNumber ? styles.negativeScoreNumber: undefined].join(' ')}>
+              {scoreNumber}
             </div>
           </PostTools>
           <div onClick={downvote} className={[styles.downvote, downvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>

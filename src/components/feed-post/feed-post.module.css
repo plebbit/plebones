@@ -28,6 +28,15 @@
   overflow: hidden;
 }
 
+.largeScoreNumber {
+  letter-spacing: -1.5px;
+  margin-left: -2px;
+}
+
+.negativeScoreNumber {
+  margin-left: -2px;
+}
+
 .downvote, .upvote {
   /* fix the arrow positions */
   height: 12px;
