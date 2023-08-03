@@ -35,7 +35,7 @@ const Challenge = ({challenge, closeModal}) => {
   }
 
   return <div className={styles.challenge}>
-    <div>{publicationType}{votePreview} in {publication?.shortSubplebbitAddress}</div>
+    <div>{publicationType}{votePreview} in p/{publication?.shortSubplebbitAddress}</div>
     <div>{publicationPreview}</div>
     <div className={styles.challengeMediaWrapper}><img alt='challenge' className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`}/></div>
     <div><input onChange={onAnswersChange} value={answers[currentChallengeIndex] || ''} className={styles.challengeInput}/></div>
