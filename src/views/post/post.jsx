@@ -111,7 +111,7 @@ function Post() {
               reply
             </span>
           </div>
-          {post?.content && <div className={styles.content}>{post?.content}</div>}
+          {post?.content?.trim?.() && <div className={styles.content}>{post?.content}</div>}
         </div>
       </div>
       <div className={hidden ? styles.hidden : undefined}>
