@@ -1,5 +1,5 @@
-import { useMemo, useRef, useEffect } from 'react'
-import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
+import { useRef, useEffect } from 'react'
+import useDefaultSubplebbitAddresses from '../../hooks/use-default-subplebbit-addresses'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import FeedPost from './feed-post'
@@ -12,8 +12,7 @@ function Home() {
   const params = useParams()
   // dont load the feed if the user loads the post page directly
   const isFirstLocationAndIsPost = useLocation().key === 'default' && params.commentCid
-  const defaultSubplebbits = useDefaultSubplebbits()
-  const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
+  const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 

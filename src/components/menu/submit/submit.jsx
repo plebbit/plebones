@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, memo } from "react"
 import {
   useFloating,
   autoUpdate,
@@ -13,11 +13,13 @@ import {
   useId
 } from "@floating-ui/react"
 import styles from './submit.module.css'
-import {usePublishComment} from '@plebbit/plebbit-react-hooks'
-import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits'
+import {usePublishComment, useAccount} from '@plebbit/plebbit-react-hooks'
+import useDefaultSubplebbitAddresses from '../../../hooks/use-default-subplebbit-addresses'
 import createStore from 'zustand'
 import challengesStore from '../../../hooks/use-challenges'
 import {useNavigate} from 'react-router-dom'
+import {isLink} from './utils'
+
 const {addChallenge} = challengesStore.getState()
 
 const useSubmitStore = createStore((setState, getState) => ({
@@ -56,13 +58,15 @@ const useSubmitStore = createStore((setState, getState) => ({
 }))
 
 const Submit = ({onSubmit}) => {
-  const navigate = useNavigate()
-  const defaultSubplebbits = useDefaultSubplebbits()
-  const subplebbitsOptions = defaultSubplebbits.map(subplebbit => <option key={subplebbit?.address} value={subplebbit?.address}>p/{subplebbit?.address || ''}</option>)
-  subplebbitsOptions.unshift(<option key='p/' value='p/'>p/</option>)
+  // get subplebbit list
+  const account = useAccount()
+  const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses()
+  const subplebbitAddresses = useMemo(() => [...new Set([...account.subscriptions, ...defaultSubplebbitAddresses])], [account.subscriptions, defaultSubplebbitAddresses])
 
   const {subplebbitAddress, title, content, publishCommentOptions, setSubmitStore, resetSubmitStore} = useSubmitStore()
   const {index, publishComment} = usePublishComment(publishCommentOptions)
+
+  const navigate = useNavigate()
 
   const onPublish = () => {
     if (!subplebbitAddress) {
@@ -90,20 +94,26 @@ const Submit = ({onSubmit}) => {
   }, [index, onSubmit, resetSubmitStore, navigate]) 
 
   return <div className={styles.submit}>
-    <div>
-      <select 
-        onChange={(e) => setSubmitStore({subplebbitAddress: e.target.value})} 
-        defaultValue={subplebbitAddress || 'p/'} 
-        className={styles.submitSelectSubplebbit}
-      >
-        {subplebbitsOptions}
-      </select>
-    </div>
+    <SubplebbitSelect subplebbitAddresses={subplebbitAddresses} subplebbitAddress={subplebbitAddress} setSubmitStore={setSubmitStore} />
     <div><input onChange={(e) => setSubmitStore({title: e.target.value})} defaultValue={title} className={styles.submitTitle} placeholder='title' /></div>
     <div><textarea onChange={(e) => setSubmitStore({content: e.target.value})} defaultValue={content} rows={6} className={styles.submitContent} placeholder='link' /></div>
     <div className={styles.submitButtonWrapper}><button onClick={onPublish} className={styles.submitButton}>submit</button></div>
   </div>
 }
+
+const SubplebbitSelect = memo(({subplebbitAddresses, subplebbitAddress, setSubmitStore}) => {
+  const subplebbitsOptions = subplebbitAddresses.map(subplebbitAddress => <option key={subplebbitAddress} value={subplebbitAddress}>p/{subplebbitAddress || ''}</option>)
+  subplebbitsOptions.unshift(<option key='p/' value='p/'>p/</option>)
+  return <div>
+    <select 
+      onChange={(e) => setSubmitStore({subplebbitAddress: e.target.value})} 
+      defaultValue={subplebbitAddress || 'p/'} 
+      className={styles.submitSelectSubplebbit}
+    >
+      {subplebbitsOptions}
+    </select>
+  </div>
+})
 
 function SubmitModal({className}) {
   // modal stuff
@@ -155,22 +165,6 @@ function SubmitModal({className}) {
       )}
     </>
   )
-}
-
-const isLink = (content) => {
-  if (!content) {
-    return false
-  }
-  content = content.trim()
-  if (
-    // starts with https://
-    /^https:\/\//i.test(content) && 
-    // doesn't contain spaces or line breaks
-    !/[ \n]/.test(content)
-  ) {
-    return true
-  }
-  return false
 }
 
 export default SubmitModal

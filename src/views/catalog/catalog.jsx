@@ -1,5 +1,5 @@
 import { useMemo, useRef, useEffect } from 'react'
-import useDefaultSubplebbits from '../../hooks/use-default-subplebbits'
+import useDefaultSubplebbitAddresses from '../../hooks/use-default-subplebbit-addresses'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import useWindowWidth from '../../hooks/use-window-width'
@@ -91,8 +91,7 @@ function Catalog() {
   const windowWidth = useWindowWidth()
   const columnCount = Math.floor(windowWidth / columnWidth)
   const params = useParams()
-  const defaultSubplebbits = useDefaultSubplebbits()
-  const subplebbitAddresses = useMemo(() => defaultSubplebbits.map(subplebbit => subplebbit.address), [defaultSubplebbits])
+  const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'active'
   let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
