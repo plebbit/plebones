@@ -9,6 +9,7 @@ import Board from './views/board'
 import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
 import Post from './views/post'
+import PendingPost from './views/pending-post'
 import NotFound from './views/not-found'
 import Profile from './views/profile'
 import About from './views/about'
@@ -48,6 +49,7 @@ function App() {
           <Route path="/board/:sortType?" element={ <Board /> } />
           <Route path="/settings" element={ <Settings/> } />
           <Route path="/profile" element={ <Profile/> } />
+          <Route path="/profile/:accountCommentIndex" element={ <PendingPost/> } />
           <Route path="/about" element={ <About/> } />
           <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>

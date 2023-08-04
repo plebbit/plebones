@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   useFloating,
   autoUpdate,
@@ -17,6 +17,7 @@ import {usePublishComment} from '@plebbit/plebbit-react-hooks'
 import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits'
 import createStore from 'zustand'
 import challengesStore from '../../../hooks/use-challenges'
+import {useNavigate} from 'react-router-dom'
 const {addChallenge} = challengesStore.getState()
 
 const useSubmitStore = createStore((setState, getState) => ({
@@ -55,22 +56,38 @@ const useSubmitStore = createStore((setState, getState) => ({
 }))
 
 const Submit = ({onSubmit}) => {
+  const navigate = useNavigate()
   const defaultSubplebbits = useDefaultSubplebbits()
   const subplebbitsOptions = defaultSubplebbits.map(subplebbit => <option key={subplebbit?.address} value={subplebbit?.address}>p/{subplebbit?.address || ''}</option>)
   subplebbitsOptions.unshift(<option key='p/' value='p/'>p/</option>)
 
   const {subplebbitAddress, title, content, publishCommentOptions, setSubmitStore, resetSubmitStore} = useSubmitStore()
-  const {publishComment} = usePublishComment(publishCommentOptions)
+  const {index, publishComment} = usePublishComment(publishCommentOptions)
 
   const onPublish = () => {
-    if (!subplebbitAddress || !title || !content) {
-      alert(`missing subplebbit, title or content`)
+    if (!subplebbitAddress) {
+      alert(`missing subplebbit`)
       return
     }
-    onSubmit?.()
+    if (!title) {
+      alert(`missing title`)
+      return
+    }
+    if (!content) {
+      alert(`missing link`)
+      return
+    }
     publishComment()
-    resetSubmitStore({})
   }
+
+  // redirect to pending post after submitting
+  useEffect(() => {
+    if (typeof index === 'number') {
+      onSubmit?.()
+      resetSubmitStore({})
+      navigate(`/profile/${index}`)
+    }
+  }, [index, onSubmit, resetSubmitStore, navigate]) 
 
   return <div className={styles.submit}>
     <div>
