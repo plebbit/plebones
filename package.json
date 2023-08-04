@@ -5,7 +5,7 @@
   "dependencies": {
     "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#25c304ca7f4a75b05a03c2c613c274b46462922a",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#5c5521672fac68ab00c83b96614445f7ccfd5b04",
     "ext-name": "5.0.0",
     "javascript-time-ago": "2.5.9",
     "json-stringify-pretty-compact": "4.0.0",
@@ -31,17 +31,16 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "chrome >= 67",
+      "edge >= 79",
+      "firefox >= 68",
+      "opera >= 54",
+      "safari >= 14"
     ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "resolutions": {
-    "@adraffy/ens-normalize": "1.8.3"
   }
 }
