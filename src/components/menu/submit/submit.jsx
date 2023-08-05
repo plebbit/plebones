@@ -13,12 +13,11 @@ import {
   useId
 } from "@floating-ui/react"
 import styles from './submit.module.css'
-import {usePublishComment, useAccount} from '@plebbit/plebbit-react-hooks'
-import useDefaultSubplebbitAddresses from '../../../hooks/use-default-subplebbit-addresses'
+import {usePublishComment} from '@plebbit/plebbit-react-hooks'
 import createStore from 'zustand'
 import challengesStore from '../../../hooks/use-challenges'
 import {useNavigate} from 'react-router-dom'
-import {isLink} from './utils'
+import {isLink, useDefaultAndSubscriptionsSubplebbits} from './utils'
 
 const {addChallenge} = challengesStore.getState()
 
@@ -58,11 +57,7 @@ const useSubmitStore = createStore((setState, getState) => ({
 }))
 
 const Submit = ({onSubmit}) => {
-  // get subplebbit list
-  const account = useAccount()
-  const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses()
-  const subplebbitAddresses = useMemo(() => [...new Set([...account.subscriptions, ...defaultSubplebbitAddresses])], [account.subscriptions, defaultSubplebbitAddresses])
-
+  const subplebbits = useDefaultAndSubscriptionsSubplebbits()
   const {subplebbitAddress, title, content, publishCommentOptions, setSubmitStore, resetSubmitStore} = useSubmitStore()
   const {index, publishComment} = usePublishComment(publishCommentOptions)
 
@@ -94,16 +89,16 @@ const Submit = ({onSubmit}) => {
   }, [index, onSubmit, resetSubmitStore, navigate]) 
 
   return <div className={styles.submit}>
-    <SubplebbitSelect subplebbitAddresses={subplebbitAddresses} subplebbitAddress={subplebbitAddress} setSubmitStore={setSubmitStore} />
+    <SubplebbitSelect subplebbits={subplebbits} subplebbitAddress={subplebbitAddress} setSubmitStore={setSubmitStore} />
     <div><input onChange={(e) => setSubmitStore({title: e.target.value})} defaultValue={title} className={styles.submitTitle} placeholder='title' /></div>
     <div><textarea onChange={(e) => setSubmitStore({content: e.target.value})} defaultValue={content} rows={6} className={styles.submitContent} placeholder='link' /></div>
     <div className={styles.submitButtonWrapper}><button onClick={onPublish} className={styles.submitButton}>submit</button></div>
   </div>
 }
 
-const SubplebbitSelect = memo(({subplebbitAddresses, subplebbitAddress, setSubmitStore}) => {
-  const subplebbitsOptions = subplebbitAddresses.map(subplebbitAddress => <option key={subplebbitAddress} value={subplebbitAddress}>p/{subplebbitAddress || ''}</option>)
-  subplebbitsOptions.unshift(<option key='p/' value='p/'>p/</option>)
+const SubplebbitSelect = memo(({subplebbits, subplebbitAddress, setSubmitStore}) => {
+  const subplebbitsOptions = subplebbits.map(subplebbit => <option key={subplebbit.address} value={subplebbit.address}>p/{subplebbit.displayAddress}</option>)
+  subplebbitsOptions.unshift(<option key='p/' value=''>p/</option>)
   return <div>
     <select 
       onChange={(e) => setSubmitStore({subplebbitAddress: e.target.value})} 
