@@ -2,13 +2,12 @@
   text-align: left;
 
   /* container */
-  padding: 0 2px 0 0;
   background-color: var(--dark1-1);
   font-size: 13px;
   font-weight: normal;
   width: 480px;
-  /* cancel the modal 2px sides padding */
-  max-width: calc(100vw - 2px);
+  /* cancel the app 4px sides padding */
+  max-width: calc(100vw - 4px);
   max-height: 50vh;
 
   /* menus are buttons so it's annoying to select them by accident */
