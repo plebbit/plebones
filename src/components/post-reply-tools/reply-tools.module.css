@@ -1,0 +1,107 @@
+.replyToolsMenu {
+  text-align: left;
+
+  /* container */
+  padding: 0 2px;
+  background-color: var(--dark1-1);
+  font-size: 13px;
+  font-weight: normal;
+  width: 480px;
+  /* cancel the modal 2px sides padding */
+  max-width: calc(100vw - 4px);
+  max-height: 50vh;
+
+  /* menus are buttons so it's annoying to select them by accident */
+  user-select: none;
+}
+
+.replyToolsButton {
+  /* make menu cursors like links */
+  cursor: pointer;
+}
+
+.modal {
+  /* needs z index to be above virtuoso */
+  z-index: 1;
+
+  /* remove outline when selected */
+  outline: unset;
+}
+
+.menuItem {
+  padding: 0 0 2px 0;
+  /* make menu cursors like links */
+  cursor: pointer;
+}
+
+.menuRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.score {
+  font-size: 13px;
+
+  /* fix the arrow positions */
+  text-align: center;
+  width: 24px;
+
+  /* if the number is too big */
+  overflow: hidden;
+}
+
+.largeScoreNumber {
+  letter-spacing: -1.5px;
+  margin-left: -2px;
+}
+
+.negativeScoreNumber {
+  margin-left: -2px;
+}
+
+.downvote, .upvote {
+  /* fix the arrow positions */
+  height: 12px;
+
+  /* buttons are annoying to select them by accident */
+  user-select: none;
+
+  /* votes are buttons */
+  cursor: pointer;
+}
+
+.downvote {
+  /* inverse the arrow to make it a downvote */
+  transform: scaleY(-1);
+
+  /* fix the arrow positions */
+  height: 13px;
+}
+
+.downvote svg path, .upvote svg path {
+  fill: var(--light2);
+}
+
+.voteSelected svg path {
+  fill: var(--light1);
+}
+
+.submitButtonWrapper {
+  text-align: right;
+}
+
+.submitContent, .submitButton {
+  background-color: var(--dark1);
+  color: var(--light2);
+
+  /* must redefine for some reason */
+  font-size: 13px;
+  color: var(--light2);
+  font-family: verdana, arial, helvetica, sans-serif;
+}
+
+.submitContent {
+  font-family: monospace;
+  width: 100%;
+  box-sizing: border-box;
+}

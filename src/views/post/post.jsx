@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from './post.module.css'
 import PostTools from '../../components/post-tools'
+import PostReplyTools from '../../components/post-reply-tools'
+import ReplyTools from '../../components/reply-tools'
 import {useBlock, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import useUpvote from '../../hooks/use-upvote'
@@ -33,20 +35,22 @@ const Reply = ({reply}) => {
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const replies = reply?.replies?.pages?.topAll?.comments || ''
   return (
-    <div className={styles.reply}>
-      <div className={styles.replyWrapper}>
-        <div className={styles.replyHeader}>
-          <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
-          <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
-          <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
-        </div>
+      <div className={styles.reply}>
+        <ReplyTools reply={reply}>
+          <div className={styles.replyWrapper}>
+            <div className={styles.replyHeader}>
+              <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
+              <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
+              <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
+            </div>
 
-        <div className={styles.replyContent}>{reply.content}</div>
+            <div className={styles.replyContent}>{reply.content}</div>
+          </div>
+        </ReplyTools>
+        <div className={styles.replies}>
+          {replies?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>)}
+        </div>
       </div>
-      <div className={styles.replies}>
-        {replies?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>)}
-      </div>
-    </div>
   )
 }
 
@@ -107,9 +111,11 @@ function Post() {
           </div>
           <div className={styles.footer}>
             <span className={[styles.replyCount, styles.button].join(' ')}>{post?.replyCount} comments</span>
-            <span className={styles.button}>
-              reply
-            </span>
+            <PostReplyTools reply={post}>
+              <span className={styles.button}>
+                reply
+              </span>
+            </PostReplyTools>
           </div>
           {post?.content?.trim?.() && <div className={styles.content}>{post?.content}</div>}
         </div>
