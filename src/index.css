@@ -17,3 +17,8 @@ a {
   color: unset;
   text-decoration: unset;
 }
+
+/* remove outlines on focus */
+select:focus, input:focus, textarea:focus {
+  outline: 0;
+}
