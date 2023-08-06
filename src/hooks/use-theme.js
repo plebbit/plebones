@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
+import createStore from 'zustand'
+
+const useThemeStore = createStore((setState, getState) => ({
+  theme: localStorage.getItem('theme') || 'dark',
+  setTheme: (theme) => {
+    localStorage.setItem('theme', theme)
+    setState(state => ({theme}))
+  }
+}))
 
 const useTheme = () => {
-  const [theme, setTheme] = useState('dark')
-
-  useEffect(() => {
-    const localTheme = localStorage.getItem('theme')
-    if (localTheme) {
-      setTheme(localTheme)
-    }
-  }, [])
-
+  const {theme, setTheme} = useThemeStore()
   return [theme, setTheme]
 }
 
