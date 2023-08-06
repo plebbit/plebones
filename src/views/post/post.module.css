@@ -109,7 +109,7 @@
   padding: 0 0 0 8px;
 }
 
-/* the first replies should have no indent */
+/* top level replies should have no indent */
 .post > .replies {
   padding: 0;
 }
@@ -119,11 +119,12 @@
   margin: 0 0 8px 0;
 }
 
+/* use padding instead of margin so bg is continuous color */
 .replyWrapper {
   padding: 0 0 3px 0;
 }
 
-/* use margin instead of padding if is last, only needed because of different gb color */
+/* use margin instead of padding if is last so bg isn't included in padding, only needed because of different bg color */
 .replyWrapper.replyIsLast {
   padding: 0;
   margin: 0 0 3px 0;

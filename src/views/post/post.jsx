@@ -66,7 +66,7 @@ function Post() {
   }
   catch (e) {}
 
-  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply} isLast={true}/>) || ''
+  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply} isLast={reply.replyCount === 0}/>) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
