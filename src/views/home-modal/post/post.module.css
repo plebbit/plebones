@@ -22,7 +22,7 @@
 
 /* make it darker so user knows a media is loading */
 .mediaWrapper {
-  background-color: #161616;
+  background-color: var(--dark1b);
 }
 
 .score {

@@ -28,7 +28,7 @@
 
 /* make it darker so user knows a media is loading */
 .mediaWrapper {
-  background-color: #161616;
+  background-color: var(--dark1b);
 }
 
 .score {
@@ -145,11 +145,11 @@
 }
 
 .labelPending {
-  color: orange;
-  border: 1px solid #ffa50030;
+  color: var(--orange1);
+  border: 1px solid var(--orange2);
 }
 
 .labelFailed {
-  color: red;
-  border: 1px solid #ff000040;
+  color: var(--red1);
+  border: 1px solid var(--red2);
 }

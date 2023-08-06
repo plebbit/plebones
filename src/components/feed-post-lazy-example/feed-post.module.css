@@ -45,7 +45,7 @@
 
 .mediaWrapper {
   height: 50vh;
-  background-color: var(--dark1-1);
+  background-color: var(--dark1b);
 
   /* undo the app post padding */
   margin: 0 0 0 -2px;
