@@ -11,6 +11,9 @@
   /* fix scrolling glitch */
   overflow-y: hidden;
 
+  /* needed, don't know why */
+  overflow-x: hidden;
+
   /* even if app is empty, fill to bottom */
   min-height: 100vh;
 }
