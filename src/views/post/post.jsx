@@ -34,10 +34,11 @@ const Reply = ({reply}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const replies = reply?.replies?.pages?.topAll?.comments || ''
+  const depthEven = reply?.depth % 2 === 0
   return (
-      <div className={styles.reply}>
+      <div className={[styles.reply].join(' ')}>
         <ReplyTools reply={reply}>
-          <div className={styles.replyWrapper}>
+          <div className={[styles.replyWrapper, depthEven ? styles.replyDepthEven : undefined].join(' ')}>
             <div className={styles.replyHeader}>
               <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
               <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>

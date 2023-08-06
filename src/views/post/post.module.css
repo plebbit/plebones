@@ -129,20 +129,8 @@
 }
 
 /* different bg colors for each nesting level */
-.post > .replies {
-  background-color: var(--dark1);
-}
-.post > .replies > .reply > .replies {
+.replyDepthEven {
   background-color: var(--dark2);
-}
-.post > .replies > .reply > .replies .reply > .replies {
-  background-color: var(--dark1);
-}
-.post > .replies > .reply > .replies .reply > .replies > .reply > .replies {
-  background-color: var(--dark2);
-}
-.post > .replies > .reply > .replies .reply > .replies > .reply > .replies > .reply > .replies {
-  background-color: var(--dark1);
 }
 
 .hidden {
