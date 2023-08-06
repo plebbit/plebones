@@ -120,17 +120,23 @@
 }
 
 .replyWrapper {
-  margin: 0 0 3px 0;
+  padding: 0 0 3px 0;
 }
 
-/* empty space between title and replies when there is no media */
-.noMedia {
-  height: 8px
+/* use margin instead of padding if is last, only needed because of different gb color */
+.replyWrapper.replyIsLast {
+  padding: 0;
+  margin: 0 0 3px 0;
 }
 
 /* different bg colors for each nesting level */
 .replyDepthEven {
   background-color: var(--dark2);
+}
+
+/* empty space between title and replies when there is no media */
+.noMedia {
+  height: 8px
 }
 
 .hidden {

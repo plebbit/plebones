@@ -30,15 +30,16 @@ const PostMedia = ({post}) => {
   return <div className={styles.noMedia}></div>
 }
 
-const Reply = ({reply}) => {
+const Reply = ({reply, isLast}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const replies = reply?.replies?.pages?.topAll?.comments || ''
   const depthEven = reply?.depth % 2 === 0
+
   return (
       <div className={[styles.reply].join(' ')}>
         <ReplyTools reply={reply}>
-          <div className={[styles.replyWrapper, depthEven ? styles.replyDepthEven : undefined].join(' ')}>
+          <div className={[styles.replyWrapper, depthEven ? styles.replyDepthEven : undefined, isLast ? styles.replyIsLast : undefined].join(' ')}>
             <div className={styles.replyHeader}>
               <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
               <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
@@ -49,7 +50,7 @@ const Reply = ({reply}) => {
           </div>
         </ReplyTools>
         <div className={styles.replies}>
-          {replies?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>)}
+          {replies?.map?.((reply, i) => <Reply key={reply?.cid} reply={reply} isLast={reply.replyCount !== 0 || replies.length === i+1} />)}
         </div>
       </div>
   )
@@ -65,7 +66,7 @@ function Post() {
   }
   catch (e) {}
 
-  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply}/>) || ''
+  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply} isLast={true}/>) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
