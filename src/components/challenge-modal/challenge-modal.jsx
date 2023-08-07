@@ -15,9 +15,10 @@ import {getPublicationType, getVotePreview, getPublicationPreview} from './utils
 const Challenge = ({challenge, closeModal}) => {
   const challenges = challenge?.[0]?.challenges
   const publication = challenge?.[1]
-  const publicationTarget = challenge?.[2] // the comment being voted on or edited
+  const publicationTarget = challenge?.[2] // the comment being voted on, replied to or edited
   const publicationType = getPublicationType(publication)
   const publicationPreview = publicationType === 'vote' ? getPublicationPreview(publicationTarget) : getPublicationPreview(publication)
+  const parentCommentPreview = publicationType === 'reply' ? getPublicationPreview(publicationTarget) : undefined
   const votePreview = getVotePreview(publication)
 
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0)
@@ -36,6 +37,7 @@ const Challenge = ({challenge, closeModal}) => {
 
   return <div className={styles.challenge}>
     <div>{publicationType}{votePreview} in p/{publication?.shortSubplebbitAddress}</div>
+    {parentCommentPreview && <div>to: {parentCommentPreview}</div>}
     <div>{publicationPreview}</div>
     <div className={styles.challengeMediaWrapper}><img alt='challenge' className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`}/></div>
     <div><input onChange={onAnswersChange} value={answers[currentChallengeIndex] || ''} className={styles.challengeInput}/></div>

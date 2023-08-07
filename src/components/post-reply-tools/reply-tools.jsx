@@ -15,8 +15,7 @@ import styles from './reply-tools.module.css'
 import useReply from '../../hooks/use-reply'
 
 const Menu = ({reply, onPublished}) => {
-  const {subplebbitAddress, cid} = reply
-  const {content, setContent, resetContent, replyIndex, publishReply} = useReply({subplebbitAddress, parentCid: cid})
+  const {content, setContent, resetContent, replyIndex, publishReply} = useReply(reply)
 
   const onPublish = () => {
     if (!content) {
