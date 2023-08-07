@@ -7,6 +7,7 @@
   font-weight: normal;
   width: 480px;
   /* cancel the app 4px sides padding */
+  max-width: 99vw; /* fix ios unsupported vw inside calc() */
   max-width: calc(100vw - 4px);
   max-height: 50vh;
 
