@@ -11,7 +11,7 @@
   padding: 0 2px;
   width: 480px;
   /* cancel the modal 2px sides padding */
-  max-width: 99vw; /* fix ios unsupported vw inside calc() */
+  max-width: 98vw; /* fix ios unsupported vw inside calc() */
   max-width: calc(100vw - 4px);
   max-height: 50vh;
 
