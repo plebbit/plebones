@@ -79,7 +79,8 @@ function ReplyTools({children, reply}) {
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
     open: isOpen,
-    onOpenChange: setIsOpen,
+    /* don't open undefined or pending replies */
+    onOpenChange: reply?.cid ? setIsOpen : undefined,
     middleware: [
       offset(2),
       flip({ fallbackAxisSideDirection: "end",  }),

@@ -45,18 +45,17 @@ function Post() {
     }
   }, [post?.cid, post?.subplebbitAddress, navigate])
 
-  let state, stateStyle
+  let state
   if (post?.timestamp) {
     // if older than 20 minutes without receiving post.cid, consider pending comment failed
     if (post.timestamp > (Date.now() / 1000) - (20 * 60)) {
       state = 'pending'
-      stateStyle = styles.labelPending
     }
     else {
       state = 'failed'
-      stateStyle = styles.labelFailed
     }
   }
+  const stateStyle = styles[`${state}Label`]
 
   return (
     <div className={styles.post}>

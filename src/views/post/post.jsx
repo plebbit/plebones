@@ -12,6 +12,7 @@ import {useBlock, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
+import useReplies from '../../hooks/use-replies'
 
 const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -30,11 +31,13 @@ const PostMedia = ({post}) => {
   return <div className={styles.noMedia}></div>
 }
 
-const Reply = ({reply, isLast}) => {
+const Reply = ({reply, depth, isLast}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
-  const replies = reply?.replies?.pages?.topAll?.comments || ''
-  const replyDepthEven = reply?.depth % 2 === 0
+  const replies = useReplies(reply)
+  const replyDepthEven = depth % 2 === 0
+
+  const state = (reply?.state === 'pending' || reply?.state === 'failed') ? reply.state : undefined
 
   return (
       <div className={[styles.reply].join(' ')}>
@@ -44,13 +47,14 @@ const Reply = ({reply, isLast}) => {
               <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
               <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
               <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
+              {state && <>{' '}<span className={styles.replyStateLabel}>{state}</span></>}
             </div>
 
             <div className={styles.replyContent}>{reply.content}</div>
           </div>
         </ReplyTools>
         <div className={styles.replies}>
-          {replies?.map?.((reply, index) => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount !== 0 || replies.length === index + 1} />)}
+          {replies.map((reply, index) => <Reply key={reply?.cid} depth={(depth || 0) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />)}
         </div>
       </div>
   )
@@ -66,7 +70,7 @@ function Post() {
   }
   catch (e) {}
 
-  const replies = post?.replies?.pages?.topAll?.comments?.map?.(reply => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount === 0}/>) || ''
+  const replies = useReplies(post).map(reply => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount === 0}/>) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 

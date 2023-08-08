@@ -144,12 +144,16 @@
   opacity: 0;
 }
 
-.labelPending {
+.pendingLabel {
   color: var(--orange1);
   border: 1px solid var(--orange2);
 }
 
-.labelFailed {
+.failedLabel {
   color: var(--red1);
   border: 1px solid var(--red2);
+}
+
+.replyStateLabel {
+  border: 1px solid var(--dark3);
 }
