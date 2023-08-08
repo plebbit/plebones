@@ -54,7 +54,7 @@ const Reply = ({reply, depth, isLast}) => {
           </div>
         </ReplyTools>
         <div className={styles.replies}>
-          {replies.map((reply, index) => <Reply key={reply?.cid} depth={(depth || 0) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />)}
+          {replies.map((reply, index) => <Reply key={reply?.cid} depth={(depth || 1) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />)}
         </div>
       </div>
   )
