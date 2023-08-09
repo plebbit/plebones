@@ -14,6 +14,7 @@ import {
 } from '@floating-ui/react'
 import styles from './post-tools.module.css'
 import {useSubscribe, useBlock, useAccount, useSubplebbit, usePublishCommentEdit} from '@plebbit/plebbit-react-hooks'
+import {alertChallengeVerificationFailed} from '../../lib/utils'
 import challengesStore from '../../hooks/use-challenges'
 const {addChallenge} = challengesStore.getState()
 
@@ -49,7 +50,7 @@ const ModTools = ({post, closeModal}) => {
     commentCid: post?.cid,
     subplebbitAddress: post?.subplebbitAddress,
     onChallenge: (...args) => addChallenge([...args, post]),
-    onChallengeVerification: console.log,
+    onChallengeVerification: alertChallengeVerificationFailed,
     onError: error => {
       console.error(error)
       alert(error.message)

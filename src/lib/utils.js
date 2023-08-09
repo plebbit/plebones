@@ -41,9 +41,20 @@ export const getFormattedTime = (timestamp) => {
   catch (e) {}
 }
 
+export const alertChallengeVerificationFailed = (challengeVerification, publication) => {
+  if (challengeVerification?.challengeSuccess === false ) {
+    console.error(challengeVerification, publication)
+    alert(`p/${publication?.subplebbitAddress} challenge error: ${[...(challengeVerification?.challengeErrors || []), challengeVerification?.reason].join(' ')}`)
+  }
+  else {
+    console.log(challengeVerification, publication)
+  }
+}
+
 const utils = {
   getCommentMediaInfo,
-  getFormattedTime
+  getFormattedTime,
+  alertChallengeVerificationFailed
 }
 
 export default utils

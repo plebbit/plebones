@@ -18,6 +18,7 @@ import createStore from 'zustand'
 import challengesStore from '../../../hooks/use-challenges'
 import {useNavigate} from 'react-router-dom'
 import {isLink, useDefaultAndSubscriptionsSubplebbits} from './utils'
+import {alertChallengeVerificationFailed} from '../../../lib/utils'
 
 const {addChallenge} = challengesStore.getState()
 
@@ -40,7 +41,7 @@ const useSubmitStore = createStore((setState, getState) => ({
     nextState.publishCommentOptions = {
       ...nextState,
       onChallenge: (...args) => addChallenge(args),
-      onChallengeVerification: console.log,
+      onChallengeVerification: alertChallengeVerificationFailed,
       onError: error => {
         console.error(error)
         alert(error.message)

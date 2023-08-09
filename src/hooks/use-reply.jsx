@@ -2,6 +2,7 @@ import {usePublishComment} from '@plebbit/plebbit-react-hooks'
 import { useMemo } from "react"
 import createStore from 'zustand'
 import challengesStore from './use-challenges'
+import {alertChallengeVerificationFailed} from '../lib/utils'
 
 const {addChallenge} = challengesStore.getState()
 
@@ -16,7 +17,7 @@ const useReplyStore = createStore((setState, getState) => ({
       content: parsedContent.content,
       link: parsedContent.link,
       onChallenge: (...args) => addChallenge([...args, comment]),
-      onChallengeVerification: console.log,
+      onChallengeVerification: alertChallengeVerificationFailed,
       onError: error => {
         console.error(error)
         alert(error.message)

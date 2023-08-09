@@ -1,6 +1,7 @@
 import {usePublishVote, useAccountVote} from '@plebbit/plebbit-react-hooks'
 import {useMemo} from 'react'
 import useChallenges from './use-challenges'
+import {alertChallengeVerificationFailed} from '../lib/utils'
 
 const useUpvote = (comment) => {
   const {addChallenge} = useChallenges()
@@ -11,7 +12,7 @@ const useUpvote = (comment) => {
     vote: vote !== 1 ? 1 : 0,
     subplebbitAddress: comment?.subplebbitAddress,
     onChallenge: (...args) => addChallenge([...args, comment]),
-    onChallengeVerification: console.log,
+    onChallengeVerification: alertChallengeVerificationFailed,
     onError: console.error
   }), [comment, vote, addChallenge])
   const {publishVote} = usePublishVote(publishVoteOptions)
