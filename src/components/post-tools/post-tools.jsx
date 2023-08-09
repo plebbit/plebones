@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from 'react'
 import {
   useFloating,
   autoUpdate,
@@ -11,11 +11,13 @@ import {
   useInteractions,
   FloatingFocusManager,
   useId
-} from "@floating-ui/react"
+} from '@floating-ui/react'
 import styles from './post-tools.module.css'
-import {useSubscribe, useBlock} from '@plebbit/plebbit-react-hooks'
+import {useSubscribe, useBlock, useAccount, useSubplebbit, usePublishCommentEdit} from '@plebbit/plebbit-react-hooks'
+import challengesStore from '../../hooks/use-challenges'
+const {addChallenge} = challengesStore.getState()
 
-const Menu = ({post}) => {
+const Menu = ({post, closeModal}) => {
   const {subscribed, subscribe, unsubscribe} = useSubscribe({subplebbitAddress: post?.subplebbitAddress})
   const {blocked: hidden, block: hide, unblock: unhide} = useBlock({cid: post?.cid})
   const {blocked: subplebbitBlocked, block: blockSubplebbit, unblock: unblockSubplebbit} = useBlock({address: post?.subplebbitAddress})
@@ -25,11 +27,55 @@ const Menu = ({post}) => {
   const toggleBlockSubplebbit = () => !subplebbitBlocked ? blockSubplebbit() : unblockSubplebbit()
   const toggleBlockAuthor = () => !authorBlocked ? blockAuthor() : unblockAuthor()
 
+  const account = useAccount()
+  const role = useSubplebbit({subplebbitAddress: post?.subplebbitAddress})?.roles?.[account?.author?.address]?.role
+  const isMod = role === 'admin' || role === 'owner'
+
   return <div className={styles.postToolsMenu}>
     <div onClick={toggleSubscribe} className={styles.menuItem}>{!subscribed ? 'join' : 'leave'} p/{post?.shortSubplebbitAddress || ''}</div>
     <div onClick={toggleHide} className={styles.menuItem}>{!hidden ? 'hide' : 'unhide'}</div>
     <div onClick={toggleBlockSubplebbit} className={styles.menuItem}>{!subplebbitBlocked ? 'block' : 'unblock'} p/{post?.shortSubplebbitAddress || ''}</div>
     <div onClick={toggleBlockAuthor} className={styles.menuItem}>{!authorBlocked ? 'block' : 'unblock'} u/{post?.author?.shortAddress || ''}</div>
+    {isMod && <ModTools post={post} closeModal={closeModal}/>}
+  </div>
+}
+
+const ModTools = ({post, closeModal}) => {
+  const defaultPublishOptions = {
+    onChallenge: (...args) => addChallenge([...args, post]),
+    onChallengeVerification: console.log,
+    onError: error => {
+      console.error(error)
+      alert(error.message)
+    }
+  }
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishOptions)
+  const {state, publishCommentEdit} = usePublishCommentEdit(publishCommentEditOptions)
+
+  // update publish options
+  useEffect(() => {
+    setPublishCommentEditOptions(state => ({...state, commentCid: post?.cid, subplebbitAddress: post?.subplebbitAddress}))
+  }, [post?.cid, post?.subplebbitAddress, setPublishCommentEditOptions])
+
+  // close the modal after publishing edit
+  useEffect(() => {
+    if (state && state !== 'failed' && state !== 'initializing' && state !== 'ready') {
+      closeModal?.()
+    }
+  }, [state, closeModal])
+
+  const onCheckbox = e => 
+    setPublishCommentEditOptions(state => ({...state, [e.target.id]: e.target.checked}))
+
+  const onReason = e => 
+    setPublishCommentEditOptions(state => ({...state, reason: e.target.value ? e.target.value : undefined}))
+
+  return <div className={styles.modTools}>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.removed ?? !!post?.removed} type='checkbox' id='removed'/ ><label for='removed'>removed</label></div>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.locked ?? !!post?.locked} type='checkbox' id='locked'/ ><label for='locked'>locked</label></div>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler ?? !!post?.spoiler} type='checkbox' id='spoiler'/ ><label for='spoiler'>spoiler</label></div>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.pinned ?? !!post?.pinned} type='checkbox' id='pinned'/ ><label for='pinned'>pinned</label></div>
+    <div className={styles.menuItem}><input onChange={onReason} defaultValue={post?.reason} size={14} placeholder='reason'/><button onClick={publishCommentEdit}>edit</button></div>
   </div>
 }
 
@@ -43,7 +89,7 @@ function PostTools({children, post}) {
     onOpenChange: setIsOpen,
     middleware: [
       offset(2),
-      flip({ fallbackAxisSideDirection: "end",  }),
+      flip({ fallbackAxisSideDirection: 'end',  }),
       shift()
     ],
     whileElementsMounted: autoUpdate
@@ -75,7 +121,7 @@ function PostTools({children, post}) {
             aria-labelledby={headingId}
             {...getFloatingProps()}
           >
-            <Menu post={post}/>
+            <Menu post={post} closeModal={() => setIsOpen(false)}/>
           </div>
         </FloatingFocusManager>
       )}

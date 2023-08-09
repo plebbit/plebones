@@ -27,3 +27,16 @@
   /* make menu cursors like links */
   cursor: pointer;
 }
+
+.modTools input, .modTools button {
+  background-color: var(--dark1);
+  color: var(--light2);
+  box-sizing: border-box;
+  font-size: 13px;
+  font-family: verdana, arial, helvetica, sans-serif;
+}
+
+.modTools input {
+  font-family: monospace;
+  accent-color: var(--dark1);
+}

@@ -31,9 +31,6 @@
 }
 
 .submitTitle, .submitContent, .submitSelectSubplebbit, .submitButton {
-  background-color: var(--dark1);
-  color: var(--light2);
-
   /* must redefine for some reason */
   font-size: 13px;
   background-color: var(--dark1);
