@@ -29,7 +29,7 @@ const Menu = ({post, closeModal}) => {
 
   const account = useAccount()
   const role = useSubplebbit({subplebbitAddress: post?.subplebbitAddress})?.roles?.[account?.author?.address]?.role
-  const isMod = role === 'admin' || role === 'owner'
+  const isMod = role === 'admin' || role === 'owner' || role === 'moderator'
 
   return <div className={styles.postToolsMenu}>
     <div onClick={toggleSubscribe} className={styles.menuItem}>{!subscribed ? 'join' : 'leave'} p/{post?.shortSubplebbitAddress || ''}</div>
@@ -42,6 +42,8 @@ const Menu = ({post, closeModal}) => {
 
 const ModTools = ({post, closeModal}) => {
   const defaultPublishOptions = {
+    commentCid: post?.cid,
+    subplebbitAddress: post?.subplebbitAddress,
     onChallenge: (...args) => addChallenge([...args, post]),
     onChallengeVerification: console.log,
     onError: error => {
@@ -52,12 +54,7 @@ const ModTools = ({post, closeModal}) => {
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishOptions)
   const {state, publishCommentEdit} = usePublishCommentEdit(publishCommentEditOptions)
 
-  // update publish options
-  useEffect(() => {
-    setPublishCommentEditOptions(state => ({...state, commentCid: post?.cid, subplebbitAddress: post?.subplebbitAddress}))
-  }, [post?.cid, post?.subplebbitAddress, setPublishCommentEditOptions])
-
-  // close the modal after publishing edit
+  // close the modal after publishing
   useEffect(() => {
     if (state && state !== 'failed' && state !== 'initializing' && state !== 'ready') {
       closeModal?.()
