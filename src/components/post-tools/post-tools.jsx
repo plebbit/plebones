@@ -42,6 +42,10 @@ const Menu = ({post, closeModal}) => {
 
 const ModTools = ({post, closeModal}) => {
   const defaultPublishOptions = {
+    removed: post?.removed,
+    locked: post?.locked,
+    spoiler: post?.spoiler,
+    pinned: post?.pinned,
     commentCid: post?.cid,
     subplebbitAddress: post?.subplebbitAddress,
     onChallenge: (...args) => addChallenge([...args, post]),
@@ -67,11 +71,13 @@ const ModTools = ({post, closeModal}) => {
   const onReason = e => 
     setPublishCommentEditOptions(state => ({...state, reason: e.target.value ? e.target.value : undefined}))
 
+  console.log(publishCommentEditOptions)
+
   return <div className={styles.modTools}>
-    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.removed ?? !!post?.removed} type='checkbox' id='removed'/ ><label for='removed'>removed</label></div>
-    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.locked ?? !!post?.locked} type='checkbox' id='locked'/ ><label for='locked'>locked</label></div>
-    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler ?? !!post?.spoiler} type='checkbox' id='spoiler'/ ><label for='spoiler'>spoiler</label></div>
-    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.pinned ?? !!post?.pinned} type='checkbox' id='pinned'/ ><label for='pinned'>pinned</label></div>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed'/ ><label for='removed'>removed</label></div>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type='checkbox' id='locked'/ ><label for='locked'>locked</label></div>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler} type='checkbox' id='spoiler'/ ><label for='spoiler'>spoiler</label></div>
+    <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.pinned} type='checkbox' id='pinned'/ ><label for='pinned'>pinned</label></div>
     <div className={styles.menuItem}><input onChange={onReason} defaultValue={post?.reason} size={14} placeholder='reason'/><button onClick={publishCommentEdit}>edit</button></div>
   </div>
 }

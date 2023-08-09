@@ -144,6 +144,10 @@
   opacity: 0;
 }
 
+.label {
+  border: 1px solid var(--dark3);
+}
+
 .pendingLabel {
   color: var(--orange1);
   border: 1px solid var(--orange2);
@@ -152,8 +156,4 @@
 .failedLabel {
   color: var(--red1);
   border: 1px solid var(--red2);
-}
-
-.replyStateLabel {
-  border: 1px solid var(--dark3);
 }
