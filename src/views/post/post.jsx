@@ -117,7 +117,7 @@ function Post() {
         <div className={[styles.column, hidden ? styles.hidden : undefined].join(' ')}>
           <div className={styles.header}>
             <Link to={post?.link} target={post?.link ? '_blank' : undefined} rel='noreferrer' className={styles.title}>{(post?.title || post?.content || '-').trim()}</Link>
-            {labels.map((label, i) => <><span key={label} className={styles.label}>{label}</span>{labels.length !== i + 1 && ' '}</>)}
+            {labels.map(label => <>{' '}<span key={label} className={styles.label}>{label}</span></>)}
             {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
           </div>
           <div>
