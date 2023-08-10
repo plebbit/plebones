@@ -40,25 +40,27 @@ const Reply = ({reply, depth, isLast}) => {
   const replyDepthEven = depth % 2 === 0
 
   const state = (reply?.state === 'pending' || reply?.state === 'failed') ? reply.state : undefined
+  const publishingStateString = useStateString(state === 'pending' && reply)
 
   return (
-      <div className={styles.reply}>
-        <ReplyTools reply={reply}>
-          <div className={[styles.replyWrapper, replyDepthEven ? styles.replyDepthEven : undefined, isLast ? styles.replyIsLast : undefined].join(' ')}>
-            <div className={styles.replyHeader}>
-              <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
-              <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
-              <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
-              {state && <>{' '}<span className={styles.label}>{state}</span></>}
-            </div>
-
-            <div className={styles.replyContent}>{reply.content}</div>
+    <div className={styles.reply}>
+      <ReplyTools reply={reply}>
+        <div className={[styles.replyWrapper, replyDepthEven ? styles.replyDepthEven : undefined, isLast ? styles.replyIsLast : undefined].join(' ')}>
+          <div className={styles.replyHeader}>
+            <span className={styles.replyScore}>{(reply?.upvoteCount - reply?.downvoteCount) || 0}</span>
+            <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
+            <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
+            {state && <>{' '}<span className={styles.label}>{state}</span></>}
+            {publishingStateString && <>{' '}<span>{publishingStateString}...</span></>}
           </div>
-        </ReplyTools>
-        <div className={styles.replies}>
-          {replies.map((reply, index) => <Reply key={reply?.cid} depth={(depth || 1) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />)}
+
+          <div className={styles.replyContent}>{reply.content}</div>
         </div>
+      </ReplyTools>
+      <div className={styles.replies}>
+        {replies.map((reply, index) => <Reply key={reply?.cid} depth={(depth || 1) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />)}
       </div>
+    </div>
   )
 }
 

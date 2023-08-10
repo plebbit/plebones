@@ -99,6 +99,8 @@ const useStateString = (commentOrSubplebbit) => {
     // })
     console.log(commentOrSubplebbit?.publishingState)
 
+    // TODO: don't show state if commentOrSubplebbit?.updatedAt is defined
+
     // if string is empty, return undefined instead
     return stateString === '' ? undefined : stateString
   }, [commentOrSubplebbit])
