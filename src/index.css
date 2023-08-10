@@ -22,3 +22,9 @@ a {
 select:focus, input:focus, textarea:focus {
   outline: 0;
 }
+
+@supports (-webkit-overflow-scrolling: touch) {
+   input, textarea {
+     font-size: 16px!important;
+   }
+}
