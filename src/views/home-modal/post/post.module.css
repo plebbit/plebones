@@ -14,6 +14,7 @@
 }
 
 .media {
+  max-width: 100%; /* fix ios max-width 100vw bug */
   max-width: 100vw;
 
   /* undo the app post padding */

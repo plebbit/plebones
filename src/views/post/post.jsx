@@ -14,6 +14,7 @@ import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
 import useReplies from '../../hooks/use-replies'
 import useCommentLabels from '../../hooks/use-comment-labels'
+import useStateString from '../../hooks/use-state-string'
 
 const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -100,6 +101,8 @@ function Post() {
 
   const labels = useCommentLabels(post, editedPostState)
 
+  const stateString = useStateString(post)
+
   return (
     <div className={styles.post}>
       <div className={styles.textWrapper}>
@@ -139,6 +142,7 @@ function Post() {
       <div className={hidden ? styles.hidden : undefined}>
         <PostMedia post={post} />
       </div>
+      {stateString && <div className={styles.stateString} title={stateString}>{stateString}...</div>}
       <div className={styles.replies}>
         {replies}
       </div>

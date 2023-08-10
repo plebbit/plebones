@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from '../post/post.module.css'
 import {useAccountComment} from '@plebbit/plebbit-react-hooks'
+import useStateString from '../../hooks/use-state-string'
 
 const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -57,6 +58,8 @@ function Post() {
   }
   const stateStyle = styles[`${state}Label`]
 
+  const publishingStateString = useStateString(post)
+
   return (
     <div className={styles.post}>
       <div className={styles.textWrapper}>
@@ -87,6 +90,7 @@ function Post() {
       <div>
         <PostMedia post={post} />
       </div>
+      {publishingStateString && <div className={styles.stateString} title={publishingStateString}>{publishingStateString}...</div>}
     </div>
   )
 }

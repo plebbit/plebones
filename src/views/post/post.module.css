@@ -157,3 +157,11 @@
   color: var(--red1);
   border: 1px solid var(--red2);
 }
+
+.stateString {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: calc(100vw - 28px);
+  width: 100vw;
+}
