@@ -11,7 +11,7 @@ function Subscriptions() {
   const account = useAccount()
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'hot'
-  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10})
 
   let Loading
   if (hasMore) {
