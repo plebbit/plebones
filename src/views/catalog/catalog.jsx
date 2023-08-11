@@ -7,6 +7,7 @@ import {useParams, Link} from 'react-router-dom'
 import utils from '../../lib/utils'
 import styles from './catalog.module.css'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
+import PostTools from '../../components/post-tools'
 
 const CatalogPostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -40,10 +41,12 @@ const CatalogPost = ({post}) => {
   const stats = `R: ${post?.replyCount}`
 
   return <div className={styles.post}>
-    <div className={styles.postHeader}>
-      <span className={styles.postStats}>{stats}</span>
-      <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
-    </div>
+    <PostTools post={post}>
+      <div className={styles.postHeader}>
+        <span className={styles.postStats}>{stats}</span>
+        <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
+      </div>
+    </PostTools>
     <div className={styles.postTitle}>
       <Link to={internalLink}>{title}</Link>
     </div>
