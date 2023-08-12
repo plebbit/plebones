@@ -81,7 +81,7 @@ const FeedPost = ({post, index}) => {
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
           <span className={styles.author}> by {shortAuthorAddress || post?.author?.shortAddress} to </span>
-          <Link to={`/p/${post.subplebbitAddress}`} className={styles.subplebbit}>{post?.shortSubplebbitAddress}</Link>
+          <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{post?.shortSubplebbitAddress}</Link>
         </div>
         <div className={styles.footer}>
           <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
