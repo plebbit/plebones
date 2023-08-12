@@ -3,7 +3,7 @@ import styles from './about.module.css'
 function About() {
   return (
     <div className={styles.about}>
-      <img alt='logo' styles={styles.logo} src='/favicon.ico' />
+      <img alt='logo' className={styles.logo} src='/favicon.ico' />
       <p>plebones is a bare bones UI client for plebbit</p>
       <ul>
         <li><span className={styles.title}>github:</span> <a href='https://github.com/plebbit' target='_blank' rel='noreferrer'>https://github.com/plebbit/plebones</a></li>
