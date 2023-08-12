@@ -9,18 +9,18 @@ import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
 import useCommentLabels from '../../hooks/use-comment-labels'
 
-const FeedPostMedia = ({mediaInfo}) => {
+const FeedPostMedia = ({mediaInfo, link}) => {
   if (!mediaInfo) {
     return <div className={styles.noMedia}></div>
   }
   if (mediaInfo.type === 'image') {
-    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
+    return <div className={styles.mediaWrapper}><Link to={link}><img className={styles.media} src={mediaInfo.url} alt='' /></Link></div>
   }
   if (mediaInfo.type === 'video') {
-    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></div>
+    return <div className={styles.mediaWrapper}><Link to={link}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></Link></div>
   }
   if (mediaInfo.type === 'audio') {
-    return <audio controls={true} autoPlay={false} src={mediaInfo.url} />
+    return <Link to={link}><audio controls={true} autoPlay={false} src={mediaInfo.url} /></Link>
   }
   return <div className={styles.noMedia}></div>
 }
@@ -90,9 +90,9 @@ const FeedPost = ({post, index}) => {
         </div>
       </div>
     </div>
-    <Link className={hidden ? styles.hidden : undefined} to={internalLink}>
-      <FeedPostMedia mediaInfo={mediaInfo} />
-    </Link>
+    <div className={hidden ? styles.hidden : undefined}>
+      <FeedPostMedia mediaInfo={mediaInfo} link={internalLink} />
+    </div>
   </div>
 }
 
