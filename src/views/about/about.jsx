@@ -4,7 +4,7 @@ function About() {
   return (
     <div className={styles.about}>
       <img alt='logo' className={styles.logo} src='/favicon.ico' />
-      <p>plebones is a bare bones GUI client for plebbit</p>
+      <p>plebones is a bare bones gui client for plebbit</p>
       <ul>
         <li><span className={styles.title}>github:</span> <a href='https://github.com/plebbit' target='_blank' rel='noreferrer'>https://github.com/plebbit/plebones</a></li>
       </ul>
