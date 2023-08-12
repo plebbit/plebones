@@ -32,7 +32,7 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
 
   return <div className={styles.info}>
     <div className={styles.header}>
-      <div className={styles.title}>{subplebbitAddress}<img className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} /></div>
+      <div className={styles.title}>{subplebbitAddress}<img alt='' className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} /></div>
       <div className={styles.stats}><button onClick={toggleSubscribe}className={styles.joinButton}>{!subscribed ? 'join' : 'leave'}</button> {stats.allActiveUserCount} members</div>
       <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
     </div>
