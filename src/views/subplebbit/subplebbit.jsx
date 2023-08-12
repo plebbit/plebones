@@ -1,8 +1,45 @@
 import { useMemo, useRef, useEffect } from 'react'
-import {useFeed} from '@plebbit/plebbit-react-hooks'
+import {useFeed, useSubplebbit, useSubplebbitStats, useSubscribe} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
+import styles from './subplebbit.module.css'
+
+const SubplebbitInfo = ({subplebbitAddress}) => {
+  const subplebbit = useSubplebbit({subplebbitAddress})
+  const stats = useSubplebbitStats({subplebbitAddress})
+  const {subscribed, subscribe, unsubscribe} = useSubscribe({subplebbitAddress})
+  const toggleSubscribe = () => !subscribed ? subscribe() : unsubscribe()
+
+  let description = subplebbit?.title || ''
+  if (subplebbit?.description) {
+    if (description) {
+      description += ': '
+    }
+    description += subplebbit?.description || ''
+  }
+  if (subplebbit?.rules?.length) {
+    if (description) {
+      description = description.trim()
+      if (!description.match(/[.,;:?!]$/)) {
+        description += '.'
+      }
+      description += ' '
+    }
+    description += 'rules:'
+  }
+  description = description.trim()
+
+  return <div className={styles.info}>
+    <div className={styles.header}>
+      <div className={styles.title}>{subplebbitAddress}<img className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} /></div>
+      <div className={styles.stats}><button onClick={toggleSubscribe}className={styles.joinButton}>{!subscribed ? 'join' : 'leave'}</button> {stats.allActiveUserCount} members</div>
+      <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
+    </div>
+    {description && <div className={styles.description}>{description}</div>}
+    {subplebbit.rules && <ol className={styles.rules}>{subplebbit.rules.map?.(rule => <li>{rule}</li>)}</ol>}
+  </div>
+}
 
 const lastVirtuosoStates = {}
 
@@ -39,6 +76,7 @@ function Subplebbit() {
 
   return (
     <div>
+      <SubplebbitInfo subplebbitAddress={subplebbitAddress} />
       <Virtuoso
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }
