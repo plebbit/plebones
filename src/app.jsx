@@ -13,6 +13,7 @@ import PendingPost from './views/pending-post'
 import NotFound from './views/not-found'
 import Profile from './views/profile'
 import About from './views/about'
+import Inbox from './views/inbox'
 
 import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
@@ -51,6 +52,7 @@ function App() {
           <Route path="/profile" element={ <Profile/> } />
           <Route path="/profile/:accountCommentIndex" element={ <PendingPost/> } />
           <Route path="/about" element={ <About/> } />
+          <Route path="/inbox" element={ <Inbox/> } />
           <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
           <Route path="*" element={ <NotFound/> } />

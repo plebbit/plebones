@@ -40,6 +40,7 @@ const Menu = ({onMenuLinkClick}) => {
         {accountsOptions}
       </select>
     </div>
+    <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/inbox'>inbox</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/profile'>profile</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/settings'>settings</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/about'>about</Link></div>
