@@ -4,6 +4,7 @@ import { Virtuoso } from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 import styles from './subplebbit.module.css'
+import {Link} from 'react-router-dom'
 
 const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
@@ -32,7 +33,7 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
 
   return <div className={styles.info}>
     <div className={styles.header}>
-      <div className={styles.title}>{subplebbitAddress}<img alt='' className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} /></div>
+      <div className={styles.title}><Link to={`/p/${subplebbitAddress}`}>{subplebbitAddress}</Link><img alt='' className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} /></div>
       <div className={styles.stats}><button onClick={toggleSubscribe}className={styles.joinButton}>{!subscribed ? 'join' : 'leave'}</button> {stats.allActiveUserCount} members</div>
       <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
     </div>

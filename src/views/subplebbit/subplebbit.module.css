@@ -1,5 +1,6 @@
 .info {
   font-size: 12px;
+  margin: 0 0 2px 0;
 }
 
 .header {
@@ -35,5 +36,5 @@
 
 .description, .rules {
   margin: 2px 0 0 0;
-  font-size: 10px;
+  font-size: 11px;
 }
