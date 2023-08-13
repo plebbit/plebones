@@ -32,6 +32,7 @@ const Challenge = ({challenge, closeModal}) => {
   }
   const onSubmit = () => {
     publication.publishChallengeAnswers(answers)
+    setAnswers([])
     closeModal()
   }
 
