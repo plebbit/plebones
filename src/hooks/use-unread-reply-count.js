@@ -37,6 +37,11 @@ const useUnreadReplyCount = (post) => {
   let unreadReplyCount
   if (typeof post?.replyCount === 'number' && typeof readReplyCount === 'number') {
     unreadReplyCount = post.replyCount - readReplyCount
+
+    // can be smaller than 0 in a feed post that hasn't yet updated
+    if (unreadReplyCount < 0) {
+      unreadReplyCount = 0
+    }
   }
   return [unreadReplyCount, setRepliesToRead]
 }
