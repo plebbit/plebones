@@ -5,6 +5,7 @@ import AccountMenu from './account-menu'
 import Submit from './submit'
 
 const pages = new Set(['profile', 'settings', 'about'])
+const defaultFeeds = new Set(['all', 'subscriptions'])
 
 const Menu = () => {
   const navigate = useNavigate()
@@ -16,8 +17,9 @@ const Menu = () => {
     return ''
   }
 
+  const isPage = pages.has(pathNames[1])
   const isCatalog = pathNames[1] === 'catalog' || pathNames[3] === 'catalog'
-  const showCatalogLink = !isCatalog && !pages.has(pathNames[1])
+  const showCatalogLink = !isCatalog && !isPage
   const feedName = pathNames[1] === 'p' ? pathNames[2] : undefined
   const feedLink = createFeedLink(feedName, params.sortType)
   const catalogLink = createCatalogLink(feedName, params.sortType)
@@ -42,6 +44,7 @@ const Menu = () => {
 
     <span className={styles.rightMenu}>
       <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
+        {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option> : undefined}
         <option value="all">p/all</option>
         <option value="subscriptions">p/subs</option>
       </select>
