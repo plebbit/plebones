@@ -165,3 +165,8 @@
   width: calc(100vw - 28px);
   width: 100vw;
 }
+
+/* put max height to be able to see pending post states */
+.pendingMedia img, .pendingMedia video {
+  max-height: 50vh;
+}
