@@ -59,6 +59,8 @@ const FeedPost = ({post, index}) => {
 
   const labels = useCommentLabels(post, editedPostState)
 
+  const title = (post?.title?.trim?.() || post?.content.trim?.())?.substring?.(0, 300) || '-'
+
   return <div className={styles.feedPost}>
     <div className={styles.textWrapper}>
       <div className={styles.column}>
@@ -74,7 +76,7 @@ const FeedPost = ({post, index}) => {
       </div>
       <div className={[styles.column, hidden ? styles.hidden : undefined].join(' ')}>
         <div className={styles.header}>
-          <Link to={internalLink} className={styles.title}>{(post?.title || post?.content || '-').trim()}</Link>
+          <Link to={internalLink} className={styles.title}>{title}</Link>
           {labels.map(label => <>{' '}<span key={label} className={styles.label}>{label}</span></>)}
           {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
         </div>
