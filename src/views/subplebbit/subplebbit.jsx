@@ -19,16 +19,6 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
     }
     description += subplebbit?.description || ''
   }
-  if (subplebbit?.rules?.length) {
-    if (description) {
-      description = description.trim()
-      if (!description.match(/[.,;:?!]$/)) {
-        description += '.'
-      }
-      description += ' '
-    }
-    description += 'rules:'
-  }
   description = description.trim()
 
   return <div className={styles.info}>
@@ -38,7 +28,7 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
       <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
     </div>
     {description && <div className={styles.description}>{description}</div>}
-    {subplebbit.rules && <ol className={styles.rules}>{subplebbit.rules.map?.(rule => <li>{rule}</li>)}</ol>}
+    {subplebbit.rules && <ol className={styles.rules}>{subplebbit.rules.map?.(rule => <li>{rule?.trim?.()}</li>)}</ol>}
   </div>
 }
 
