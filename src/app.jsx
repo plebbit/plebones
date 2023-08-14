@@ -8,6 +8,7 @@ import Catalog from './views/catalog'
 import Board from './views/board'
 import Settings from './views/settings'
 import Subplebbit from './views/subplebbit'
+import SubplebbitCatalog from './views/subplebbit-catalog'
 import Post from './views/post'
 import PendingPost from './views/pending-post'
 import NotFound from './views/not-found'
@@ -43,8 +44,8 @@ function App() {
           <Route path="/modal/:sortType?" element={ <HomeModal/> } />
           <Route path="/modal/p/:subplebbitAddress/c/:commentCid" element={ <HomeModal/> } />
           <Route path="/:sortType?" element={ <Home/> } />
-          <Route path="/p/subscriptions/:sortType?" element={ <Subscriptions/> } />
           <Route path="/p/subscriptions/catalog/:sortType?" element={ <SubscriptionsCatalog/> } />
+          <Route path="/p/subscriptions/:sortType?" element={ <Subscriptions/> } />
           <Route path="/text-only/:sortType?" element={ <TextOnly/> } />
           <Route path="/catalog/:sortType?" element={ <Catalog /> } />
           <Route path="/board/:sortType?" element={ <Board /> } />
@@ -53,6 +54,7 @@ function App() {
           <Route path="/profile/:accountCommentIndex" element={ <PendingPost/> } />
           <Route path="/about" element={ <About/> } />
           <Route path="/inbox" element={ <Inbox/> } />
+          <Route path="/p/:subplebbitAddress/catalog/:sortType?" element={ <SubplebbitCatalog/> } />
           <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
           <Route path="*" element={ <NotFound/> } />
