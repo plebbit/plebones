@@ -11,6 +11,18 @@
   user-select: none;
 }
 
+.scrollToTopButton {
+  opacity: 0;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 0;
+  right: 2px;
+  /* needs z index to be above virtuoso */
+  z-index: 1;
+}
+
 .leftMenu {
   text-align: left;
 }

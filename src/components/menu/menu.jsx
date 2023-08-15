@@ -63,6 +63,7 @@ const Menu = () => {
       {' '}
       <AccountMenu className={styles.menuItem}/>
     </span>
+    <button onClick={() => window.scrollTo(0,0)} className={styles.scrollToTopButton}>top</button>
   </div>
 }
 
