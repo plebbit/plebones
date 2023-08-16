@@ -4,7 +4,7 @@ import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import AccountMenu from './account-menu'
 import Submit from './submit'
 
-const pages = new Set(['profile', 'settings', 'about'])
+const pages = new Set(['profile', 'settings', 'about', 'inbox'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
 
 const Menu = () => {
@@ -43,7 +43,7 @@ const Menu = () => {
     <span className={styles.leftMenu}></span>
 
     <span className={styles.rightMenu}>
-      <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
+      <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName || ''}>
         {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option> : undefined}
         <option value="all">p/all</option>
         <option value="subscriptions">p/subs</option>
