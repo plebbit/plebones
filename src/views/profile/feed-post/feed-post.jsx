@@ -1,13 +1,11 @@
-import utils from '../../lib/utils'
+import utils from '../../../lib/utils'
 import { Link } from 'react-router-dom'
 import styles from './feed-post.module.css'
-import Arrow from '../icons/arrow'
-import PostTools from '../post-tools'
-import {useBlock, useAuthorAddress, useEditedComment} from '@plebbit/plebbit-react-hooks'
-import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
-import useUpvote from '../../hooks/use-upvote'
-import useDownvote from '../../hooks/use-downvote'
-import useCommentLabels from '../../hooks/use-comment-labels'
+import Arrow from '../../../components/icons/arrow'
+import PostTools from '../../../components/post-tools'
+import {useAuthorAddress, useEditedComment} from '@plebbit/plebbit-react-hooks'
+import useUnreadReplyCount from '../../../hooks/use-unread-reply-count'
+import useCommentLabels from '../../../hooks/use-comment-labels'
 
 const FeedPostMedia = ({mediaInfo, link}) => {
   if (!mediaInfo) {
@@ -40,9 +38,7 @@ const FeedPost = ({post, index}) => {
 
   const mediaInfo = utils.getCommentMediaInfo(post)
 
-  const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
-
-  const {blocked: hidden} = useBlock({cid: post?.cid})
+  const internalLink = post?.cid ? `/p/${post.subplebbitAddress}/c/${post.cid}` : `/profile/${post.index}`
 
   const [unreadReplyCount] = useUnreadReplyCount(post)
   const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `+${unreadReplyCount}` : ''
@@ -50,14 +46,25 @@ const FeedPost = ({post, index}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: post})
 
-  const [upvoted, upvote] = useUpvote(post)
-  const [downvoted, downvote] = useDownvote(post)
-
   const scoreNumber = (post?.upvoteCount - post?.downvoteCount) || 0
   const largeScoreNumber = String(scoreNumber).length > 3
   const negativeScoreNumber = scoreNumber < 0
 
-  const labels = useCommentLabels(post, editedPostState)
+  let labels = useCommentLabels(post, editedPostState)
+  let labelStyle = styles.label
+
+  let state
+  if (!post?.cid && post?.timestamp) {
+    // if older than 20 minutes without receiving post.cid, consider pending comment failed
+    if (post.timestamp > (Date.now() / 1000) - (20 * 60)) {
+      state = 'pending'
+    }
+    else {
+      state = 'failed'
+    }
+    labels = [state]
+    labelStyle = styles[`${state}Label`]
+  }
 
   const title = (post?.title?.trim?.() || post?.content?.trim?.())?.substring?.(0, 300) || '-'
 
@@ -65,25 +72,25 @@ const FeedPost = ({post, index}) => {
     <div className={styles.textWrapper}>
       <div className={styles.column}>
         <div className={styles.score}>
-          <div onClick={upvote} className={[styles.upvote, upvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>
+          <div className={styles.upvote}><Arrow /></div>
           <PostTools post={post}>
             <div className={[styles.scoreNumber, largeScoreNumber ? styles.largeScoreNumber : undefined, negativeScoreNumber ? styles.negativeScoreNumber: undefined].join(' ')}>
               {scoreNumber}
             </div>
           </PostTools>
-          <div onClick={downvote} className={[styles.downvote, downvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>
+          <div className={styles.downvote}><Arrow /></div>
         </div>
       </div>
-      <div className={[styles.column, hidden ? styles.hidden : undefined].join(' ')}>
+      <div className={styles.column}>
         <div className={styles.header}>
           <Link to={internalLink} className={styles.title}>{title}</Link>
-          {labels.map(label => <>{' '}<span key={label} className={styles.label}>{label}</span></>)}
+          {labels.map(label => <>{' '}<span key={label} className={labelStyle}>{label}</span></>)}
           {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
           <span className={styles.author}> by {shortAuthorAddress || post?.author?.shortAddress} to </span>
-          <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{post?.shortSubplebbitAddress}</Link>
+          <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{post?.subplebbitAddress}</Link>
         </div>
         <div className={styles.footer}>
           <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
@@ -92,7 +99,7 @@ const FeedPost = ({post, index}) => {
         </div>
       </div>
     </div>
-    <div className={hidden ? styles.hidden : undefined}>
+    <div>
       <FeedPostMedia mediaInfo={mediaInfo} link={internalLink} />
     </div>
   </div>

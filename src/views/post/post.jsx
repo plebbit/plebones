@@ -1,8 +1,7 @@
 import {useComment, useEditedComment} from '@plebbit/plebbit-react-hooks'
 import utils from '../../lib/utils'
-import { useParams } from 'react-router-dom'
 import {useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import {Link, useNavigate, useParams} from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from './post.module.css'
 import PostTools from '../../components/post-tools'
@@ -65,7 +64,7 @@ const Reply = ({reply, depth, isLast}) => {
 }
 
 function Post() {
-  const {commentCid} = useParams()
+  const {commentCid, subplebbitAddress} = useParams()
   let post = useComment({commentCid})
 
   // handle pending mod or author edit
@@ -105,6 +104,19 @@ function Post() {
 
   const stateString = useStateString(post)
 
+  // redirect to parent post if any
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (post?.postCid && post?.postCid !== post?.cid) {
+      navigate(`/p/${post?.subplebbitAddress}/c/${post?.postCid}`, {replace: true})
+    }
+  }, [post?.postCid, post?.subplebbitAddress, post?.cid, navigate])
+
+  // invalid subplebbit
+  if (post?.subplebbitAddress && subplebbitAddress !== post?.subplebbitAddress) {
+    return 'invalid subplebbit address'
+  }
+
   return (
     <div className={styles.post}>
       <div className={styles.textWrapper}>
@@ -121,7 +133,7 @@ function Post() {
         </div>
         <div className={[styles.column, hidden ? styles.hidden : undefined].join(' ')}>
           <div className={styles.header}>
-            <Link to={post?.link} target={post?.link ? '_blank' : undefined} rel='noreferrer' className={styles.title}>{(post?.title || post?.content || '-').trim()}</Link>
+            <Link to={post?.link} target={post?.link ? '_blank' : undefined} rel='noreferrer' className={styles.title}>{post?.title?.trim?.() || '-'}</Link>
             {labels.map(label => <>{' '}<span key={label} className={styles.label}>{label}</span></>)}
             {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
           </div>

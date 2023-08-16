@@ -1,0 +1,121 @@
+.feedPost {
+  padding: 2px 0;
+}
+
+.textWrapper {
+  /* put score in left column */
+  display: flex; 
+  flex-direction: row;
+}
+
+.title {
+  color: var(--light1);
+  font-size: 16px;
+}
+
+.footer {
+  font-weight: bold;
+}
+
+.score {
+  font-size: 13px;
+
+  /* fix the arrow positions */
+  text-align: center;
+  width: 24px;
+
+  /* if the number is too big */
+  overflow: hidden;
+}
+
+.largeScoreNumber {
+  letter-spacing: -1.5px;
+  margin-left: -2px;
+}
+
+.negativeScoreNumber {
+  margin-left: -2px;
+}
+
+.downvote, .upvote {
+  /* fix the arrow positions */
+  height: 12px;
+
+  /* buttons are annoying to select them by accident */
+  user-select: none;
+
+  /* votes are buttons */
+  cursor: pointer;
+}
+
+.downvote {
+  /* inverse the arrow to make it a downvote */
+  transform: scaleY(-1);
+
+  /* fix the arrow positions */
+  height: 13px;
+}
+
+.downvote svg path, .upvote svg path {
+  fill: var(--light2);
+}
+
+.voteSelected svg path {
+  fill: var(--light1);
+}
+
+.media {
+  height: 50vh;
+}
+
+.mediaWrapper {
+  height: 50vh;
+  background-color: var(--dark1b);
+
+  /* undo the app post padding */
+  margin: 0 0 0 -2px;
+}
+
+.button {
+  padding: 0 8px 0 0;
+
+  /* make menu cursors like links */
+  cursor: pointer;
+
+  /* buttons are annoying to select them by accident */
+  user-select: none;
+}
+
+.moreButton {
+  font-size: 16px;
+  line-height: 0;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+.replyCount {
+  /* allow selecting comment count */
+  user-select: auto;
+}
+
+.unreadReplyCount {
+  font-weight: normal;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.label {
+  border: 1px solid var(--dark3);
+}
+
+.pendingLabel {
+  color: var(--orange1);
+  border: 1px solid var(--orange2);
+}
+
+.failedLabel {
+  color: var(--red1);
+  border: 1px solid var(--red2);
+}
