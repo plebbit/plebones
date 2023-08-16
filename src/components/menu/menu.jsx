@@ -37,13 +37,13 @@ const Menu = () => {
   }
 
   const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
-  const selectedFeedName = feedName
+  const selectedFeedName = feedName || ''
 
   return <div className={styles.menu}>
     <span className={styles.leftMenu}></span>
 
     <span className={styles.rightMenu}>
-      <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName || ''}>
+      <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
         {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option> : undefined}
         <option value="all">p/all</option>
         <option value="subscriptions">p/subs</option>
