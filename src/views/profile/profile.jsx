@@ -22,6 +22,10 @@ function Profile() {
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
   }, [])
 
+  if (!accountComments.length) {
+    return 'no posts'
+  }
+
   return (
     <div>
       <Virtuoso

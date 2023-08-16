@@ -114,7 +114,7 @@ function Post() {
 
   // invalid subplebbit
   if (post?.subplebbitAddress && subplebbitAddress !== post?.subplebbitAddress) {
-    return 'invalid subplebbit address'
+    return 'wrong subplebbit address'
   }
 
   return (

@@ -15,6 +15,7 @@ import NotFound from './views/not-found'
 import Profile from './views/profile'
 import About from './views/about'
 import Inbox from './views/inbox'
+import {useAccount} from '@plebbit/plebbit-react-hooks'
 
 import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
@@ -30,6 +31,15 @@ function App() {
     document.body.classList.forEach(className => document.body.classList.remove(className))
     document.body.classList.add(theme)
   }, [theme])
+
+  // add notification count to title
+  const unreadNotificationCount = useAccount()?.unreadNotificationCount
+  useEffect(() => {
+    if (unreadNotificationCount)
+      document.title = `plebones (${unreadNotificationCount})`
+    else 
+      document.title = 'plebones'
+  }, [unreadNotificationCount])
 
   const layout = <div>
     <ChallengeModal />

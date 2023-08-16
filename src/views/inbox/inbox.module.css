@@ -1,0 +1,15 @@
+.markAsReadButton {
+  /* must redefine for some reason */
+  font-size: 13px;
+  background-color: var(--dark1);
+  color: var(--light2);
+  font-family: verdana, arial, helvetica, sans-serif;
+}
+
+.unreadNotification {
+  border: 1px solid var(--dark3);
+}
+
+.readNotification {
+
+}

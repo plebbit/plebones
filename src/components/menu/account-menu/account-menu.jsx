@@ -34,13 +34,15 @@ const Menu = ({onMenuLinkClick}) => {
     }
   }
 
+  const unreadNotificationCount = account?.unreadNotificationCount ? ` (${account.unreadNotificationCount})` : ''
+
   return <div className={styles.accountMenu}>
     <div className={styles.menuItem}>
       <select onChange={onAccountSelectChange} value={account?.name}>
         {accountsOptions}
       </select>
     </div>
-    <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/inbox'>inbox</Link></div>
+    <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/inbox'>inbox{unreadNotificationCount}</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/profile'>profile</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/settings'>settings</Link></div>
     <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/about'>about</Link></div>
