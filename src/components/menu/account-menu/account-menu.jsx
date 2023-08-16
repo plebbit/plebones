@@ -42,10 +42,10 @@ const Menu = ({onMenuLinkClick}) => {
         {accountsOptions}
       </select>
     </div>
-    <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/inbox'>inbox{unreadNotificationCount}</Link></div>
-    <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/profile'>profile</Link></div>
-    <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/settings'>settings</Link></div>
-    <div onClick={onMenuLinkClick} className={styles.menuItem}><Link to='/about'>about</Link></div>
+    <Link to='/inbox'><div onClick={onMenuLinkClick} className={styles.menuItem}>inbox{unreadNotificationCount}</div></Link>
+    <Link to='/profile'><div onClick={onMenuLinkClick} className={styles.menuItem}>profile</div></Link>
+    <Link to='/settings'><div onClick={onMenuLinkClick} className={styles.menuItem}>settings</div></Link>
+    <Link to='/about'><div onClick={onMenuLinkClick} className={styles.menuItem}>about</div></Link>
     <div className={styles.version}>{version}</div>
   </div>
 }
