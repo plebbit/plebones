@@ -130,7 +130,7 @@ const ReplyMedia = ({reply}) => {
   if (mediaType === 'video') {
     return <VideoModal url={reply?.link} />
   }
-  return <div className={styles.replyLink}><a href={reply?.link} target='_blank' rel='noreferrer'>{reply?.link}</a></div>
+  return <div className={styles.replyLink}><a href={reply?.link} target='_blank' rel='noreferrer'>{reply?.link?.trim?.()}</a></div>
 }
 
 export default ReplyMedia

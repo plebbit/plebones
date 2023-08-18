@@ -39,7 +39,7 @@ const Reply = ({reply, depth, isLast}) => {
   const replies = useReplies(reply)
   const replyDepthEven = depth % 2 === 0
 
-  const state = (reply?.state === 'pending' || reply?.state === 'failed') ? reply.state : undefined
+  const state = (reply?.state === 'pending' || reply?.state === 'failed') ? reply?.state : undefined
   const publishingStateString = useStateString(state === 'pending' && reply)
 
   return (
@@ -54,7 +54,7 @@ const Reply = ({reply, depth, isLast}) => {
             {publishingStateString && <>{' '}<span>{publishingStateString}...</span></>}
           </div>
 
-          <div className={styles.replyContent}>{reply.content}</div>
+          <div className={styles.replyContent}>{reply?.content?.trim?.()}</div>
           <ReplyMedia reply={reply} />
         </div>
       </ReplyTools>
@@ -152,7 +152,7 @@ function Post() {
               </span>
             </PostReplyTools>
           </div>
-          {post?.content?.trim?.() && <div className={styles.content}>{post?.content}</div>}
+          {post?.content?.trim?.() && <div className={styles.content}>{post?.content?.trim?.()}</div>}
         </div>
       </div>
       <div className={hidden ? styles.hidden : undefined}>
