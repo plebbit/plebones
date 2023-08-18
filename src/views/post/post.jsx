@@ -14,6 +14,7 @@ import useDownvote from '../../hooks/use-downvote'
 import useReplies from '../../hooks/use-replies'
 import useCommentLabels from '../../hooks/use-comment-labels'
 import useStateString from '../../hooks/use-state-string'
+import ReplyMedia from './reply-media'
 
 const PostMedia = ({post}) => {
   const mediaInfo = utils.getCommentMediaInfo(post)
@@ -54,6 +55,7 @@ const Reply = ({reply, depth, isLast}) => {
           </div>
 
           <div className={styles.replyContent}>{reply.content}</div>
+          <ReplyMedia reply={reply} />
         </div>
       </ReplyTools>
       <div className={styles.replies}>
