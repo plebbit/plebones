@@ -48,6 +48,8 @@ select.sortType, select.feedName {
   margin: -1px 0 0 0;
   /* border width is not 1px in firefox */
   border-width: 1px;
+  /* border color isn't set in firefox */
+  border-color: var(--light2);
 
   /* remove icon */
   appearance: unset;
