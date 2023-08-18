@@ -120,17 +120,17 @@ function VideoModal({url}) {
 }
 
 const ReplyMedia = ({reply}) => {
-  const mediaInfo = utils.getCommentMediaInfo(reply)
-  if (!mediaInfo) {
+  if (!reply?.link) {
     return ''
   }
-  if (mediaInfo.type === 'image') {
+  const mediaInfo = utils.getCommentMediaInfo(reply)
+  if (mediaInfo?.type === 'image') {
     return <ImageModal url={mediaInfo.url} />
   }
-  if (mediaInfo.type === 'video') {
+  if (mediaInfo?.type === 'video') {
     return <VideoModal url={mediaInfo.url} />
   }
-  return ''
+  return <div className={styles.replyLink}><a href={reply?.link} target='_blank' rel='noreferrer'>{reply?.link}</a></div>
 }
 
 export default ReplyMedia
