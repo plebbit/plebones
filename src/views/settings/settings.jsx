@@ -19,7 +19,7 @@ const PlebonesSettings = () => {
   // const [nonImagesInCatalog, setNonImagesInCatalog] = useSetting('nonImagesInCatalog')
 
   return <div className={styles.plebonesSettings}>
-    {/*<div className={styles.plebonesSetting}><input onChange={(e) => setNonImagesInCatalog(e.target.checked)} checked={nonImagesInCatalog} type='checkbox' id='nonImagesInCatalog'/ ><label for='nonImagesInCatalog'>non images in catalog</label></div>*/}
+    {/*<div><input onChange={(e) => setNonImagesInCatalog(e.target.checked)} checked={nonImagesInCatalog} type='checkbox' id='nonImagesInCatalog'/ ><label for='nonImagesInCatalog'>non images in catalog</label></div>*/}
   </div>
 }
 
