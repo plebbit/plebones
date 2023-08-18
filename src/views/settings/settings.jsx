@@ -3,6 +3,7 @@ import styles from './settings.module.css'
 import {useAccount, setAccount, deleteAccount} from '@plebbit/plebbit-react-hooks'
 import stringify from "json-stringify-pretty-compact"
 import useTheme from '../../hooks/use-theme'
+// import useSetting from '../../hooks/use-setting'
 
 const Theme = () => {
   const [theme, setTheme] = useTheme()
@@ -14,7 +15,15 @@ const Theme = () => {
   </div>
 }
 
-function Settings() {
+const PlebonesSettings = () => {
+  // const [nonImagesInCatalog, setNonImagesInCatalog] = useSetting('nonImagesInCatalog')
+
+  return <div className={styles.plebonesSettings}>
+    {/*<div className={styles.plebonesSetting}><input onChange={(e) => setNonImagesInCatalog(e.target.checked)} checked={nonImagesInCatalog} type='checkbox' id='nonImagesInCatalog'/ ><label for='nonImagesInCatalog'>non images in catalog</label></div>*/}
+  </div>
+}
+
+const AccountSettings = () => {
   const account = useAccount()
   const accountJson = useMemo(() => stringify({...account, plebbit: undefined, karma: undefined, unreadNotificationCount: undefined}), [account])
 
@@ -45,12 +54,19 @@ function Settings() {
     console.log('deleting account...')
   }
 
+  return <div>
+    <textarea onChange={(e) => setText(e.target.value)} autocorrect='off' rows="32" value={text} />
+    <button onClick={saveAccount}>save</button>
+    <button onClick={() => _deleteAccount(account?.name)} >delete account u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</button>
+  </div>
+}
+
+function Settings() {
   return (
     <div className={styles.settings}>
       <Theme />
-      <textarea onChange={(e) => setText(e.target.value)} autocorrect='off' rows="32" value={text} />
-      <button onClick={saveAccount}>save</button>
-      <button onClick={() => _deleteAccount(account?.name)} >delete account u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</button>
+      <PlebonesSettings />
+      <AccountSettings />
     </div>
   )
 }

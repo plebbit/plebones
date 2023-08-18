@@ -9,6 +9,7 @@ let lastVirtuosoState
 function Inbox() {
   const {notifications, markAsRead} = useNotifications()
   const unreadNotificationCount = useAccount()?.unreadNotificationCount
+  console.log({notifications})
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()

@@ -72,8 +72,6 @@ const ModTools = ({post, closeModal}) => {
   const onReason = e => 
     setPublishCommentEditOptions(state => ({...state, reason: e.target.value ? e.target.value : undefined}))
 
-  console.log(publishCommentEditOptions)
-
   return <div className={styles.modTools}>
     <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed'/ ><label for='removed'>removed</label></div>
     <div className={styles.menuItem}><input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type='checkbox' id='locked'/ ><label for='locked'>locked</label></div>
