@@ -1,36 +1,56 @@
 import extName from 'ext-name'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import memoize from 'memoizee'
 
-export const getCommentMediaInfo = (post) => {
-  let mime
-  if (!post?.link) {
+export const getCommentMediaInfo = (comment) => {
+  const mediaType = getCommentLinkMediaType(comment?.link)
+  // can optionally fallback to comment.thumbnailUrl
+  // plebones doesn't do it because thumnbails don't look good
+  // if (!mediaType && comment?.thumbnailUrl) {
+  //   return {
+  //     url: comment?.thumbnailUrl,
+  //     type: 'image',
+  //   }
+  // }
+  if (!mediaType) {
     return
   }
-  try {
-    mime = extName(new URL(post?.link).pathname.toLowerCase().replace('/', ''))[0]?.mime
-  } catch (error) {
-
-  }
-  if (mime?.startsWith('image')) {
+  if (mediaType === 'image') {
     return {
-      url: post?.link,
+      url: comment?.link,
       type: 'image',
     }
   }
-  if (mime?.startsWith('video')) {
+  if (mediaType === 'video') {
     return {
-      url: post?.link,
+      url: comment?.link,
       type: 'video',
     }
   }
-  if (mime?.startsWith('audio')) {
+  if (mediaType === 'audio') {
     return {
-      url: post?.link,
+      url: comment?.link,
       type: 'audio',
     }
   }
 }
+
+// cache media type because not sure how fast it is
+const getCommentLinkMediaTypeNoCache = (link) => {
+  if (!link) return
+  let mime
+  try {
+    mime = extName(new URL(link).pathname.toLowerCase().replace('/', ''))[0]?.mime
+  } 
+  catch (e) {
+    return
+  }
+  if (mime?.startsWith('image')) return 'image'
+  if (mime?.startsWith('video')) return 'video'
+  if (mime?.startsWith('audio')) return 'audio'
+}
+const getCommentLinkMediaType = memoize(getCommentLinkMediaTypeNoCache, {max: 1000})
 
 TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en-US')
