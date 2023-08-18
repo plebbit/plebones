@@ -5,34 +5,21 @@ import memoize from 'memoizee'
 
 export const getCommentMediaInfo = (comment) => {
   const mediaType = getCommentLinkMediaType(comment?.link)
-  // can optionally fallback to comment.thumbnailUrl
-  // doesn't look good in plebones
+  // can optionally fallback to comment.thumbnailUrl, doesn't look good in plebones
   // if (!mediaType && comment?.thumbnailUrl) {
-  //   return {
-  //     url: comment?.thumbnailUrl,
-  //     type: 'image',
-  //   }
+  //   return {url: comment?.thumbnailUrl, type: 'image'}
   // }
   if (!mediaType) {
     return
   }
   if (mediaType === 'image') {
-    return {
-      url: comment?.link,
-      type: 'image',
-    }
+    return {url: comment?.link, type: 'image'}
   }
   if (mediaType === 'video') {
-    return {
-      url: comment?.link,
-      type: 'video',
-    }
+    return {url: comment?.link, type: 'video'}
   }
   if (mediaType === 'audio') {
-    return {
-      url: comment?.link,
-      type: 'audio',
-    }
+    return {url: comment?.link, type: 'audio'}
   }
 }
 
