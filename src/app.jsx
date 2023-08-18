@@ -36,7 +36,7 @@ function App() {
   const unreadNotificationCount = useAccount()?.unreadNotificationCount
   useEffect(() => {
     if (unreadNotificationCount)
-      document.title = `plebones (${unreadNotificationCount})`
+      document.title = `(${unreadNotificationCount}) plebones`
     else 
       document.title = 'plebones'
   }, [unreadNotificationCount])
