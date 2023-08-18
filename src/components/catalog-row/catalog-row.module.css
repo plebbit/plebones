@@ -1,19 +1,14 @@
 .row {
   display: flex; 
   flex-direction: row;
-  justify-content: center;
-}
-
-/* if less than 4 columns (180 * 4) catalog should be centered */
-@media (max-width: 720px) {
-  .row {
-    justify-content: center;
-  }
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 14px;
 }
 
 .post {
   width: 180px;
-  font-size: 11px;
+  font-size: 12px;
 
   /* fix text overflowing */
   overflow: hidden;
@@ -37,10 +32,6 @@
   overflow: hidden;
   width: 180px;
   height: 180px;
-}
-
-.mediaWrapper {
-  background-color: var(--dark1b);
 }
 
 /* add some padding to rows when there's no image */
