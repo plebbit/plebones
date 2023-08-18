@@ -72,7 +72,10 @@ const CatalogRow = ({row}) => {
   const posts = []
   for (const post of row) {
     posts.push(<CatalogPost key={post?.cid} post={post} />)
+    posts.push(<div className={styles.columnSeparator}/>)
   }
+  // remove last separator
+  posts.pop()
   return <div className={styles.row}>{posts}</div>
 }
 

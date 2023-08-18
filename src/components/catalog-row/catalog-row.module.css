@@ -1,9 +1,13 @@
 .row {
   display: flex; 
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  padding-bottom: 14px;
+  margin: 0 0 2px 0;
+}
+
+.columnSeparator {
+  width: 2px;
 }
 
 .post {
