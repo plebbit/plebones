@@ -10,15 +10,15 @@ import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import PostTools from '../../components/post-tools'
 
 const CatalogPostMedia = ({post}) => {
-  const mediaInfo = utils.getCommentMediaInfo(post)
-  if (!mediaInfo) {
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }
-  if (mediaInfo.type === 'image') {
-    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
+  if (mediaType === 'image') {
+    return <div className={styles.mediaWrapper}><img className={styles.media} src={post?.link} alt='' /></div>
   }
-  if (mediaInfo.type === 'video') {
-    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></div>
+  if (mediaType === 'video') {
+    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={post?.link} /></div>
   }
   return <div className={styles.noMedia}></div>
 }

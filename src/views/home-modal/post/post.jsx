@@ -6,18 +6,18 @@ import PostTools from '../../../components/post-tools'
 import {useBlock} from '@plebbit/plebbit-react-hooks'
 
 const PostMedia = ({post}) => {
-  const mediaInfo = utils.getCommentMediaInfo(post)
-  if (!mediaInfo) {
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }
-  if (mediaInfo.type === 'image') {
-    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
+  if (mediaType === 'image') {
+    return <div className={styles.mediaWrapper}><img className={styles.media} src={post?.link} alt='' /></div>
   }
-  if (mediaInfo.type === 'video') {
-    return <video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
+  if (mediaType === 'video') {
+    return <video className={styles.media} controls={true} autoPlay={false} src={post?.link} />
   }
-  if (mediaInfo.type === 'audio') {
-    return <audio className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
+  if (mediaType === 'audio') {
+    return <audio className={styles.media} controls={true} autoPlay={false} src={post?.link} />
   }
   return <div className={styles.noMedia}></div>
 }

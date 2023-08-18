@@ -123,12 +123,12 @@ const ReplyMedia = ({reply}) => {
   if (!reply?.link) {
     return ''
   }
-  const mediaInfo = utils.getCommentMediaInfo(reply)
-  if (mediaInfo?.type === 'image') {
-    return <ImageModal url={mediaInfo.url} />
+  const mediaType = utils.getCommentLinkMediaType(reply?.link)
+  if (mediaType === 'image') {
+    return <ImageModal url={reply?.link} />
   }
-  if (mediaInfo?.type === 'video') {
-    return <VideoModal url={mediaInfo.url} />
+  if (mediaType === 'video') {
+    return <VideoModal url={reply?.link} />
   }
   return <div className={styles.replyLink}><a href={reply?.link} target='_blank' rel='noreferrer'>{reply?.link}</a></div>
 }

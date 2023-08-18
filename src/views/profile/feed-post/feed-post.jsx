@@ -7,18 +7,18 @@ import {useAuthorAddress, useEditedComment} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../../hooks/use-unread-reply-count'
 import useCommentLabels from '../../../hooks/use-comment-labels'
 
-const FeedPostMedia = ({mediaInfo, link}) => {
-  if (!mediaInfo) {
+const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
+  if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }
-  if (mediaInfo.type === 'image') {
-    return <div className={styles.mediaWrapper}><Link to={link}><img className={styles.media} src={mediaInfo.url} alt='' /></Link></div>
+  if (mediaType === 'image') {
+    return <div className={styles.mediaWrapper}><Link to={link}><img className={styles.media} src={mediaUrl} alt='' /></Link></div>
   }
-  if (mediaInfo.type === 'video') {
-    return <div className={styles.mediaWrapper}><Link to={link}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></Link></div>
+  if (mediaType === 'video') {
+    return <div className={styles.mediaWrapper}><Link to={link}><video className={styles.media} controls={true} autoPlay={false} src={mediaUrl} /></Link></div>
   }
-  if (mediaInfo.type === 'audio') {
-    return <Link to={link}><audio controls={true} autoPlay={false} src={mediaInfo.url} /></Link>
+  if (mediaType === 'audio') {
+    return <Link to={link}><audio controls={true} autoPlay={false} src={mediaUrl} /></Link>
   }
   return <div className={styles.noMedia}></div>
 }
@@ -36,7 +36,7 @@ const FeedPost = ({post, index}) => {
   }
   catch (e) {}
 
-  const mediaInfo = utils.getCommentMediaInfo(post)
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
 
   const internalLink = post?.cid ? `/p/${post.subplebbitAddress}/c/${post.cid}` : `/profile/${post.index}`
 
@@ -100,7 +100,7 @@ const FeedPost = ({post, index}) => {
       </div>
     </div>
     <div>
-      <FeedPostMedia mediaInfo={mediaInfo} link={internalLink} />
+      <FeedPostMedia mediaType={mediaType} mediaLink={post?.link} link={internalLink} />
     </div>
   </div>
 }

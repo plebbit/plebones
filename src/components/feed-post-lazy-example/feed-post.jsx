@@ -4,25 +4,25 @@ import styles from './feed-post.module.css'
 import {useState, useEffect} from 'react'
 import useIsMounted from '../../hooks/use-is-mounted'
 
-const FeedPostMedia = ({mediaInfo, show}) => {
-  if (!mediaInfo) {
+const FeedPostMedia = ({mediaType, mediaUrl, show}) => {
+  if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }
   // only show low priority components after high priority components have mounted
   if (!show) {
     return <div className={styles.mediaWrapper}></div>
   }
-  if (mediaInfo.type === 'image') {
+  if (mediaType === 'image') {
     return <div className={styles.mediaWrapper}><Media/></div>
   }
-  if (mediaInfo.type === 'video') {
+  if (mediaType === 'video') {
     return <div className={styles.mediaWrapper}><Media/></div>
   }
   return <div className={styles.noMedia}></div>
 }
 
 // fake slow media
-const Media = ({mediaInfo}) => {
+const Media = ({mediaType}) => {
   let i = 50000000
   let a = 0
   while (i--) {
@@ -39,10 +39,10 @@ const FeedPost = ({post, index}) => {
   }
   catch (e) {}
 
-  const mediaInfo = utils.getCommentMediaInfo(post)
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
 
   const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
-  const externalLink = !mediaInfo && post?.link
+  const externalLink = !mediaType && post?.link
 
   // FeedPost is mounted, only show low priority components after has mounted
   let isMounted = useIsMounted()
@@ -77,7 +77,7 @@ const FeedPost = ({post, index}) => {
       </div>
     </div>
     <Link to={internalLink}>
-      <FeedPostMedia mediaInfo={mediaInfo} show={isMounted} />
+      <FeedPostMedia mediaType={mediaType} mediaUrl={post?.link} show={isMounted} />
     </Link>
   </div>
 }

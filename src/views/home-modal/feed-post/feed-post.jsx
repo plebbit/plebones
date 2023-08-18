@@ -5,18 +5,18 @@ import Arrow from '../../../components/icons/arrow'
 import PostTools from '../../../components/post-tools'
 import {useBlock} from '@plebbit/plebbit-react-hooks'
 
-const FeedPostMedia = ({mediaInfo}) => {
-  if (!mediaInfo) {
+const FeedPostMedia = ({mediaType, mediaUrl}) => {
+  if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }
-  if (mediaInfo.type === 'image') {
-    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
+  if (mediaType === 'image') {
+    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaUrl} alt='' /></div>
   }
-  if (mediaInfo.type === 'video') {
-    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></div>
+  if (mediaType === 'video') {
+    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaUrl} /></div>
   }
-  if (mediaInfo.type === 'audio') {
-    return <audio className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} />
+  if (mediaType === 'audio') {
+    return <audio className={styles.media} controls={true} autoPlay={false} src={mediaUrl} />
   }
   return <div className={styles.noMedia}></div>
 }
@@ -28,7 +28,7 @@ const FeedPost = ({post, index}) => {
   }
   catch (e) {}
 
-  const mediaInfo = utils.getCommentMediaInfo(post)
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
 
   const internalLink = `/modal/p/${post.subplebbitAddress}/c/${post.cid}`
 
@@ -65,7 +65,7 @@ const FeedPost = ({post, index}) => {
       </div>
     </div>
     <Link className={hidden && styles.hidden} to={internalLink}>
-      <FeedPostMedia mediaInfo={mediaInfo} />
+      <FeedPostMedia mediaType={mediaType} mediaUrl={post?.link} />
     </Link>
   </div>
 }

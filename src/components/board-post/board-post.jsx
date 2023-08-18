@@ -4,15 +4,15 @@ import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/util
 import {useMemo} from 'react'
 import styles from './board-post.module.css'
 
-const BoardPostMedia = ({mediaInfo}) => {
-  if (!mediaInfo) {
+const BoardPostMedia = ({mediaType, mediaUrl}) => {
+  if (!mediaType) {
     return <div className={styles.noMedia} ></div>
   }
-  if (mediaInfo.type === 'image') {
-    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaInfo.url} alt='' /></div>
+  if (mediaType === 'image') {
+    return <div className={styles.mediaWrapper}><img className={styles.media} src={mediaUrl} alt='' /></div>
   }
-  if (mediaInfo.type === 'video') {
-    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaInfo.url} /></div>
+  if (mediaType === 'video') {
+    return <div className={styles.mediaWrapper}><video className={styles.media} controls={true} autoPlay={false} src={mediaUrl} /></div>
   }
   return <div className={styles.noMedia}></div>
 }
@@ -33,16 +33,16 @@ const Reply = ({reply}) => {
 }
 
 const BoardPost = ({post, index}) => {
-  const mediaInfo = utils.getCommentMediaInfo(post)
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
 
   const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
-  const externalLink = !mediaInfo && post?.link && <Link to={post?.link}>{post?.link}</Link>
+  const externalLink = !mediaType && post?.link && <Link to={post?.link}>{post?.link}</Link>
 
   const replies = useMemo(() => flattenCommentsPages(post.replies).splice(0, 5).map(reply => <Reply reply={reply}/>), [post.replies])
 
   return <div className={styles.post}>
     <Link to={internalLink}>
-      <BoardPostMedia mediaInfo={mediaInfo} />
+      <BoardPostMedia mediaType={mediaType} mediaUrl={post?.link} />
     </Link>
     <div className={styles.textWrapper}>
       <div className={styles.header}>
