@@ -7,9 +7,8 @@
 }
 
 .unreadNotification {
-  border: 1px solid var(--dark3);
+  background-color: var(--dark2);
 }
 
-.readNotification {
-
+.readNotification > div {
 }
