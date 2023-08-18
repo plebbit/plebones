@@ -7,16 +7,15 @@ import {useParams} from 'react-router-dom'
 
 const lastVirtuosoStates = {}
 
+const Loading = () => 'loading...'
+
 function Board() {
   const params = useParams()
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'active'
-  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
-  let Loading
-  if (hasMore) {
-    Loading = () => 'loading...'
-  }
+  const Footer = hasMore ? Loading : undefined
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
@@ -42,7 +41,7 @@ function Board() {
         style={ { maxWidth: '100%' } }
         itemContent={(index, post) => <BoardPost index={index} post={post} />}
         useWindowScroll={ true }
-        components={ {Footer: Loading } }
+        components={ {Footer} }
         endReached={ loadMore }
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}

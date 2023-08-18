@@ -34,17 +34,16 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
 
 const lastVirtuosoStates = {}
 
+const Loading = () => 'loading...'
+
 function Subplebbit() {
   const params = useParams()
   const subplebbitAddress = params.subplebbitAddress
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress])
   const sortType = params?.sortType || 'hot'
-  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
-  let Loading
-  if (hasMore) {
-    Loading = () => 'loading...'
-  }
+  const Footer = hasMore ? Loading : undefined
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
@@ -75,7 +74,7 @@ function Subplebbit() {
         style={ { maxWidth: '100%' } }
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
         useWindowScroll={ true }
-        components={ {Footer: Loading } }
+        components={ {Footer} }
         endReached={ loadMore }
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}

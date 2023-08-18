@@ -6,19 +6,22 @@ import {useParams} from 'react-router-dom'
 
 const lastVirtuosoStates = {}
 
+const Loading = () => 'loading...'
+const NoSubscriptions = () => 'no subscriptions'
+
 function Subscriptions() {
   const params = useParams()
   const account = useAccount()
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'hot'
-  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10})
 
-  let Loading
+  let Footer
   if (hasMore) {
-    Loading = () => 'loading...'
+    Footer = Loading
   }
   if (subplebbitAddresses?.length === 0) {
-    Loading = () => 'no subscriptions'
+    Footer = NoSubscriptions
   }
 
   // save last virtuoso state on each scroll
@@ -45,7 +48,7 @@ function Subscriptions() {
         style={ { maxWidth: '100%' } }
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
         useWindowScroll={ true }
-        components={ {Footer: Loading } }
+        components={ {Footer} }
         endReached={ loadMore }
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}

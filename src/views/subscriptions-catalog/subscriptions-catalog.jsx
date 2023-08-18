@@ -89,6 +89,9 @@ const lastVirtuosoStates = {}
 // column width in px
 const columnWidth = 180
 
+const Loading = () => 'loading...'
+const NoSubscriptions = () => 'no subscriptions'
+
 function Catalog() {
   const windowWidth = useWindowWidth()
   const columnCount = Math.floor(windowWidth / columnWidth)
@@ -96,17 +99,23 @@ function Catalog() {
   const account = useAccount()
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'active'
-  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+
+  // filter non images
+  const imageOnlyFeed = useMemo(() => feed.filter(post => {
+    const mediaType = utils.getCommentLinkMediaType(post?.link)
+    return mediaType === 'image' || mediaType === 'video'
+  }), [feed])
 
   // split feed into rows
-  const rows = useFeedRows(feed, columnCount)
+  const rows = useFeedRows(imageOnlyFeed, columnCount)
 
-  let Loading
+  let Footer
   if (hasMore) {
-    Loading = () => 'loading...'
+    Footer = Loading
   }
   if (subplebbitAddresses?.length === 0) {
-    Loading = () => 'no subscriptions'
+    Footer = NoSubscriptions
   }
 
   // save last virtuoso state on each scroll
@@ -134,7 +143,7 @@ function Catalog() {
         style={ { maxWidth: '100%' } }
         itemContent={(index, row) => <CatalogRow index={index} row={row} />}
         useWindowScroll={ true }
-        components={ {Footer: Loading } }
+        components={ {Footer } }
         endReached={ loadMore }
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}

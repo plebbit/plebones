@@ -8,18 +8,17 @@ import PostModal from './post-modal'
  
 const lastVirtuosoStates = {}
 
+const Loading = () => 'loading...'
+
 function Home() {
   const params = useParams()
   // dont load the feed if the user loads the post page directly
   const isFirstLocationAndIsPost = useLocation().key === 'default' && params.commentCid
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
-  let {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
-  let Loading
-  if (hasMore) {
-    Loading = () => 'loading...'
-  }
+  const Footer = hasMore ? Loading : undefined
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
@@ -46,7 +45,7 @@ function Home() {
         style={ { maxWidth: '100%' } }
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
         useWindowScroll={ true }
-        components={ {Footer: Loading } }
+        components={ {Footer} }
         endReached={ loadMore }
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}
