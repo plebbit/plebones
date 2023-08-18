@@ -17,6 +17,7 @@
   font-size: 13px;
   border: 1px solid var(--dark3);
   word-break: break-word;
+  white-space: pre;
 }
 
 .media {
@@ -102,6 +103,8 @@
 
 .replyContent {
   font-size: 13px;
+  word-break: break-word;
+  white-space: pre;
 }
 
 /* add indent to each nested reply */
