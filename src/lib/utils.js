@@ -6,7 +6,7 @@ import memoize from 'memoizee'
 export const getCommentMediaInfo = (comment) => {
   const mediaType = getCommentLinkMediaType(comment?.link)
   // can optionally fallback to comment.thumbnailUrl
-  // plebones doesn't do it because thumnbails don't look good
+  // doesn't look good in plebones
   // if (!mediaType && comment?.thumbnailUrl) {
   //   return {
   //     url: comment?.thumbnailUrl,
@@ -36,7 +36,7 @@ export const getCommentMediaInfo = (comment) => {
   }
 }
 
-// cache media type because not sure how fast it is
+// cache media type because it takes on average 5ms
 const getCommentLinkMediaTypeNoCache = (link) => {
   if (!link) return
   let mime
