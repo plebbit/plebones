@@ -6,9 +6,9 @@
   font-family: verdana, arial, helvetica, sans-serif;
 }
 
-.unreadNotification {
+.unreadNotification > div {
   background-color: var(--dark2);
 }
 
-.readNotification > div {
+.readNotification {
 }
