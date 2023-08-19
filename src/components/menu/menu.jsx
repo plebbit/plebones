@@ -7,14 +7,31 @@ import Submit from './submit'
 const pages = new Set(['profile', 'settings', 'about', 'inbox'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
 
+const PostMenu = () => {
+  return <div className={styles.menu}>
+    <span className={styles.leftMenu}></span>
+    <span className={styles.rightMenu}>
+      <Link to={'/'} className={styles.menuItem}>p/all</Link>
+      {' '}
+      <Link to={'/about'} className={styles.menuItem}>about</Link>
+    </span>
+  </div>
+}
+
 const Menu = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const pathNames = useLocation()?.pathname?.split?.('/')
+  const {pathname, key} = useLocation()
+  const pathNames = pathname?.split?.('/')
+  const isFirstLocation = key === 'default'
 
   // dont show menu on post page because it looks ugly
   if (params.commentCid) {
-    return ''
+    // users who clicked on a post can click back button, don't need a manu
+    if (!isFirstLocation) {
+      return ''
+    }
+    return <PostMenu />
   }
 
   const isPage = pages.has(pathNames[1])

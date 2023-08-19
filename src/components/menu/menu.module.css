@@ -11,6 +11,17 @@
   user-select: none;
 }
 
+.aboutMenu {
+  position: fixed;
+  top: 0;
+  right: 2px;
+  color: var(--light2);
+  background-color: var(--dark1);
+  font-size: 12px;
+  /* menus are buttons so it's annoying to select them by accident */
+  user-select: none;
+}
+
 .scrollToTopButton {
   opacity: 0;
   height: 50px;
