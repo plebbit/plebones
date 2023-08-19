@@ -1,4 +1,4 @@
-#### How to add android app to project using capacitor
+#### How to add Android app to project using https://capacitorjs.com/docs/getting-started
 
 1.
 ```
@@ -7,9 +7,9 @@ npx cap add android
 npx cap sync
 ```
 
-2. put icons in android/icons
+2. Put icons in android/icons
 ```
 yarn android:build:icons
 ```
 
-3. copy keystore to android/plebbit.keystore
+3. Copy keystore to android/plebbit.keystore
