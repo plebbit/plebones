@@ -1,6 +1,6 @@
 {
   "short_name": "plebones",
-  "name": "bare bones gui client for plebbit",
+  "name": "plebones",
   "icons": [
     {
       "src": "manifest-icon-192x192.png",

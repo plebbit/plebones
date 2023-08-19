@@ -2,6 +2,23 @@
   "name": "plebones",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts build",
+    "test": "react-scripts test",
+    "analyze-bundle": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true react-scripts build && source-map-explorer 'build/static/js/*.js'",
+    "electron": "yarn electron:before && electron .",
+    "electron:no-delete-data": "yarn electron:before:download-ipfs && electron .",
+    "electron:start": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && yarn electron\"",
+    "electron:start:no-delete-data": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && yarn electron:no-delete-data\"",
+    "electron:build:linux": "electron-builder build --publish never -l",
+    "electron:build:windows": "electron-builder build --publish never -w",
+    "electron:build:mac": "electron-builder build --publish never -m",
+    "electron:before": "yarn electron:before:download-ipfs && yarn electron:before:delete-data",
+    "electron:before:download-ipfs": "node electron/downloadIpfs",
+    "electron:before:delete-data": "rimraf .plebbit",
+    "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#ffffee'"
+  },
   "dependencies": {
     "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
@@ -17,11 +34,53 @@
     "react-virtuoso": "4.5.0",
     "use-debounce": "9.0.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@capacitor/cli": "3.6.0",
+    "concurrently": "8.0.1",
+    "cordova-res": "0.15.4",
+    "cross-env": "7.0.3",
+    "decompress": "4.2.1",
+    "electron": "19.1.8",
+    "electron-builder": "23.0.9",
+    "source-map-explorer": "2.5.3",
+    "wait-on": "7.0.1"
+  },
+  "main": "electron/main.js",
+  "build": {
+    "appId": "plebones.desktop",
+    "productName": "plebones",
+    "beforePack": "electron/beforePack.js",
+    "afterAllArtifactBuild": "electron/afterAllArtifactBuild.js",
+    "extraResources": [
+      {
+        "from": "bin/${os}",
+        "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "files": [
+      "build/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extends": null,
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.social-networking",
+      "type": "distribution"
+    },
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Network"
+    }
   },
   "eslintConfig": {
     "extends": [
