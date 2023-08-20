@@ -53,9 +53,12 @@ const FeedPost = ({post, index}) => {
   const [upvoted, upvote] = useUpvote(post)
   const [downvoted, downvote] = useDownvote(post)
 
-  const scoreNumber = (post?.upvoteCount - post?.downvoteCount) || 0
-  const largeScoreNumber = String(scoreNumber).length > 3
+  let scoreNumber = (post?.upvoteCount - post?.downvoteCount)
   const negativeScoreNumber = scoreNumber < 0
+  const largeScoreNumber = String(scoreNumber).length > 3
+  if (isNaN(scoreNumber)) {
+    scoreNumber = '-'
+  }
 
   const labels = useCommentLabels(post, editedPostState)
 

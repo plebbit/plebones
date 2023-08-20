@@ -98,9 +98,12 @@ function Post() {
   // scroll to top on first load
   useEffect(() => window.scrollTo(0,0), [])
 
-  const scoreNumber = (post?.upvoteCount - post?.downvoteCount) || 0
-  const largeScoreNumber = String(scoreNumber).length > 3
+  let scoreNumber = (post?.upvoteCount - post?.downvoteCount)
   const negativeScoreNumber = scoreNumber < 0
+  const largeScoreNumber = String(scoreNumber).length > 3
+  if (isNaN(scoreNumber)) {
+    scoreNumber = '-'
+  }
 
   const labels = useCommentLabels(post, editedPostState)
 
@@ -127,7 +130,7 @@ function Post() {
             <div onClick={upvote} className={[styles.upvote, upvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>
               <PostTools post={post}>
                 <div className={[styles.scoreNumber, largeScoreNumber ? styles.largeScoreNumber : undefined, negativeScoreNumber ? styles.negativeScoreNumber: undefined].join(' ')}>
-                  {(post?.upvoteCount - post?.downvoteCount) || 0}
+                  {scoreNumber}
                 </div>
               </PostTools>
             <div onClick={downvote} className={[styles.downvote, downvoted ? styles.voteSelected : undefined].join(' ')}><Arrow /></div>
