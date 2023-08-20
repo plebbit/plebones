@@ -1,6 +1,6 @@
 {
   "name": "plebones",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "bare bones gui client for plebbit",
   "author": "Esteban Abaroa",
   "license": "GPL-2.0-only",
