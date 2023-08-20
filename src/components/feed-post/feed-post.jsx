@@ -40,7 +40,7 @@ const FeedPost = ({post, index}) => {
 
   const mediaType = utils.getCommentLinkMediaType(post?.link)
 
-  const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
+  const internalLink = `/p/${post?.subplebbitAddress}/c/${post?.cid}`
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
@@ -82,7 +82,7 @@ const FeedPost = ({post, index}) => {
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
-          <span className={styles.author}> by {shortAuthorAddress || post?.author?.shortAddress} to </span>
+          <span className={styles.author}> by <Link to={`/u/${post?.author?.address}/c/${post?.cid}`}>{shortAuthorAddress || post?.author?.shortAddress}</Link> to </span>
           <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{post?.shortSubplebbitAddress}</Link>
         </div>
         <div className={styles.footer}>

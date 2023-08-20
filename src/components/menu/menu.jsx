@@ -4,7 +4,7 @@ import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import AccountMenu from './account-menu'
 import Submit from './submit'
 
-const pages = new Set(['profile', 'settings', 'about', 'inbox'])
+const pages = new Set(['profile', 'settings', 'about', 'inbox', 'u'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
 
 const PostMenu = () => {
@@ -26,7 +26,7 @@ const Menu = () => {
   const isFirstLocation = key === 'default'
 
   // dont show menu on post page because it looks ugly
-  if (params.commentCid) {
+  if (pathNames[0] === 'p' && params.commentCid) {
     // users who clicked on a post can click back button, don't need a manu
     if (!isFirstLocation) {
       return ''

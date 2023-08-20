@@ -19,7 +19,7 @@ a {
 }
 
 /* remove outlines on focus */
-select:focus, input:focus, textarea:focus, video:focus {
+select:focus, input:focus, textarea:focus, video:focus, a:focus {
   outline: 0;
 }
 

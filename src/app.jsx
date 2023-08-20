@@ -15,6 +15,7 @@ import NotFound from './views/not-found'
 import Profile from './views/profile'
 import About from './views/about'
 import Inbox from './views/inbox'
+import Author from './views/author'
 import {useAccount} from '@plebbit/plebbit-react-hooks'
 
 import styles from './app.module.css'
@@ -67,6 +68,7 @@ function App() {
           <Route path="/p/:subplebbitAddress/catalog/:sortType?" element={ <SubplebbitCatalog/> } />
           <Route path="/p/:subplebbitAddress/:sortType?" element={ <Subplebbit/> } />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={ <Post/> }/>
+          <Route path="/u/:authorAddress/c/:commentCid?" element={ <Author/> } />
           <Route path="*" element={ <NotFound/> } />
         </Route>
       </Routes>

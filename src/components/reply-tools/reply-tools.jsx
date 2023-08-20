@@ -18,6 +18,7 @@ import Arrow from '../icons/arrow'
 import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
 import useReply from '../../hooks/use-reply'
+import {Link} from 'react-router-dom'
 
 const Menu = ({reply, onPublished}) => {
   const {blocked: hidden, block: hide, unblock: unhide} = useBlock({cid: reply?.cid})
@@ -61,8 +62,8 @@ const Menu = ({reply, onPublished}) => {
       </div>
       {' '}
       <div>
-        <div onClick={toggleHide} className={styles.menuItem}> {!hidden ? 'hide' : 'unhide'}</div>
-        <div onClick={toggleBlockAuthor} className={styles.menuItem}> {!authorBlocked ? 'block' : 'unblock'} u/{reply?.author?.shortAddress || ''}</div>
+        <div onClick={toggleHide} className={styles.menuItem}>{!hidden ? 'hide' : 'unhide'}</div>
+        <div className={styles.menuItem}><span onClick={toggleBlockAuthor}>{!authorBlocked ? 'block' : 'unblock'}</span> <Link to={`/u/${reply?.author?.address}/c/${reply?.cid}`}>u/{reply?.author?.shortAddress || ''}</Link></div>
       </div>
     </div>
     <div>

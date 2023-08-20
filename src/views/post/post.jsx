@@ -141,7 +141,7 @@ function Post() {
           </div>
           <div>
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
-            <span className={styles.author}> by {shortAuthorAddress || post?.author?.shortAddress} to </span>
+            <span className={styles.author}> by <Link to={`/u/${post?.author?.address}/c/${post?.cid}`}>{shortAuthorAddress || post?.author?.shortAddress}</Link> to </span>
             <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{post?.subplebbitAddress}</Link>
           </div>
           <div className={styles.footer}>
