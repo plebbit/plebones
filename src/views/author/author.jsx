@@ -61,7 +61,6 @@ function Author() {
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ authorComments?.length || 0 }
         data={ authorComments }
-        style={ { maxWidth: '100%' } }
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
         useWindowScroll={ true }
         components={ {Footer} }

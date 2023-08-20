@@ -46,7 +46,6 @@ function Profile() {
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ accountComments?.length || 0 }
         data={ accountComments }
-        style={ { maxWidth: '100%' } }
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
         useWindowScroll={ true }
         ref={virtuosoRef}

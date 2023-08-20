@@ -36,7 +36,6 @@ function Inbox() {
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ notifications?.length || 0 }
         data={ notifications }
-        style={ { maxWidth: '100%' } }
         itemContent={(index, notification) => <div className={notification.markedAsRead === false ? styles.unreadNotification : styles.readNotification}><FeedPost index={index} post={notification} /></div>}
         useWindowScroll={ true }
         ref={virtuosoRef}

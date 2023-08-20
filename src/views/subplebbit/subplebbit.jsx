@@ -71,7 +71,6 @@ function Subplebbit() {
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ feed?.length || 0 }
         data={ feed }
-        style={ { maxWidth: '100%' } }
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
         useWindowScroll={ true }
         components={ {Footer} }

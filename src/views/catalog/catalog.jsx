@@ -77,7 +77,6 @@ function Catalog() {
         increaseViewportBy={ { bottom: 600, top: 600 } }
         totalCount={ rows?.length || 0 }
         data={ rows }
-        style={ { maxWidth: '100%' } }
         itemContent={(index, row) => <CatalogRow index={index} row={row} />}
         useWindowScroll={ true }
         components={ {Footer} }
