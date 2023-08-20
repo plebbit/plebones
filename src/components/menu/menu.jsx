@@ -23,11 +23,12 @@ const Menu = () => {
   const params = useParams()
   const {pathname, key} = useLocation()
   const pathNames = pathname?.split?.('/')
+  // is first page visitor
   const isFirstLocation = key === 'default'
 
   // dont show menu on post page because it looks ugly
   if (pathNames[1] === 'p' && params.commentCid) {
-    // users who clicked on a post can click back button, don't need a manu
+    // only show menu to first page visitors, because they can't click back to return to feed
     if (!isFirstLocation) {
       return ''
     }
