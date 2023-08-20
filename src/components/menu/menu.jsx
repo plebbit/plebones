@@ -26,7 +26,7 @@ const Menu = () => {
   const isFirstLocation = key === 'default'
 
   // dont show menu on post page because it looks ugly
-  if (pathNames[0] === 'p' && params.commentCid) {
+  if (pathNames[1] === 'p' && params.commentCid) {
     // users who clicked on a post can click back button, don't need a manu
     if (!isFirstLocation) {
       return ''
