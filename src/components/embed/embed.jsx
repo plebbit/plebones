@@ -11,19 +11,17 @@ const Embed = ({parsedUrl}) => {
     return <RedditEmbed parsedUrl={parsedUrl} />
   }
 }
+
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
 
 const YoutubeEmbed = ({parsedUrl}) => {
   let youtubeId
-  try {
-    if (parsedUrl.host.endsWith('youtu.be')) {
-      youtubeId = parsedUrl.pathname.replaceAll('/', '')
-    }
-    else {
-      youtubeId = parsedUrl.searchParams.get('v')
-    }
+  if (parsedUrl.host.endsWith('youtu.be')) {
+    youtubeId = parsedUrl.pathname.replaceAll('/', '')
   }
-  catch (e) {}
+  else {
+    youtubeId = parsedUrl.searchParams.get('v')
+  }
   return <iframe 
     className={styles.youtubeEmbed}
     height="100%"
