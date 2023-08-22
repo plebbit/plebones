@@ -1,0 +1,17 @@
+.youtubeEmbed {
+  height: 360px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.redditEmbed {
+  height: 360px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.twitterEmbed {
+  height: 360px;
+  width: 100%;
+  max-width: 640px;
+}

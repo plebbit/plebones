@@ -15,12 +15,13 @@ import useReplies from '../../hooks/use-replies'
 import useCommentLabels from '../../hooks/use-comment-labels'
 import useStateString from '../../hooks/use-state-string'
 import ReplyMedia from './reply-media'
+import Embed, {canEmbed} from '../../components/embed'
 
 const PostMedia = ({post}) => {
-  const mediaType = utils.getCommentLinkMediaType(post?.link)
-  if (!mediaType) {
+  if (!post?.link) {
     return <div className={styles.noMedia}></div>
   }
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
   if (mediaType === 'image') {
     return <div className={styles.mediaWrapper}><img className={styles.media} src={post?.link} alt='' /></div>
   }
@@ -30,6 +31,13 @@ const PostMedia = ({post}) => {
   if (mediaType === 'audio') {
     return <audio className={styles.media} controls={true} autoPlay={false} src={post?.link} />
   }
+  try {
+    const parsedUrl = new URL(post?.link)
+    if (canEmbed(parsedUrl)) {
+      return <div className={styles.mediaWrapper}><Embed parsedUrl={parsedUrl} /></div>
+    }
+  }
+  catch (e) {}
   return <div className={styles.noMedia}></div>
 }
 
