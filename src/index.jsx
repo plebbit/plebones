@@ -4,6 +4,7 @@ import App from './app'
 import { HashRouter as Router } from 'react-router-dom'
 import './index.css'
 import './themes.css'
+import { App as CapacitorApp } from '@capacitor/app'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import PlebbitJs from '@plebbit/plebbit-js'
 // inject native functions into renderer
@@ -23,3 +24,12 @@ root.render(
 
 // set up PWA https://cra.link/PWA
 serviceWorkerRegistration.register()
+
+// add back button in android app
+CapacitorApp.addListener('backButton', ({canGoBack}) => {
+  if (canGoBack) {
+    window.history.back()
+  } else {
+    CapacitorApp.exitApp()
+  }
+})
