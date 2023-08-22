@@ -100,7 +100,7 @@ const FeedPost = ({post, index}) => {
       </div>
     </div>
     <div>
-      <FeedPostMedia mediaType={mediaType} mediaLink={post?.link} link={internalLink} />
+      <FeedPostMedia mediaType={mediaType} mediaUrl={post?.link} link={internalLink} />
     </div>
   </div>
 }
