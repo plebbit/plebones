@@ -23,7 +23,7 @@
     "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#000000'"
   },
   "dependencies": {
-    "@capacitor/app": "5.0.6",
+    "@capacitor/app": "1.1.1",
     "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
     "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#376dd0c2fbecc398d69a1395e59c62b712c229bc",
