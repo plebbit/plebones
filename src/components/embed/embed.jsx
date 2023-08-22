@@ -47,6 +47,7 @@ const TwitterEmbed = ({parsedUrl}) => {
     credentialless
     referrerpolicy='no-referrer'
     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
     title={parsedUrl.href}
     srcdoc={`
       <blockquote class="twitter-tweet" data-theme="dark">
@@ -68,6 +69,7 @@ const RedditEmbed = ({parsedUrl}) => {
     credentialless
     referrerpolicy='no-referrer'
     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
     title={parsedUrl.href}
     srcdoc={`
       <style>
