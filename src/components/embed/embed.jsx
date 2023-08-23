@@ -228,6 +228,7 @@ const StreamableEmbed = ({parsedUrl}) => {
 }
 
 const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts, ...odyseeHosts, ...bitchuteHosts, ...streamableHosts])
+
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
 export default Embed
