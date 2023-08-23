@@ -10,6 +10,9 @@ const Embed = ({parsedUrl}) => {
   if (redditHosts.has(parsedUrl.host)) {
     return <RedditEmbed parsedUrl={parsedUrl} />
   }
+  if (twitchHosts.has(parsedUrl.host)) {
+    return <TwitchEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -47,7 +50,6 @@ const TwitterEmbed = ({parsedUrl}) => {
     credentialless
     referrerpolicy='no-referrer'
     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    allowfullscreen
     title={parsedUrl.href}
     srcdoc={`
       <blockquote class="twitter-tweet" data-theme="dark">
@@ -69,7 +71,6 @@ const RedditEmbed = ({parsedUrl}) => {
     credentialless
     referrerpolicy='no-referrer'
     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    allowfullscreen
     title={parsedUrl.href}
     srcdoc={`
       <style>
@@ -86,7 +87,33 @@ const RedditEmbed = ({parsedUrl}) => {
   />
 }
 
-const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts])
+const twitchHosts = new Set(['twitch.tv', 'www.twitch.tv'])
+
+const TwitchEmbed = ({parsedUrl}) => {
+  let iframeUrl
+  if (parsedUrl.pathname.startsWith('/videos/')) {
+    const videoId = parsedUrl.pathname.replace('/videos/', '')
+    iframeUrl = `https://player.twitch.tv/?video=${videoId}&parent=${window.location.hostname}`
+  }
+  else {
+    const channel = parsedUrl.pathname.replaceAll('/', '')
+    iframeUrl = `https://player.twitch.tv/?channel=${channel}&parent=${window.location.hostname}`
+  }
+  return <iframe 
+    className={styles.embed}
+    height="100%"
+    width="100%"
+    frameborder="0" 
+    credentialless
+    referrerpolicy='no-referrer'
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
+    title={parsedUrl.href}
+    src={iframeUrl}
+  />
+}
+
+const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts])
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
 export default Embed
