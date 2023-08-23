@@ -25,6 +25,9 @@ const Embed = ({parsedUrl}) => {
   if (bitchuteHosts.has(parsedUrl.host)) {
     return <BitchuteEmbed parsedUrl={parsedUrl} />
   }
+  if (streamableHosts.has(parsedUrl.host)) {
+    return <StreamableEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -206,7 +209,25 @@ const BitchuteEmbed = ({parsedUrl}) => {
   />
 }
 
-const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts, ...odyseeHosts, ...bitchuteHosts])
+const streamableHosts = new Set(['streamable.com', 'www.streamable.com'])
+
+const StreamableEmbed = ({parsedUrl}) => {
+  const videoId = parsedUrl.pathname.replaceAll('/', '')
+  return <iframe 
+    className={styles.embed}
+    height="100%"
+    width="100%"
+    frameborder="0" 
+    credentialless
+    referrerpolicy='no-referrer'
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
+    title={parsedUrl.href}
+    src={`https://streamable.com/e/${videoId}`}
+  />
+}
+
+const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts, ...odyseeHosts, ...bitchuteHosts, ...streamableHosts])
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
 export default Embed
