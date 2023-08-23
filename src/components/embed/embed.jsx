@@ -16,6 +16,9 @@ const Embed = ({parsedUrl}) => {
   if (tiktokHosts.has(parsedUrl.host)) {
     return <TiktokEmbed parsedUrl={parsedUrl} />
   }
+  if (instagramHosts.has(parsedUrl.host)) {
+    return <InstagramEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -138,7 +141,30 @@ const TiktokEmbed = ({parsedUrl}) => {
   />
 }
 
-const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts])
+const instagramHosts = new Set(['instagram.com', 'www.instagram.com'])
+
+const InstagramEmbed = ({parsedUrl}) => {
+  const pathNames = parsedUrl.pathname.replace(/\/+$/, '').split('/')
+  const id = pathNames[pathNames.length - 1]
+  return <iframe 
+    className={styles.embed}
+    height="100%"
+    width="100%"
+    frameborder="0" 
+    credentialless
+    referrerpolicy='no-referrer'
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    title={parsedUrl.href}
+    srcdoc={`
+      <blockquote class="instagram-media">
+        <a href="https://www.instagram.com/p/${id}/"></a>
+      /blockquote>
+      <script async src="//www.instagram.com/embed.js"></script>
+    `}
+  />
+}
+
+const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts])
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
 export default Embed
