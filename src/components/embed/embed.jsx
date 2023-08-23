@@ -22,6 +22,9 @@ const Embed = ({parsedUrl}) => {
   if (odyseeHosts.has(parsedUrl.host)) {
     return <OdyseeEmbed parsedUrl={parsedUrl} />
   }
+  if (bitchuteHosts.has(parsedUrl.host)) {
+    return <BitchuteEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -125,7 +128,7 @@ const TwitchEmbed = ({parsedUrl}) => {
 const tiktokHosts = new Set(['tiktok.com', 'www.tiktok.com'])
 
 const TiktokEmbed = ({parsedUrl}) => {
-  const videoId = parsedUrl.pathname.replace(/.+\/video\//, '')
+  const videoId = parsedUrl.pathname.replace(/.+\/video\//, '').replaceAll('/', '')
   return <iframe 
     className={styles.verticalEmbed}
     height="100%"
@@ -185,7 +188,25 @@ const OdyseeEmbed = ({parsedUrl}) => {
   />
 }
 
-const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts, ...odyseeHosts])
+const bitchuteHosts = new Set(['bitchute.com', 'www.bitchute.com'])
+
+const BitchuteEmbed = ({parsedUrl}) => {
+  const videoId = parsedUrl.pathname.replace(/\/video\//, '').replaceAll('/', '')
+  return <iframe 
+    className={styles.embed}
+    height="100%"
+    width="100%"
+    frameborder="0" 
+    credentialless
+    referrerpolicy='no-referrer'
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
+    title={parsedUrl.href}
+    src={`https://www.bitchute.com/embed/${videoId}/`}
+  />
+}
+
+const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts, ...odyseeHosts, ...bitchuteHosts])
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
 export default Embed
