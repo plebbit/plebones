@@ -167,7 +167,7 @@ const InstagramEmbed = ({parsedUrl}) => {
     srcdoc={`
       <blockquote class="instagram-media">
         <a href="https://www.instagram.com/p/${id}/"></a>
-      /blockquote>
+      </blockquote>
       <script async src="//www.instagram.com/embed.js"></script>
     `}
   />
