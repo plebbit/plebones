@@ -13,6 +13,9 @@ const Embed = ({parsedUrl}) => {
   if (twitchHosts.has(parsedUrl.host)) {
     return <TwitchEmbed parsedUrl={parsedUrl} />
   }
+  if (tiktokHosts.has(parsedUrl.host)) {
+    return <TiktokEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -26,7 +29,7 @@ const YoutubeEmbed = ({parsedUrl}) => {
     youtubeId = parsedUrl.searchParams.get('v')
   }
   return <iframe 
-    className={styles.youtubeEmbed}
+    className={styles.embed}
     height="100%"
     width="100%"
     frameborder="0" 
@@ -43,7 +46,7 @@ const twitterHosts = new Set(['twitter.com', 'www.twitter.com', 'x.com', 'www.x.
 
 const TwitterEmbed = ({parsedUrl}) => {
   return <iframe 
-    className={styles.twitterEmbed}
+    className={styles.embed}
     height="100%"
     width="100%"
     frameborder="0" 
@@ -64,7 +67,7 @@ const redditHosts = new Set(['reddit.com', 'www.reddit.com', 'old.reddit.com'])
 
 const RedditEmbed = ({parsedUrl}) => {
   return <iframe 
-    className={styles.redditEmbed}
+    className={styles.embed}
     height="100%"
     width="100%"
     frameborder="0" 
@@ -113,7 +116,29 @@ const TwitchEmbed = ({parsedUrl}) => {
   />
 }
 
-const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts])
+const tiktokHosts = new Set(['tiktok.com', 'www.tiktok.com'])
+
+const TiktokEmbed = ({parsedUrl}) => {
+  const videoId = parsedUrl.pathname.replace(/.+\/video\//, '')
+  return <iframe 
+    className={styles.verticalEmbed}
+    height="100%"
+    width="100%"
+    frameborder="0" 
+    credentialless
+    referrerpolicy='no-referrer'
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    title={parsedUrl.href}
+    srcdoc={`
+      <blockquote class="tiktok-embed" data-video-id="${videoId}">
+        <a></a>
+      </blockquote> 
+      <script async src="https://www.tiktok.com/embed.js"></script>
+    `}
+  />
+}
+
+const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts])
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
 export default Embed
