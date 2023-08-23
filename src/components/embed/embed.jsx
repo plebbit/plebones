@@ -19,6 +19,9 @@ const Embed = ({parsedUrl}) => {
   if (instagramHosts.has(parsedUrl.host)) {
     return <InstagramEmbed parsedUrl={parsedUrl} />
   }
+  if (odyseeHosts.has(parsedUrl.host)) {
+    return <OdyseeEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -164,7 +167,25 @@ const InstagramEmbed = ({parsedUrl}) => {
   />
 }
 
-const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts])
+const odyseeHosts = new Set(['odysee.com', 'www.odysee.com'])
+
+const OdyseeEmbed = ({parsedUrl}) => {
+  const iframeUrl = `https://odysee.com/$/embed${parsedUrl.pathname}`
+  return <iframe 
+    className={styles.embed}
+    height="100%"
+    width="100%"
+    frameborder="0" 
+    credentialless
+    referrerpolicy='no-referrer'
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
+    title={parsedUrl.href}
+    src={iframeUrl}
+  />
+}
+
+const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts, ...odyseeHosts])
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
 export default Embed
