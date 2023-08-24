@@ -28,6 +28,9 @@ const Embed = ({parsedUrl}) => {
   if (streamableHosts.has(parsedUrl.host)) {
     return <StreamableEmbed parsedUrl={parsedUrl} />
   }
+  if (spotifyHosts.has(parsedUrl.host)) {
+    return <SpotifyEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -227,7 +230,29 @@ const StreamableEmbed = ({parsedUrl}) => {
   />
 }
 
-const canEmbedHosts = new Set([...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, ...tiktokHosts, ...instagramHosts, ...odyseeHosts, ...bitchuteHosts, ...streamableHosts])
+const spotifyHosts = new Set(['spotify.com', 'www.spotify.com', 'open.spotify.com'])
+
+const SpotifyEmbed = ({parsedUrl}) => {
+  const iframeUrl = `https://open.spotify.com/embed${parsedUrl.pathname}?theme=0`
+  return <iframe 
+    className={styles.embed}
+    height="100%"
+    width="100%"
+    frameborder="0" 
+    credentialless
+    referrerpolicy='no-referrer'
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
+    title={parsedUrl.href}
+    src={iframeUrl}
+  />
+}
+
+const canEmbedHosts = new Set([
+  ...youtubeHosts, ...twitterHosts, ...redditHosts, ...twitchHosts, 
+  ...tiktokHosts, ...instagramHosts, ...odyseeHosts, ...bitchuteHosts, 
+  ...streamableHosts, ...spotifyHosts
+])
 
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
 
