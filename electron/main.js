@@ -7,8 +7,7 @@ const {
   Tray,
   screen: electronScreen,
   shell,
-  dialog,
-  session
+  dialog
 } = require('electron')
 const isDev = require('electron-is-dev')
 const path = require('path')
