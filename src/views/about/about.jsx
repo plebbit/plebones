@@ -6,7 +6,7 @@ function About() {
   const {changeLanguage, language} = i18n
   const {supportedLngs} = i18n.options
 
-  // some language codes have more than 2 chars, like 'ckb' and 'cimode' (the test mode, which shows the key, e.g. about_plebbit)
+  // some language codes have more than 2 chars, like 'ckb' and 'cimode' (the CI test mode, which shows the key, e.g. about_plebbit)
   const languageOptions = supportedLngs.map(language => <option value={language}>{language.substring(0, 2)}</option>)
   const onSelectLanguage = (e) => changeLanguage(e.target.value)
 
