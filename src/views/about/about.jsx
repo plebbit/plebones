@@ -6,7 +6,7 @@ function About() {
   const {changeLanguage, language} = i18n
   const {supportedLngs} = i18n.options
 
-  const languageOptions = supportedLngs.filter(language => language !== 'cimode').map(language => <option value={language}>{language}</option>)
+  const languageOptions = supportedLngs.map(language => <option value={language}>{language.substring(0, 2)}</option>)
   const onSelectLanguage = (e) => changeLanguage(e.target.value)
 
   return (
