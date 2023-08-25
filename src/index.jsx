@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './app'
+import './lib/init-translations'
 import { HashRouter as Router } from 'react-router-dom'
 import './index.css'
 import './themes.css'
