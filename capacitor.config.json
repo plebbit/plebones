@@ -2,10 +2,5 @@
   "appId": "plebones.android",
   "appName": "plebones",
   "webDir": "build",
-  "bundledWebRuntime": false,
-  "plugins": {
-    "CapacitorHttp": {
-      "enabled": true
-    }
-  }
+  "bundledWebRuntime": false
 }
