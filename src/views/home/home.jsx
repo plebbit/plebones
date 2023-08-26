@@ -8,6 +8,7 @@ import {useParams} from 'react-router-dom'
 const lastVirtuosoStates = {}
 
 const Loading = () => 'loading...'
+const NoPosts = () => 'no posts'
 
 function Home() {
   const params = useParams()
@@ -15,7 +16,13 @@ function Home() {
   const sortType = params?.sortType || 'hot'
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10})
 
-  const Footer = hasMore ? Loading : undefined
+  let Footer
+  if (feed?.length === 0) {
+    Footer = NoPosts
+  }
+  if (hasMore) {
+    Footer = Loading
+  }
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()

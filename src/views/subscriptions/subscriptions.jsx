@@ -8,6 +8,7 @@ const lastVirtuosoStates = {}
 
 const Loading = () => 'loading...'
 const NoSubscriptions = () => 'no subscriptions'
+const NoPosts = () => 'no posts'
 
 function Subscriptions() {
   const params = useParams()
@@ -17,11 +18,14 @@ function Subscriptions() {
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10})
 
   let Footer
-  if (hasMore) {
-    Footer = Loading
+  if (feed?.length === 0) {
+    Footer = NoPosts
   }
   if (subplebbitAddresses?.length === 0) {
     Footer = NoSubscriptions
+  }
+  if (hasMore) {
+    Footer = Loading
   }
 
   // save last virtuoso state on each scroll

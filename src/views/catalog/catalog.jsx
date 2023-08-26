@@ -32,6 +32,7 @@ const lastVirtuosoStates = {}
 const columnWidth = 180
 
 const Loading = () => 'loading...'
+const NoPosts = () => 'no image posts'
 
 function Catalog() {
   const windowWidth = useWindowWidth()
@@ -53,7 +54,13 @@ function Catalog() {
   // split feed into rows
   const rows = useFeedRows(imageOnlyFeed, columnCount)
 
-  const Footer = hasMore ? Loading : undefined
+  let Footer
+  if (imageOnlyFeed?.length === 0) {
+    Footer = NoPosts
+  }
+  if (hasMore) {
+    Footer = Loading
+  }
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()

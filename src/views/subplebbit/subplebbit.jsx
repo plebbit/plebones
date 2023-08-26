@@ -35,6 +35,7 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
 const lastVirtuosoStates = {}
 
 const Loading = () => 'loading...'
+const NoPosts = () => 'no posts'
 
 function Subplebbit() {
   const params = useParams()
@@ -43,7 +44,13 @@ function Subplebbit() {
   const sortType = params?.sortType || 'hot'
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
-  const Footer = hasMore ? Loading : undefined
+  let Footer
+  if (feed?.length === 0) {
+    Footer = NoPosts
+  }
+  if (hasMore) {
+    Footer = Loading
+  }
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
