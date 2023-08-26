@@ -1,7 +1,7 @@
 import createStore from 'zustand'
 import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru'
 
-const readReplyCountsDb = localForageLru.createInstance({name: `plebonesReadReplyCounts`, size: 1000})
+const readReplyCountsDb = localForageLru.createInstance({name: `plebonesReadReplyCounts`, size: 2000})
 
 const useReadReplyCountsStore = createStore((setState, getState) => ({
   readReplyCounts: {},
@@ -27,11 +27,15 @@ const initializeReadReplyCountsStore = async () => {
 initializeReadReplyCountsStore()
 
 const useUnreadReplyCount = (post) => {
-  const readReplyCount = useReadReplyCountsStore(state => state.readReplyCounts[post?.cid])
+  const readReplyCount = useReadReplyCountsStore(state => state.readReplyCounts[post?.cid.substring(2, 14)])
   const setReadReplyCount = useReadReplyCountsStore(state => state.setReadReplyCount)
   const setRepliesToRead = () => {
     if (post?.cid && typeof post?.replyCount === 'number') {
-      setReadReplyCount(post.cid, post.replyCount)
+      // don't set if readReplyCount is defined and bigger or equal, could happen if post.replyCount is outdated
+      if (typeof readReplyCount === 'number' && readReplyCount >= post?.replyCount) {
+        return
+      }
+      setReadReplyCount(post.cid.substring(2, 14), post.replyCount)
     }
   }
   let unreadReplyCount
