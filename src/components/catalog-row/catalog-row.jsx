@@ -34,10 +34,10 @@ const CatalogPostMedia = ({post}) => {
 }
 
 const CatalogPost = ({post}) => {
-  const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
+  const internalLink = `/p/${post?.subplebbitAddress}/c/${post?.cid}`
 
-  let title = post.title || ''
-  const content = post.content || ''
+  let title = post?.title || ''
+  const content = post?.content || ''
   if (title && content) {
     title += ': '
   }

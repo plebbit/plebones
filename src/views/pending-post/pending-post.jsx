@@ -50,7 +50,7 @@ function Post() {
   // redirect to post when post.cid is received
   useEffect(() => {
     if (post?.cid && post?.subplebbitAddress) {
-      navigate(`/p/${post?.subplebbitAddress}/c/${post.cid}`, {replace: true})
+      navigate(`/p/${post?.subplebbitAddress}/c/${post?.cid}`, {replace: true})
     }
   }, [post?.cid, post?.subplebbitAddress, navigate])
 

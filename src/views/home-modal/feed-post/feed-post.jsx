@@ -30,7 +30,7 @@ const FeedPost = ({post, index}) => {
 
   const mediaType = utils.getCommentLinkMediaType(post?.link)
 
-  const internalLink = `/modal/p/${post.subplebbitAddress}/c/${post.cid}`
+  const internalLink = `/modal/p/${post?.subplebbitAddress}/c/${post?.cid}`
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
