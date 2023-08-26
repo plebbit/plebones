@@ -27,7 +27,7 @@ const initializeReadReplyCountsStore = async () => {
 initializeReadReplyCountsStore()
 
 const useUnreadReplyCount = (post) => {
-  const readReplyCount = useReadReplyCountsStore(state => state.readReplyCounts[post?.cid.substring(2, 14)])
+  const readReplyCount = useReadReplyCountsStore(state => state.readReplyCounts[post?.cid?.substring(2, 14)])
   const setReadReplyCount = useReadReplyCountsStore(state => state.setReadReplyCount)
   const setRepliesToRead = () => {
     if (post?.cid && typeof post?.replyCount === 'number') {
