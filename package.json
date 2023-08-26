@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true react-scripts build",
     "test": "react-scripts test",
     "analyze-bundle": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true react-scripts build && source-map-explorer 'build/static/js/*.js'",
     "electron": "yarn electron:before && electron .",
