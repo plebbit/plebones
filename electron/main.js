@@ -69,7 +69,7 @@ const createMainWindow = () => {
     width: 1000,
     height: 600,
     show: false,
-    backgroundColor: 'black',
+    backgroundColor: '#181818',
     webPreferences: {
       webSecurity: true, // must be true or iframe embeds like youtube can do remote code execution
       nodeIntegration: false,
