@@ -25,21 +25,6 @@ const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
   return <div className={styles.noMedia}></div>
 }
 
-const allowedThumbnailHostnames = new Set([
-  'youtube.com',
-  'youtu.be',
-  'tiktok.com',
-  'odysee.com',
-  'bitchute.com',
-  'streamable.com',
-  'instagram.com', 
-  'twitch.tv', 
-  'reddit.com',
-  'old.reddit.com',
-  'twitter.com',
-  'x.com'
-])
-
 const FeedPost = ({post, index}) => {
   // handle pending mod or author edit
   const {state: editedPostState, editedComment: editedPost} = useEditedComment({comment: post})
@@ -53,14 +38,7 @@ const FeedPost = ({post, index}) => {
   }
   catch (e) {}
 
-  let mediaType = utils.getCommentLinkMediaType(post?.link)
-  let mediaUrl = post?.link
-
-  // most thumbnails look bad, so only display certain sites that look good, like youtube
-  if (post?.thumbnailUrl && allowedThumbnailHostnames.has(hostname)) {
-    mediaType = 'image'
-    mediaUrl = post?.thumbnailUrl
-  }
+  const mediaType = utils.getCommentLinkMediaType(post?.link)
 
   const internalLink = `/p/${post?.subplebbitAddress}/c/${post?.cid}`
 
@@ -123,7 +101,7 @@ const FeedPost = ({post, index}) => {
       </div>
     </div>
     <div className={hidden ? styles.hidden : undefined}>
-      <FeedPostMedia mediaType={mediaType} mediaUrl={mediaUrl} link={internalLink} />
+      <FeedPostMedia mediaType={mediaType} mediaUrl={post?.link} link={internalLink} />
     </div>
   </div>
 }
