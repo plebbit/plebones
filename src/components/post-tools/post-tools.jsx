@@ -32,11 +32,17 @@ const Menu = ({post, closeModal}) => {
   const role = useSubplebbit({subplebbitAddress: post?.subplebbitAddress})?.roles?.[account?.author?.address]?.role
   const isMod = role === 'admin' || role === 'owner' || role === 'moderator'
 
+  const share = () => {
+    const shareUrl = `https://pleb.bz/p/${post?.subplebbitAddress}/c/${post?.cid}?redirect=plebones.eth.limo`
+    alert(`${shareUrl}`)
+  }
+
   return <div className={styles.postToolsMenu}>
     <div onClick={toggleSubscribe} className={styles.menuItem}>{!subscribed ? 'join' : 'leave'} p/{post?.shortSubplebbitAddress || ''}</div>
     <div onClick={toggleHide} className={styles.menuItem}>{!hidden ? 'hide' : 'unhide'}</div>
     <div onClick={toggleBlockSubplebbit} className={styles.menuItem}>{!subplebbitBlocked ? 'block' : 'unblock'} p/{post?.shortSubplebbitAddress || ''}</div>
     <div onClick={toggleBlockAuthor} className={styles.menuItem}>{!authorBlocked ? 'block' : 'unblock'} u/{post?.author?.shortAddress || ''}</div>
+    <div onClick={share} className={styles.menuItem}>share</div>
     {isMod && <ModTools post={post} closeModal={closeModal}/>}
   </div>
 }
