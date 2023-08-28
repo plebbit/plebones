@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from './feed-post.module.css'
 import Arrow from '../icons/arrow'
 import PostTools from '../post-tools'
-import {useBlock, useAuthorAddress, useEditedComment} from '@plebbit/plebbit-react-hooks'
+import {useBlock, useAuthorAddress, useEditedComment, useSubplebbit} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
@@ -64,6 +64,11 @@ const FeedPost = ({post, index}) => {
 
   const title = (post?.title?.trim?.() || post?.content?.trim?.())?.substring?.(0, 300) || '-'
 
+  // if sub address is not a domain, add sub title hint to address
+  const subplebbitAddressIsDomain = post?.shortSubplebbitAddress && post?.shortSubplebbitAddress?.includes('.')
+  const subplebbit = useSubplebbit({subplebbitAddress: !subplebbitAddressIsDomain ? post?.subplebbitAddress : undefined})
+  const subplebbitAddress = subplebbit?.title ? `${post?.shortSubplebbitAddress.substring(0, 8)}-${subplebbit?.title?.replaceAll(' ', '').substring(0, 8).toLowerCase()}` : post?.shortSubplebbitAddress
+
   return <div className={styles.feedPost}>
     <div className={styles.textWrapper}>
       <div className={styles.column}>
@@ -86,7 +91,7 @@ const FeedPost = ({post, index}) => {
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
           <span className={styles.author}> by <Link to={`/u/${post?.author?.address}/c/${post?.cid}`}>{shortAuthorAddress || post?.author?.shortAddress}</Link> to </span>
-          <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{post?.shortSubplebbitAddress}</Link>
+          <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{subplebbitAddress}</Link>
         </div>
         <div className={styles.footer}>
           <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
