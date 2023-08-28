@@ -78,3 +78,11 @@ select.sortType, select.feedName {
 .sortType option, .feedName option {
   color: var(--light2);
 }
+
+.goToSubplebbitModal {
+  /* dialog element must have 0 padding/border to be able to detect outside clicks */
+  padding: 0;
+  border: none;
+  /* needs z index to be above virtuoso */
+  z-index: 1;
+}

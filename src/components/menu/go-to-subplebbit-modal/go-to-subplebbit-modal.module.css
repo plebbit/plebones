@@ -1,0 +1,33 @@
+.modal {
+  /* needs z index to be above virtuoso */
+  z-index: 1;
+
+  /* remove outline when selected */
+  outline: unset;
+
+  /* position centered */
+  position: fixed;
+  /* the menu is 15px + 2px padding */
+  top: 17px;
+  right: 0;
+/*  transform: translateX(-50%);*/
+}
+
+.goToSubplebbit {
+  padding: 0 2px;
+  display: flex;
+  width: 360px;
+  /* cancel the modal 2px sides padding */
+  max-width: 98vw; /* fix ios unsupported vw inside calc() */
+  max-width: calc(100vw - 4px);
+}
+
+.goToSubplebbit, .goToSubplebbit button, .goToSubplebbit input {
+  font-size: 16px;
+  background-color: var(--dark1);
+  color: var(--light2);
+}
+
+.goToSubplebbit input {
+  flex: 1;
+}

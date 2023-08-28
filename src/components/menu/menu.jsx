@@ -3,6 +3,8 @@ import styles from './menu.module.css'
 import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import AccountMenu from './account-menu'
 import Submit from './submit'
+import {useState} from 'react'
+import GoToSubplebbitModal from './go-to-subplebbit-modal'
 
 const pages = new Set(['profile', 'settings', 'about', 'inbox', 'u'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
@@ -19,6 +21,7 @@ const PostMenu = () => {
 }
 
 const Menu = () => {
+  const [goToSubplebbitModalIsOpen, setGoToSubplebbitModalIsOpen] = useState(false)
   const navigate = useNavigate()
   const params = useParams()
   const {pathname, key} = useLocation()
@@ -50,6 +53,11 @@ const Menu = () => {
 
   const changeFeedName = (event) => {
     const feedName = event.target.value
+
+    if (feedName === 'goToSubplebbit') {
+      return setGoToSubplebbitModalIsOpen(true)
+    }
+
     const link = isCatalog ? createCatalogLink(feedName, params.sortType) : createFeedLink(feedName, params.sortType)
     navigate(link)
   }
@@ -65,6 +73,7 @@ const Menu = () => {
         {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option> : undefined}
         <option value="all">p/all</option>
         <option value="subscriptions">p/subs</option>
+        <option value="goToSubplebbit">p/</option>
       </select>
       {' '}
       <select className={[styles.sortType, styles.menuItem].join(' ')}  onChange={changeSortType} value={selectedSortType}>
@@ -82,6 +91,8 @@ const Menu = () => {
       <AccountMenu className={styles.menuItem}/>
     </span>
     <button onClick={() => window.scrollTo(0,0)} className={styles.scrollToTopButton}>top</button>
+
+    <GoToSubplebbitModal isOpen={goToSubplebbitModalIsOpen} setIsOpen={setGoToSubplebbitModalIsOpen} />
   </div>
 }
 
