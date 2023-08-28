@@ -34,7 +34,7 @@ const Menu = ({post, closeModal}) => {
 
   const share = () => {
     const shareUrl = `https://pleb.bz/p/${post?.subplebbitAddress}/c/${post?.cid}?redirect=plebones.eth.limo`
-    alert(`${shareUrl}`)
+    alert(shareUrl)
   }
 
   return <div className={styles.postToolsMenu}>
