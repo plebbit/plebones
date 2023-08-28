@@ -25,7 +25,7 @@ const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
   return <div className={styles.noMedia}></div>
 }
 
-const allowedThumbnailHosts = new Set([
+const allowedThumbnailHostnames = new Set([
   'youtube.com',
   'youtu.be',
   'tiktok.com',
@@ -57,7 +57,7 @@ const FeedPost = ({post, index}) => {
   let mediaUrl = post?.link
 
   // most thumbnails look bad, so only display certain sites that look good, like youtube
-  if (post?.thumbnailUrl && allowedThumbnailHosts.has(hostname)) {
+  if (post?.thumbnailUrl && allowedThumbnailHostnames.has(hostname)) {
     mediaType = 'image'
     mediaUrl = post?.thumbnailUrl
   }
