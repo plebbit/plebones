@@ -91,6 +91,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v2
+        with:
+          # needed to use 'git tag' and get all tags
+          fetch-depth: 0
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
