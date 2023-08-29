@@ -2,6 +2,7 @@ import {useAccount} from '@plebbit/plebbit-react-hooks'
 import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits'
 import {getShortAddress} from '@plebbit/plebbit-js'
 import {useMemo} from 'react'
+import {useParams} from 'react-router-dom'
 
 export const isLink = (content) => {
   if (!content) {
@@ -20,10 +21,15 @@ export const isLink = (content) => {
 }
 
 export const useDefaultAndSubscriptionsSubplebbits = () => {
+  const {subplebbitAddress: subplebbitAddressParam} = useParams()
   const account = useAccount()
   const defaultSubplebbits = useDefaultSubplebbits()
   return useMemo(() => {
     const subplebbits = {}
+    // add subplebbit from params first so easily visible
+    if (subplebbitAddressParam) {
+      subplebbits[subplebbitAddressParam] = {address: subplebbitAddressParam, displayAddress: subplebbitAddressParam}
+    }
     for (const address of account.subscriptions) {
       subplebbits[address] = {address, displayAddress: address}
     }
@@ -43,6 +49,6 @@ export const useDefaultAndSubscriptionsSubplebbits = () => {
       }
     }
     return Object.values(subplebbits)
-    }, [account.subscriptions, defaultSubplebbits]
+    }, [account.subscriptions, defaultSubplebbits, subplebbitAddressParam]
   )
 }
