@@ -102,7 +102,9 @@ const SubplebbitSelect = memo(({subplebbits, subplebbitAddress, setSubmitStore})
   subplebbitsOptions.unshift(<option key='p/' value=''>p/</option>)
   return <div>
     <select 
-      onChange={(e) => setSubmitStore({subplebbitAddress: e.target.value})} 
+      onChange={(e) => setSubmitStore({subplebbitAddress: e.target.value})}
+      // NOTE: using 'defaultValue' instead of 'value' sometimes causes a bug to render 'p/' even when subplebbitAddress
+      // is defined, but it seems to improve performance and the bug doesn't affect UX much
       defaultValue={subplebbitAddress || 'p/'} 
       className={styles.submitSelectSubplebbit}
     >
