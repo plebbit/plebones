@@ -106,6 +106,9 @@ jobs:
       # build react app
       - run: yarn install --frozen-lockfile
       - run: CI='' yarn build
+      # set android versionCode and versionName
+      - run: sed -i "s/versionCode 1/versionCode $(git tag | wc -l)/" ./android/app/build.gradle
+      - run: sed -i "s/versionName \"1.0\"/versionName \"$(node -e "console.log(require('./package.json').version)")\"/" ./android/app/build.gradle
       # build apk
       - run: npx cap update
       - run: npx cap copy
