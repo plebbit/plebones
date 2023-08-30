@@ -1,10 +1,12 @@
 import { useMemo, useRef, useEffect } from 'react'
-import {useFeed, useSubplebbit, useSubplebbitStats, useSubscribe} from '@plebbit/plebbit-react-hooks'
+import {useFeed, useSubplebbit, useSubplebbitStats, useSubscribe, useSubplebbits} from '@plebbit/plebbit-react-hooks'
 import { Virtuoso } from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 import styles from './subplebbit.module.css'
 import {Link} from 'react-router-dom'
+import useFeedStateString from '../../hooks/use-feed-state-string'
+import useStateString from '../../hooks/use-state-string'
 
 const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
@@ -34,7 +36,6 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
 
 const lastVirtuosoStates = {}
 
-const Loading = () => 'loading...'
 const NoPosts = () => 'no posts'
 
 function Subplebbit() {
@@ -44,12 +45,18 @@ function Subplebbit() {
   const sortType = params?.sortType || 'hot'
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
 
+  // TODO: state strings must be cleaner than this
+  const subplebbit = useSubplebbit({subplebbitAddress})
+  const subplebbitLoadingStateString = useStateString(subplebbit)
+  const {subplebbits} = useSubplebbits({subplebbitAddresses})
+  const loadingStateString = useFeedStateString(subplebbits) || subplebbitLoadingStateString
+
   let Footer
   if (feed?.length === 0) {
     Footer = NoPosts
   }
   if (hasMore) {
-    Footer = Loading
+    Footer = () => loadingStateString ? `${loadingStateString}...` : 'loading...'
   }
 
   // save last virtuoso state on each scroll

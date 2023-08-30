@@ -79,13 +79,13 @@ const useStateString = (commentOrSubplebbit) => {
         stateString += ', '
       }
 
-      // e.g. 'fetching IPFS from cloudflare-ipfs.com, ipfs.io'
+      // e.g. 'cloudflare-ipfs.com/ipfs.io: fetching-ipfs'
       stateString += `${clientHosts.join('/')}: ${state}`
     }
 
     // fallback to comment or subplebbit state when possible
     if (!stateString) {
-      if (commentOrSubplebbit?.publishingState !== 'stopped' && commentOrSubplebbit?.publishingState !== 'succeeded') {
+      if (commentOrSubplebbit?.publishingState && commentOrSubplebbit?.publishingState !== 'stopped' && commentOrSubplebbit?.publishingState !== 'succeeded') {
         stateString = commentOrSubplebbit.publishingState
       }
       else if (commentOrSubplebbit?.updatingState !== 'stopped' && commentOrSubplebbit?.updatingState !== 'succeeded') {
