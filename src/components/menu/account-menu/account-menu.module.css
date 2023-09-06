@@ -22,7 +22,8 @@
 
 .version {
   position: absolute;
-  right: 0;
+  /* imitate the 2px side and bottom padding of menu */
+  right: 2px;
   bottom: 2px;
   font-size: 10px;
   color: var(--dark3);
