@@ -97,6 +97,9 @@
 }
 
 .replyCount {
+  /* reply count is not a link/button in the post view */
+  cursor: auto;
+
   /* allow selecting comment count */
   user-select: auto;
 }
