@@ -23,7 +23,7 @@ function Home() {
   if (feed?.length === 0) {
     Footer = NoPosts
   }
-  if (hasMore) {
+  if (hasMore || subplebbitAddresses.length === 0) {
     Footer = Loading
   }
 

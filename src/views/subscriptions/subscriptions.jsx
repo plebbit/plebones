@@ -24,7 +24,7 @@ function Subscriptions() {
   if (subplebbitAddresses?.length === 0) {
     Footer = NoSubscriptions
   }
-  if (hasMore) {
+  if (hasMore || !account) {
     Footer = Loading
   }
 
