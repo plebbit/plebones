@@ -44,7 +44,7 @@ const useSubmitStore = createStore((setState, getState) => ({
       onChallengeVerification: alertChallengeVerificationFailed,
       onError: error => {
         console.error(error)
-        alert(error.message)
+        alert(error)
       }
     }
     // plebones only has 1 input for link or content, detect if is link before publishing

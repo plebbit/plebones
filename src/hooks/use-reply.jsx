@@ -26,7 +26,7 @@ const useReplyStore = createStore((setState, getState) => ({
       },
       onError: error => {
         console.error(error)
-        alert(error.message)
+        alert(error)
       }
     }
     return {

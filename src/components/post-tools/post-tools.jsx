@@ -59,7 +59,7 @@ const ModTools = ({post, closeModal}) => {
     onChallengeVerification: alertChallengeVerificationFailed,
     onError: error => {
       console.error(error)
-      alert(error.message)
+      alert(error)
     }
   }
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishOptions)
