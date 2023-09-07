@@ -18,6 +18,7 @@ const ProfileInfo = () => {
 let lastVirtuosoState
 
 function Profile() {
+  const account = useAccount()
   let {accountComments} = useAccountComments()
   accountComments = [...accountComments].reverse()
 
@@ -35,7 +36,7 @@ function Profile() {
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
   }, [])
 
-  if (!accountComments.length) {
+  if (account && !accountComments.length) {
     return 'no posts'
   }
 
