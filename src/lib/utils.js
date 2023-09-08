@@ -19,6 +19,12 @@ const getCommentLinkMediaTypeNoCache = (link) => {
 }
 export const getCommentLinkMediaType = memoize(getCommentLinkMediaTypeNoCache, {max: 1000})
 
+// plebones catalog is image/video only, not including thumbnail urls
+export const catalogFilter = (comment) => {
+  const mediaType = getCommentLinkMediaType(comment?.link)
+  return mediaType === 'image' || mediaType === 'video'
+}
+
 TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en-US')
 export const getFormattedTime = (timestamp) => {
@@ -40,6 +46,7 @@ export const alertChallengeVerificationFailed = (challengeVerification, publicat
 
 const utils = {
   getCommentLinkMediaType,
+  catalogFilter,
   getFormattedTime,
   alertChallengeVerificationFailed
 }

@@ -41,22 +41,13 @@ function Catalog() {
   const subplebbitAddress = params.subplebbitAddress
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress])
   const sortType = params?.sortType || 'active'
-  // because we filter non images after, 50 posts per page makes it less likely to stall
-  // virtuoso can stall is loadMore is called and no new posts are added (because they are filtered)
-  // TODO: implement useFeed({filter: Function}) in plebbit-react-hooks
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 50})
-
-  // filter non images
-  const imageOnlyFeed = useMemo(() => feed.filter(post => {
-    const mediaType = utils.getCommentLinkMediaType(post?.link)
-    return mediaType === 'image' || mediaType === 'video'
-  }), [feed])
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 20, filter: utils.catalogFilter})
 
   // split feed into rows
-  const rows = useFeedRows(imageOnlyFeed, columnCount)
+  const rows = useFeedRows(feed, columnCount)
 
   let Footer
-  if (imageOnlyFeed?.length === 0) {
+  if (feed?.length === 0) {
     Footer = NoPosts
   }
   if (subplebbitAddresses?.length === 0) {
