@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
   useFloating,
   autoUpdate,
@@ -49,7 +49,11 @@ const Menu = ({reply, onPublished}) => {
       onPublished?.()
       resetContent()
     }
-  }, [replyIndex, onPublished, resetContent]) 
+  }, [replyIndex, onPublished, resetContent])
+
+  // autofocus textarea without scrolling
+  const textareaRef = useRef()
+  useEffect(() => textareaRef.current.focus({preventScroll: true}), [])
 
   return <div className={styles.replyToolsMenu}>
     <div className={styles.menuRow}>
@@ -67,7 +71,7 @@ const Menu = ({reply, onPublished}) => {
       </div>
     </div>
     <div>
-      <textarea autoFocus className={styles.submitContent} rows={2} placeholder='content' defaultValue={content} onChange={(e) => setContent(e.target.value)}/>
+      <textarea ref={textareaRef} className={styles.submitContent} rows={2} placeholder='content' defaultValue={content} onChange={(e) => setContent(e.target.value)}/>
     </div>
     <div className={styles.submitButtonWrapper} ><button onClick={onPublish}  className={styles.submitButton}>reply</button></div>
   </div>

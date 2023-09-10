@@ -31,11 +31,11 @@ const Menu = ({reply, onPublished}) => {
       onPublished?.()
       resetContent()
     }
-  }, [replyIndex, onPublished, resetContent]) 
+  }, [replyIndex, onPublished, resetContent])
 
   return <div className={styles.replyToolsMenu}>
     <div>
-      <textarea autoFocus className={styles.submitContent} rows={2} placeholder='content' defaultValue={content} onChange={(e) => setContent(e.target.value)}/>
+      <textarea className={styles.submitContent} rows={2} placeholder='content' defaultValue={content} onChange={(e) => setContent(e.target.value)}/>
     </div>
     <div className={styles.submitButtonWrapper} ><button onClick={onPublish} className={styles.submitButton}>reply</button></div>
   </div>
