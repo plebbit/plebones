@@ -38,9 +38,9 @@ const Challenge = ({challenge, closeModal}) => {
   const onEnterKey = (e) => {
     if (e.key !== 'Enter') return
     if (challenges[currentChallengeIndex+1])
-      return setCurrentChallengeIndex(prev => prev + 1)
+      setCurrentChallengeIndex(prev => prev + 1)
     else 
-      return onSubmit()
+      onSubmit()
   }
 
   return <div className={styles.challenge}>
