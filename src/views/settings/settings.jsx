@@ -25,7 +25,7 @@ const PlebonesSettings = () => {
 
 const AccountSettings = () => {
   const account = useAccount()
-  const accountJson = useMemo(() => stringify({...account, plebbit: undefined, karma: undefined, unreadNotificationCount: undefined}), [account])
+  const accountJson = useMemo(() => stringify({account: {...account, plebbit: undefined, karma: undefined, unreadNotificationCount: undefined}}), [account])
 
   const [text, setText] = useState('')
 
@@ -36,7 +36,7 @@ const AccountSettings = () => {
 
   const saveAccount = async () => {
     try {
-      const newAccount = JSON.parse(text)
+      const newAccount = JSON.parse(text).account
       await setAccount(newAccount)
       alert(`saved`)
     }
