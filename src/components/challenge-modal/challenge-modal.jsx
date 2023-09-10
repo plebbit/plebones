@@ -35,13 +35,20 @@ const Challenge = ({challenge, closeModal}) => {
     setAnswers([])
     closeModal()
   }
+  const onEnterKey = (e) => {
+    if (e.key !== 'Enter') return
+    if (challenges[currentChallengeIndex+1])
+      return setCurrentChallengeIndex(prev => prev + 1)
+    else 
+      return onSubmit()
+  }
 
   return <div className={styles.challenge}>
     <div>{publicationType}{votePreview} in p/{publication?.shortSubplebbitAddress}</div>
     {parentCommentPreview && <div>to: {parentCommentPreview}</div>}
     <div>{publicationPreview}</div>
     <div className={styles.challengeMediaWrapper}><img alt='challenge' className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`}/></div>
-    <div><input onChange={onAnswersChange} value={answers[currentChallengeIndex] || ''} className={styles.challengeInput}/></div>
+    <div><input onKeyPress={onEnterKey} onChange={onAnswersChange} value={answers[currentChallengeIndex] || ''} className={styles.challengeInput}/></div>
     <div className={styles.challengeFooter}>
       <div>{currentChallengeIndex + 1} of {challenges?.length}</div>
       <span>
