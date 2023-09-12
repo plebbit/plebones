@@ -8,6 +8,7 @@ import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
 import useCommentLabels from '../../hooks/use-comment-labels'
+import {useState, useEffect} from 'react'
 
 const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
   if (!mediaType) {
@@ -27,11 +28,21 @@ const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
 
 const FeedPostAuthorAddress = ({post}) => {
   // show the unverified author address for a few ms until the verified arrives
-  const {shortAuthorAddress} = useAuthorAddress({comment: post})
+  const {authorAddress, shortAuthorAddress} = useAuthorAddress({comment: post})
+
+  // show css animation if author address changed
+  const [firstAuthorAddress, setFirstAuthorAddress] = useState()
+  useEffect(() => {
+    if (authorAddress && !firstAuthorAddress) {
+      setFirstAuthorAddress(authorAddress)
+    }
+  }, [authorAddress, firstAuthorAddress])
+  const authorAddressChanged = firstAuthorAddress && authorAddress !== firstAuthorAddress
+
   return <Link className={styles.authorAddressWrapper} to={`/u/${post?.author?.address}/c/${post?.cid}`}>
     {/* use the crypto name as the width of the html element, but hide it and display the verified author address instead */}
     <span className={styles.authorAddressHidden}>{post?.author?.shortAddress}</span>
-    <span className={styles.authorAddressVisible}>{shortAuthorAddress}</span>
+    <span className={[styles.authorAddressVisible, authorAddressChanged ? styles.authorAddressChanged : undefined].join(' ')}>{shortAuthorAddress}</span>
   </Link>
 }
 

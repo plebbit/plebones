@@ -117,11 +117,28 @@
 
 /* use the crypto name as the width of the html element, but hide it and display the verified author address instead */
 .authorAddressHidden {
-  opacity: 0;
+  visibility: hidden;
   user-select: none;
 }
 
 .authorAddressVisible {
   float: left;
   width: 0;
+}
+
+@keyframes authorAddressChangedAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.authorAddressChanged {
+  animation-name: authorAddressChangedAnimation;
+  animation-duration: 0.07s;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
 }
