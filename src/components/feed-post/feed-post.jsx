@@ -26,6 +26,7 @@ const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
 }
 
 const FeedPostAuthorAddress = ({post}) => {
+  // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: post})
   return <Link className={styles.authorAddressWrapper} to={`/u/${post?.author?.address}/c/${post?.cid}`}>
     <span className={styles.authorAddressHidden}>{post?.author?.shortAddress}</span>
@@ -54,9 +55,6 @@ const FeedPost = ({post, index}) => {
 
   const [unreadReplyCount] = useUnreadReplyCount(post)
   const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `+${unreadReplyCount}` : ''
-
-  // show the unverified author address for a few ms until the verified arrives
-  const {shortAuthorAddress} = useAuthorAddress({comment: post})
 
   const [upvoted, upvote] = useUpvote(post)
   const [downvoted, downvote] = useDownvote(post)

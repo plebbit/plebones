@@ -117,6 +117,7 @@
 
 .authorAddressHidden {
   opacity: 0;
+  user-select: none;
 }
 
 .authorAddressVisible {
