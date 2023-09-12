@@ -25,6 +25,14 @@ const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
   return <div className={styles.noMedia}></div>
 }
 
+const FeedPostAuthorAddress = ({post}) => {
+  const {shortAuthorAddress} = useAuthorAddress({comment: post})
+  return <Link className={styles.authorAddressWrapper} to={`/u/${post?.author?.address}/c/${post?.cid}`}>
+    <span className={styles.authorAddressHidden}>{post?.author?.shortAddress}</span>
+    <span className={styles.authorAddressVisible}>{shortAuthorAddress}</span>
+  </Link>
+}
+
 const FeedPost = ({post, index}) => {
   // handle pending mod or author edit
   const {state: editedPostState, editedComment: editedPost} = useEditedComment({comment: post})
@@ -90,7 +98,7 @@ const FeedPost = ({post, index}) => {
         </div>
         <div className={styles.content}>
           <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
-          <span className={styles.author}> by <Link to={`/u/${post?.author?.address}/c/${post?.cid}`}>{shortAuthorAddress || post?.author?.shortAddress}</Link> to </span>
+          <span className={styles.author}> by <FeedPostAuthorAddress post={post}/> to </span>
           <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{subplebbitAddress}</Link>
         </div>
         <div className={styles.footer}>

@@ -109,3 +109,17 @@
 .label {
   border: 1px solid var(--dark3);
 }
+
+.authorAddressWrapper {
+  display: inline-block;
+  overflow: clip;
+}
+
+.authorAddressHidden {
+  opacity: 0;
+}
+
+.authorAddressVisible {
+  float: left;
+  width: 0;
+}
