@@ -29,6 +29,7 @@ const FeedPostAuthorAddress = ({post}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: post})
   return <Link className={styles.authorAddressWrapper} to={`/u/${post?.author?.address}/c/${post?.cid}`}>
+    {/* use the crypto name as the width of the html element, but hide it and display the verified author address instead */}
     <span className={styles.authorAddressHidden}>{post?.author?.shortAddress}</span>
     <span className={styles.authorAddressVisible}>{shortAuthorAddress}</span>
   </Link>
