@@ -26,7 +26,7 @@ const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
 }
 
 const FeedPostAuthorAddress = ({post}) => {
-  // show the private key author address for a few ms until the crypto name verification loads
+  // show the public key author address for a few ms until the crypto name verification loads
   const {shortAuthorAddress, authorAddressChanged} = useAuthorAddress({comment: post})
 
   return <Link className={styles.authorAddressWrapper} to={`/u/${post?.author?.address}/c/${post?.cid}`}>
