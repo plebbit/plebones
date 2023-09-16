@@ -27,7 +27,7 @@ jobs:
       - run: ls dist
 
       # publish version release
-      - run: echo "RELEASE_BODY='Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 1)'" >> $GITHUB_ENV
+      - run: echo "RELEASE_BODY=\"Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 2)\"" >> $GITHUB_ENV
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.AppImage,dist/plebones-html*.zip'
@@ -54,7 +54,7 @@ jobs:
       - run: ls dist
 
       # publish version release
-      - run: echo "RELEASE_BODY='Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 1)'" >> $GITHUB_ENV
+      - run: echo "RELEASE_BODY=\"Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 2)\"" >> $GITHUB_ENV
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.dmg'
@@ -79,7 +79,7 @@ jobs:
       - run: dir dist
 
       # publish version release
-      - run: echo "RELEASE_BODY='Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 1)'" >> $GITHUB_ENV
+      - run: echo "RELEASE_BODY=\"Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 2)\"" >> $GITHUB_ENV
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.exe'
@@ -131,7 +131,7 @@ jobs:
       - run: ls dist
 
       # publish version release
-      - run: echo "RELEASE_BODY='Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 1)'" >> $GITHUB_ENV
+      - run: echo "RELEASE_BODY=\"Progressive web app mirrors:\n- https://plebones.eth.limo\n- https://plebones.eth.link\n- https://cloudflare-ipfs.com/ipns/plebones.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest\n\n$(node_modules/.bin/conventional-changelog --preset angular --release-count 2)\"" >> $GITHUB_ENV
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.apk'
