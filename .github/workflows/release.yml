@@ -17,7 +17,7 @@ jobs:
       # electron build
       - uses: actions/checkout@v2
         with:
-          # needed for git commit changelogs
+          # needed for git commit history changelog
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
@@ -47,7 +47,7 @@ jobs:
       # electron build
       - uses: actions/checkout@v2
         with:
-          # needed for git commit changelogs
+          # needed for git commit history changelog
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
@@ -77,7 +77,7 @@ jobs:
       # electron build
       - uses: actions/checkout@v2
         with:
-          # needed for git commit changelogs
+          # needed for git commit history changelog
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
@@ -104,7 +104,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          # needed to use 'git tag' and get all tags and for git commit changelogs
+          # needed to use 'git tag' and get all tags and for git commit history changelog
           fetch-depth: 0
       - uses: actions/setup-java@v3
         with:
