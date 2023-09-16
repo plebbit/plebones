@@ -95,11 +95,12 @@ const Menu = () => {
         </Link>{' '}
         <Submit className={styles.menuItem} /> <AccountMenu className={styles.menuItem} />
       </span>
+
+      <GoToSubplebbitModal isOpen={goToSubplebbitModalIsOpen} setIsOpen={setGoToSubplebbitModalIsOpen} />
+
       <button onClick={() => window.scrollTo(0, 0)} className={styles.scrollToTopButton}>
         top
       </button>
-
-      <GoToSubplebbitModal isOpen={goToSubplebbitModalIsOpen} setIsOpen={setGoToSubplebbitModalIsOpen} />
     </div>
   )
 }

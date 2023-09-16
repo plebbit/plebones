@@ -23,6 +23,8 @@
 }
 
 .scrollToTopButton {
+  font-size: 13px;
+  /* position bottom right */
   opacity: 0;
   height: 50px;
   width: 50px;
@@ -32,6 +34,10 @@
   right: 2px;
   /* needs z index to be above virtuoso */
   z-index: 1;
+}
+
+button:hover.scrollToTopButton {
+  opacity: 0.1;
 }
 
 .leftMenu {
