@@ -16,6 +16,9 @@ jobs:
     steps:
       # electron build
       - uses: actions/checkout@v2
+        with:
+          # needed for git commit changelogs
+          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -27,13 +30,13 @@ jobs:
       - run: ls dist
 
       # publish version release
-      - run: node scripts/release-body > ./release-body.txt
+      - run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.AppImage,dist/plebones-html*.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
-          bodyFile: "./release-body.txt"
+          bodyFile: "release-body.txt"
           allowUpdates: true
 
   mac:
@@ -43,6 +46,9 @@ jobs:
     steps:
       # electron build
       - uses: actions/checkout@v2
+        with:
+          # needed for git commit changelogs
+          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -54,13 +60,13 @@ jobs:
       - run: ls dist
 
       # publish version release
-      - run: node scripts/release-body > ./release-body.txt
+      - run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.dmg'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
-          bodyFile: "./release-body.txt"
+          bodyFile: "release-body.txt"
           allowUpdates: true
 
   windows:
@@ -70,6 +76,9 @@ jobs:
     steps:
       # electron build
       - uses: actions/checkout@v2
+        with:
+          # needed for git commit changelogs
+          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -79,13 +88,13 @@ jobs:
       - run: dir dist
 
       # publish version release
-      - run: node scripts/release-body > ./release-body.txt
+      - run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.exe'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
-          bodyFile: "./release-body.txt"
+          bodyFile: "release-body.txt"
           allowUpdates: true
 
   android:
@@ -95,7 +104,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          # needed to use 'git tag' and get all tags
+          # needed to use 'git tag' and get all tags and for git commit changelogs
           fetch-depth: 0
       - uses: actions/setup-java@v3
         with:
@@ -131,11 +140,11 @@ jobs:
       - run: ls dist
 
       # publish version release
-      - run: node scripts/release-body > ./release-body.txt
+      - run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'dist/plebones*.apk'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
-          bodyFile: "./release-body.txt"
+          bodyFile: "release-body.txt"
           allowUpdates: true
