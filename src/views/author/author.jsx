@@ -12,12 +12,17 @@ const AuthorInfo = ({authorAddress, commentCid}) => {
 
   const description = author?.displayName
 
-  return <div className={styles.info}>
-    <div className={styles.header}>
-      <div className={styles.title}><Link to={`/u/${authorAddress}/c/${commentCid}`}>u/{authorAddress}</Link><img alt='' className={styles.avatar} src={avatarUrl} /></div>
+  return (
+    <div className={styles.info}>
+      <div className={styles.header}>
+        <div className={styles.title}>
+          <Link to={`/u/${authorAddress}/c/${commentCid}`}>u/{authorAddress}</Link>
+          <img alt="" className={styles.avatar} src={avatarUrl} />
+        </div>
+      </div>
+      {description && <div className={styles.description}>{description}</div>}
     </div>
-    {description && <div className={styles.description}>{description}</div>}
-  </div>
+  )
 }
 
 const lastVirtuosoStates = {}
@@ -34,12 +39,13 @@ function Author() {
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
   useEffect(() => {
-    const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
-      // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
-      if (snapshot?.ranges?.length) {
-        lastVirtuosoStates[authorAddress] = snapshot
-      }
-    })
+    const setLastVirtuosoState = () =>
+      virtuosoRef.current?.getState((snapshot) => {
+        // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
+        if (snapshot?.ranges?.length) {
+          lastVirtuosoStates[authorAddress] = snapshot
+        }
+      })
     // TODO: doesn't work if the user hasn't scrolled
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
@@ -58,18 +64,17 @@ function Author() {
     <div>
       <AuthorInfo authorAddress={authorAddress} commentCid={commentCid} />
       <Virtuoso
-        increaseViewportBy={ { bottom: 600, top: 600 } }
-        totalCount={ authorComments?.length || 0 }
-        data={ authorComments }
+        increaseViewportBy={{bottom: 600, top: 600}}
+        totalCount={authorComments?.length || 0}
+        data={authorComments}
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
-        useWindowScroll={ true }
-        components={ {Footer} }
-        endReached={ loadMore }
+        useWindowScroll={true}
+        components={{Footer}}
+        endReached={loadMore}
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}
         initialScrollTop={lastVirtuosoState?.scrollTop}
       />
-
     </div>
   )
 }

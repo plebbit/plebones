@@ -9,8 +9,7 @@ const getCommentLinkMediaTypeNoCache = (link) => {
   let mime
   try {
     mime = extName(new URL(link).pathname.toLowerCase().replace('/', ''))[0]?.mime
-  } 
-  catch (e) {
+  } catch (e) {
     return
   }
   if (mime?.startsWith('image')) return 'image'
@@ -30,16 +29,14 @@ const timeAgo = new TimeAgo('en-US')
 export const getFormattedTime = (timestamp) => {
   try {
     return timeAgo.format(timestamp * 1000)
-  }
-  catch (e) {}
+  } catch (e) {}
 }
 
 export const alertChallengeVerificationFailed = (challengeVerification, publication) => {
-  if (challengeVerification?.challengeSuccess === false ) {
+  if (challengeVerification?.challengeSuccess === false) {
     console.error(challengeVerification, publication)
     alert(`p/${publication?.subplebbitAddress} challenge error: ${[...(challengeVerification?.challengeErrors || []), challengeVerification?.reason].join(' ')}`)
-  }
-  else {
+  } else {
     console.log(challengeVerification, publication)
   }
 }
@@ -48,7 +45,7 @@ const utils = {
   getCommentLinkMediaType,
   catalogFilter,
   getFormattedTime,
-  alertChallengeVerificationFailed
+  alertChallengeVerificationFailed,
 }
 
 export default utils

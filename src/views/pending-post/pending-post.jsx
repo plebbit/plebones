@@ -1,7 +1,7 @@
 import utils from '../../lib/utils'
 import {useParams, useNavigate} from 'react-router-dom'
 import {useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from '../post/post.module.css'
 import {useAccountComment} from '@plebbit/plebbit-react-hooks'
@@ -14,7 +14,11 @@ const PostMedia = ({post}) => {
   }
   const mediaType = utils.getCommentLinkMediaType(post?.link)
   if (mediaType === 'image') {
-    return <div className={styles.mediaWrapper}><img className={styles.media} src={post?.link} alt='' /></div>
+    return (
+      <div className={styles.mediaWrapper}>
+        <img className={styles.media} src={post?.link} alt="" />
+      </div>
+    )
   }
   if (mediaType === 'video') {
     return <video className={styles.media} controls={true} autoPlay={false} src={post?.link} />
@@ -25,10 +29,13 @@ const PostMedia = ({post}) => {
   try {
     const parsedUrl = new URL(post?.link)
     if (canEmbed(parsedUrl)) {
-      return <div className={styles.mediaWrapper}><Embed parsedUrl={parsedUrl} /></div>
+      return (
+        <div className={styles.mediaWrapper}>
+          <Embed parsedUrl={parsedUrl} />
+        </div>
+      )
     }
-  }
-  catch (e) {}
+  } catch (e) {}
   return <div className={styles.noMedia}></div>
 }
 
@@ -41,11 +48,10 @@ function Post() {
   let hostname
   try {
     hostname = new URL(post?.link).hostname.replace(/^www\./, '')
-  }
-  catch (e) {}
+  } catch (e) {}
 
   // scroll to top on first load
-  useEffect(() => window.scrollTo(0,0), [])
+  useEffect(() => window.scrollTo(0, 0), [])
 
   // redirect to post when post.cid is received
   useEffect(() => {
@@ -57,10 +63,9 @@ function Post() {
   let state
   if (post?.timestamp) {
     // if older than 20 minutes without receiving post.cid, consider pending comment failed
-    if (post.timestamp > (Date.now() / 1000) - (20 * 60)) {
+    if (post.timestamp > Date.now() / 1000 - 20 * 60) {
       state = 'pending'
-    }
-    else {
+    } else {
       state = 'failed'
     }
   }
@@ -73,21 +78,37 @@ function Post() {
       <div className={styles.textWrapper}>
         <div className={styles.column}>
           <div className={styles.score}>
-            <div className={styles.upvote}><Arrow /></div>
-              <div className={styles.scoreNumber}>0</div>
-            <div className={styles.downvote}><Arrow /></div>
+            <div className={styles.upvote}>
+              <Arrow />
+            </div>
+            <div className={styles.scoreNumber}>0</div>
+            <div className={styles.downvote}>
+              <Arrow />
+            </div>
           </div>
         </div>
         <div className={styles.column}>
           <div className={styles.header}>
-            <Link to={post?.link} target={post?.link ? '_blank' : undefined} rel='noreferrer' className={styles.title}>{post?.title || post?.content || '-'}</Link>
-            {' '}<span className={stateStyle}>{state}</span>
-            {hostname && <Link to={post?.link} target='_blank' rel='noreferrer'> {hostname}</Link>}
+            <Link to={post?.link} target={post?.link ? '_blank' : undefined} rel="noreferrer" className={styles.title}>
+              {post?.title || post?.content || '-'}
+            </Link>{' '}
+            <span className={stateStyle}>{state}</span>
+            {hostname && (
+              <Link to={post?.link} target="_blank" rel="noreferrer">
+                {' '}
+                {hostname}
+              </Link>
+            )}
           </div>
           <div>
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
-            <span className={styles.author}> by <Link to='/profile'>{shortAuthorAddress || post?.author?.shortAddress}</Link> to </span>
-            <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>{post?.subplebbitAddress}</Link>
+            <span className={styles.author}>
+              {' '}
+              by <Link to="/profile">{shortAuthorAddress || post?.author?.shortAddress}</Link> to{' '}
+            </span>
+            <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>
+              {post?.subplebbitAddress}
+            </Link>
           </div>
           <div className={styles.footer}>
             <span className={[styles.replyCount, styles.button].join(' ')}>0 comments</span>
@@ -98,7 +119,11 @@ function Post() {
       <div className={styles.pendingMedia}>
         <PostMedia post={post} />
       </div>
-      {publishingStateString && <div className={styles.stateString} title={publishingStateString}>{publishingStateString}...</div>}
+      {publishingStateString && (
+        <div className={styles.stateString} title={publishingStateString}>
+          {publishingStateString}...
+        </div>
+      )}
     </div>
   )
 }

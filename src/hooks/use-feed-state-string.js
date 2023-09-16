@@ -5,8 +5,7 @@ const useFeedStateString = (subplebbits) => {
     const getClientHost = (clientUrl) => {
       try {
         clientUrl = new URL(clientUrl).hostname || clientUrl
-      }
-      catch (e) {}
+      } catch (e) {}
       return clientUrl
     }
     const getClientUrls = (regex) => {

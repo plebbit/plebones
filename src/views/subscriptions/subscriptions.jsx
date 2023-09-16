@@ -1,6 +1,6 @@
-import { useRef, useEffect } from 'react'
+import {useRef, useEffect} from 'react'
 import {useFeed, useAccount} from '@plebbit/plebbit-react-hooks'
-import { Virtuoso } from 'react-virtuoso'
+import {Virtuoso} from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 
@@ -31,12 +31,13 @@ function Subscriptions() {
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
   useEffect(() => {
-    const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
-      // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
-      if (snapshot?.ranges?.length) {
-        lastVirtuosoStates[sortType] = snapshot
-      }
-    })
+    const setLastVirtuosoState = () =>
+      virtuosoRef.current?.getState((snapshot) => {
+        // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
+        if (snapshot?.ranges?.length) {
+          lastVirtuosoStates[sortType] = snapshot
+        }
+      })
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
@@ -46,18 +47,17 @@ function Subscriptions() {
   return (
     <div>
       <Virtuoso
-        increaseViewportBy={ { bottom: 600, top: 600 } }
-        totalCount={ feed?.length || 0 }
-        data={ feed }
+        increaseViewportBy={{bottom: 600, top: 600}}
+        totalCount={feed?.length || 0}
+        data={feed}
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
-        useWindowScroll={ true }
-        components={ {Footer} }
-        endReached={ loadMore }
+        useWindowScroll={true}
+        components={{Footer}}
+        endReached={loadMore}
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}
         initialScrollTop={lastVirtuosoState?.scrollTop}
       />
-
     </div>
   )
 }

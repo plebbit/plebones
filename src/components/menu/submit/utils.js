@@ -11,7 +11,7 @@ export const isLink = (content) => {
   content = content.trim()
   if (
     // starts with https://
-    /^https:\/\//i.test(content) && 
+    /^https:\/\//i.test(content) &&
     // doesn't contain spaces or line breaks
     !/[ \n]/.test(content)
   ) {
@@ -49,6 +49,5 @@ export const useDefaultAndSubscriptionsSubplebbits = () => {
       }
     }
     return Object.values(subplebbits)
-    }, [account.subscriptions, defaultSubplebbits, subplebbitAddressParam]
-  )
+  }, [account.subscriptions, defaultSubplebbits, subplebbitAddressParam])
 }

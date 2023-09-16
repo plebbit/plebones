@@ -4,8 +4,8 @@ const useThemeStore = createStore((setState, getState) => ({
   theme: localStorage.getItem('theme') || 'dark',
   setTheme: (theme) => {
     localStorage.setItem('theme', theme)
-    setState(state => ({theme}))
-  }
+    setState((state) => ({theme}))
+  },
 }))
 
 const useTheme = () => {

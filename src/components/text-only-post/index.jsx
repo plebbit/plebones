@@ -1,1 +1,1 @@
-export {default} from "./text-only-post"
+export {default} from './text-only-post'

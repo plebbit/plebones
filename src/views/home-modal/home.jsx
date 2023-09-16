@@ -1,11 +1,11 @@
-import { useRef, useEffect } from 'react'
+import {useRef, useEffect} from 'react'
 import useDefaultSubplebbitAddresses from '../../hooks/use-default-subplebbit-addresses'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
-import { Virtuoso } from 'react-virtuoso'
+import {Virtuoso} from 'react-virtuoso'
 import FeedPost from './feed-post'
 import {useParams, useLocation} from 'react-router-dom'
 import PostModal from './post-modal'
- 
+
 const lastVirtuosoStates = {}
 
 const Loading = () => 'loading...'
@@ -30,12 +30,13 @@ function Home() {
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
   useEffect(() => {
-    const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
-      // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
-      if (snapshot?.ranges?.length) {
-        lastVirtuosoStates[sortType] = snapshot
-      }
-    })
+    const setLastVirtuosoState = () =>
+      virtuosoRef.current?.getState((snapshot) => {
+        // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
+        if (snapshot?.ranges?.length) {
+          lastVirtuosoStates[sortType] = snapshot
+        }
+      })
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
@@ -45,18 +46,20 @@ function Home() {
   return (
     <div>
       <PostModal />
-      {!isFirstLocationAndIsPost && <Virtuoso
-        increaseViewportBy={ { bottom: 600, top: 600 } }
-        totalCount={ feed?.length || 0 }
-        data={ feed }
-        itemContent={(index, post) => <FeedPost index={index} post={post} />}
-        useWindowScroll={ true }
-        components={ {Footer} }
-        endReached={ loadMore }
-        ref={virtuosoRef}
-        restoreStateFrom={lastVirtuosoState}
-        initialScrollTop={lastVirtuosoState?.scrollTop}
-      />}
+      {!isFirstLocationAndIsPost && (
+        <Virtuoso
+          increaseViewportBy={{bottom: 600, top: 600}}
+          totalCount={feed?.length || 0}
+          data={feed}
+          itemContent={(index, post) => <FeedPost index={index} post={post} />}
+          useWindowScroll={true}
+          components={{Footer}}
+          endReached={loadMore}
+          ref={virtuosoRef}
+          restoreStateFrom={lastVirtuosoState}
+          initialScrollTop={lastVirtuosoState?.scrollTop}
+        />
+      )}
     </div>
   )
 }

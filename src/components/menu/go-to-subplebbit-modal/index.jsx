@@ -1,1 +1,1 @@
-export {default} from "./go-to-subplebbit-modal"
+export {default} from './go-to-subplebbit-modal'

@@ -1,6 +1,6 @@
-import { useMemo, useRef, useEffect } from 'react'
+import {useMemo, useRef, useEffect} from 'react'
 import {useFeed, useSubplebbit, useSubplebbitStats, useSubscribe, useSubplebbits} from '@plebbit/plebbit-react-hooks'
-import { Virtuoso } from 'react-virtuoso'
+import {Virtuoso} from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 import styles from './subplebbit.module.css'
@@ -12,7 +12,7 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
   const stats = useSubplebbitStats({subplebbitAddress})
   const {subscribed, subscribe, unsubscribe} = useSubscribe({subplebbitAddress})
-  const toggleSubscribe = () => !subscribed ? subscribe() : unsubscribe()
+  const toggleSubscribe = () => (!subscribed ? subscribe() : unsubscribe())
 
   let description = subplebbit?.title || ''
   if (subplebbit?.description) {
@@ -23,15 +23,31 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
   }
   description = description.trim()
 
-  return <div className={styles.info}>
-    <div className={styles.header}>
-      <div className={styles.title}><Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress}</Link><img alt='' className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} /></div>
-      <div className={styles.stats}><button onClick={toggleSubscribe}className={styles.joinButton}>{!subscribed ? 'join' : 'leave'}</button> {stats.allActiveUserCount} members</div>
-      <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
+  return (
+    <div className={styles.info}>
+      <div className={styles.header}>
+        <div className={styles.title}>
+          <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress}</Link>
+          <img alt="" className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} />
+        </div>
+        <div className={styles.stats}>
+          <button onClick={toggleSubscribe} className={styles.joinButton}>
+            {!subscribed ? 'join' : 'leave'}
+          </button>{' '}
+          {stats.allActiveUserCount} members
+        </div>
+        <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
+      </div>
+      {description && <div className={styles.description}>{description}</div>}
+      {subplebbit.rules && (
+        <ol className={styles.rules}>
+          {subplebbit.rules.map?.((rule) => (
+            <li>{rule?.trim?.()}</li>
+          ))}
+        </ol>
+      )}
     </div>
-    {description && <div className={styles.description}>{description}</div>}
-    {subplebbit.rules && <ol className={styles.rules}>{subplebbit.rules.map?.(rule => <li>{rule?.trim?.()}</li>)}</ol>}
-  </div>
+  )
 }
 
 const lastVirtuosoStates = {}
@@ -56,21 +72,22 @@ function Subplebbit() {
     Footer = NoPosts
   }
   if (hasMore) {
-    Footer = () => loadingStateString ? `${loadingStateString}...` : 'loading...'
+    Footer = () => (loadingStateString ? `${loadingStateString}...` : 'loading...')
   }
 
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
   useEffect(() => {
-    const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
-      // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
-      if (snapshot?.ranges?.length) {
-        if (!lastVirtuosoStates[subplebbitAddress]) {
-          lastVirtuosoStates[subplebbitAddress] = {}
+    const setLastVirtuosoState = () =>
+      virtuosoRef.current?.getState((snapshot) => {
+        // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
+        if (snapshot?.ranges?.length) {
+          if (!lastVirtuosoStates[subplebbitAddress]) {
+            lastVirtuosoStates[subplebbitAddress] = {}
+          }
+          lastVirtuosoStates[subplebbitAddress][sortType] = snapshot
         }
-        lastVirtuosoStates[subplebbitAddress][sortType] = snapshot
-      }
-    })
+      })
     // TODO: doesn't work if the user hasn't scrolled
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
@@ -82,18 +99,17 @@ function Subplebbit() {
     <div>
       <SubplebbitInfo subplebbitAddress={subplebbitAddress} />
       <Virtuoso
-        increaseViewportBy={ { bottom: 600, top: 600 } }
-        totalCount={ feed?.length || 0 }
-        data={ feed }
+        increaseViewportBy={{bottom: 600, top: 600}}
+        totalCount={feed?.length || 0}
+        data={feed}
         itemContent={(index, post) => <FeedPost index={index} post={post} />}
-        useWindowScroll={ true }
-        components={ {Footer} }
-        endReached={ loadMore }
+        useWindowScroll={true}
+        components={{Footer}}
+        endReached={loadMore}
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}
         initialScrollTop={lastVirtuosoState?.scrollTop}
       />
-
     </div>
   )
 }

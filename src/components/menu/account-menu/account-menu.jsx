@@ -1,17 +1,5 @@
-import { useState } from "react"
-import {
-  useFloating,
-  autoUpdate,
-  offset,
-  flip,
-  shift,
-  useDismiss,
-  useRole,
-  useClick,
-  useInteractions,
-  FloatingFocusManager,
-  useId
-} from "@floating-ui/react"
+import {useState} from 'react'
+import {useFloating, autoUpdate, offset, flip, shift, useDismiss, useRole, useClick, useInteractions, FloatingFocusManager, useId} from '@floating-ui/react'
 import styles from './account-menu.module.css'
 import {useAccount, useAccounts, createAccount, setActiveAccount} from '@plebbit/plebbit-react-hooks'
 import {Link} from 'react-router-dom'
@@ -21,60 +9,69 @@ const version = commitRef || `v${packageJson.version}`
 
 const Menu = ({onMenuLinkClick}) => {
   const {accounts} = useAccounts()
-  const accountsOptions = accounts.map(account => <option value={account?.name}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
-  accountsOptions[accountsOptions.length] = <option value='createAccount'>+create</option>
+  const accountsOptions = accounts.map((account) => <option value={account?.name}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
+  accountsOptions[accountsOptions.length] = <option value="createAccount">+create</option>
   const account = useAccount()
 
   const onAccountSelectChange = async (event) => {
     if (event.target.value === 'createAccount') {
       createAccount()
-    }
-    else {
+    } else {
       setActiveAccount(event.target.value)
     }
   }
 
   const unreadNotificationCount = account?.unreadNotificationCount ? ` (${account.unreadNotificationCount})` : ''
 
-  return <div className={styles.accountMenu}>
-    <div className={styles.menuItem}>
-      <select onChange={onAccountSelectChange} value={account?.name}>
-        {accountsOptions}
-      </select>
+  return (
+    <div className={styles.accountMenu}>
+      <div className={styles.menuItem}>
+        <select onChange={onAccountSelectChange} value={account?.name}>
+          {accountsOptions}
+        </select>
+      </div>
+      <Link to="/inbox">
+        <div onClick={onMenuLinkClick} className={styles.menuItem}>
+          inbox{unreadNotificationCount}
+        </div>
+      </Link>
+      <Link to="/profile">
+        <div onClick={onMenuLinkClick} className={styles.menuItem}>
+          profile
+        </div>
+      </Link>
+      <Link to="/settings">
+        <div onClick={onMenuLinkClick} className={styles.menuItem}>
+          settings
+        </div>
+      </Link>
+      <Link to="/about">
+        <div onClick={onMenuLinkClick} className={styles.menuItem}>
+          about
+        </div>
+      </Link>
+      <div className={styles.version}>{version}</div>
     </div>
-    <Link to='/inbox'><div onClick={onMenuLinkClick} className={styles.menuItem}>inbox{unreadNotificationCount}</div></Link>
-    <Link to='/profile'><div onClick={onMenuLinkClick} className={styles.menuItem}>profile</div></Link>
-    <Link to='/settings'><div onClick={onMenuLinkClick} className={styles.menuItem}>settings</div></Link>
-    <Link to='/about'><div onClick={onMenuLinkClick} className={styles.menuItem}>about</div></Link>
-    <div className={styles.version}>{version}</div>
-  </div>
+  )
 }
 
 function AccountMenu({className}) {
   // modal stuff
   const [isOpen, setIsOpen] = useState(false)
 
-  const { refs, floatingStyles, context } = useFloating({
+  const {refs, floatingStyles, context} = useFloating({
     placement: 'bottom',
     open: isOpen,
     onOpenChange: setIsOpen,
-    middleware: [
-      offset(2),
-      flip({ fallbackAxisSideDirection: "end" }),
-      shift()
-    ],
-    whileElementsMounted: autoUpdate
+    middleware: [offset(2), flip({fallbackAxisSideDirection: 'end'}), shift()],
+    whileElementsMounted: autoUpdate,
   })
 
   const click = useClick(context)
   const dismiss = useDismiss(context)
   const role = useRole(context)
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    click,
-    dismiss,
-    role
-  ])
+  const {getReferenceProps, getFloatingProps} = useInteractions([click, dismiss, role])
 
   const headingId = useId()
 
@@ -94,13 +91,7 @@ function AccountMenu({className}) {
       </span>
       {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
-          <div
-            className={styles.modal}
-            ref={refs.setFloating}
-            style={floatingStyles}
-            aria-labelledby={headingId}
-            {...getFloatingProps()}
-          >
+          <div className={styles.modal} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
             <Menu onMenuLinkClick={onMenuLinkClick} />
           </div>
         </FloatingFocusManager>

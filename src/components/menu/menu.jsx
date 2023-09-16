@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import styles from './menu.module.css'
 import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import AccountMenu from './account-menu'
@@ -10,14 +10,19 @@ const pages = new Set(['profile', 'settings', 'about', 'inbox', 'u'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
 
 const PostMenu = () => {
-  return <div className={styles.menu}>
-    <span className={styles.leftMenu}></span>
-    <span className={styles.rightMenu}>
-      <Link to={'/'} className={styles.menuItem}>p/all</Link>
-      {' '}
-      <Link to={'/about'} className={styles.menuItem}>about</Link>
-    </span>
-  </div>
+  return (
+    <div className={styles.menu}>
+      <span className={styles.leftMenu}></span>
+      <span className={styles.rightMenu}>
+        <Link to={'/'} className={styles.menuItem}>
+          p/all
+        </Link>{' '}
+        <Link to={'/about'} className={styles.menuItem}>
+          about
+        </Link>
+      </span>
+    </div>
+  )
 }
 
 const Menu = () => {
@@ -65,35 +70,38 @@ const Menu = () => {
   const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
   const selectedFeedName = feedName || ''
 
-  return <div className={styles.menu}>
-    <span className={styles.leftMenu}></span>
+  return (
+    <div className={styles.menu}>
+      <span className={styles.leftMenu}></span>
 
-    <span className={styles.rightMenu}>
-      <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
-        {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option> : undefined}
-        <option value="all">p/all</option>
-        <option value="subscriptions">p/subs</option>
-        <option value="goToSubplebbit">p/</option>
-      </select>
-      {' '}
-      <select className={[styles.sortType, styles.menuItem].join(' ')}  onChange={changeSortType} value={selectedSortType}>
-        <option value="hot">hot</option>
-        <option value="new">new</option>
-        <option value="topAll">top</option>
-        <option value="active">active</option>
-        <option value="controversialAll">cont</option>
-      </select>
-      {' '}
-      <Link to={showCatalogLink ? catalogLink : feedLink} className={styles.menuItem}>{showCatalogLink ? 'catalog' : 'feed'}</Link>
-      {' '}
-      <Submit className={styles.menuItem}/>
-      {' '}
-      <AccountMenu className={styles.menuItem}/>
-    </span>
-    <button onClick={() => window.scrollTo(0,0)} className={styles.scrollToTopButton}>top</button>
+      <span className={styles.rightMenu}>
+        <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
+          {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? (
+            <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option>
+          ) : undefined}
+          <option value="all">p/all</option>
+          <option value="subscriptions">p/subs</option>
+          <option value="goToSubplebbit">p/</option>
+        </select>{' '}
+        <select className={[styles.sortType, styles.menuItem].join(' ')} onChange={changeSortType} value={selectedSortType}>
+          <option value="hot">hot</option>
+          <option value="new">new</option>
+          <option value="topAll">top</option>
+          <option value="active">active</option>
+          <option value="controversialAll">cont</option>
+        </select>{' '}
+        <Link to={showCatalogLink ? catalogLink : feedLink} className={styles.menuItem}>
+          {showCatalogLink ? 'catalog' : 'feed'}
+        </Link>{' '}
+        <Submit className={styles.menuItem} /> <AccountMenu className={styles.menuItem} />
+      </span>
+      <button onClick={() => window.scrollTo(0, 0)} className={styles.scrollToTopButton}>
+        top
+      </button>
 
-    <GoToSubplebbitModal isOpen={goToSubplebbitModalIsOpen} setIsOpen={setGoToSubplebbitModalIsOpen} />
-  </div>
+      <GoToSubplebbitModal isOpen={goToSubplebbitModalIsOpen} setIsOpen={setGoToSubplebbitModalIsOpen} />
+    </div>
+  )
 }
 
 const createFeedLink = (feedName, sortType) => {

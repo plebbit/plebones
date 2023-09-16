@@ -7,29 +7,33 @@ const readReplyCountsDb = localForageLru.createInstance({name: `plebonesReadRepl
 const useReadReplyCountsStore = createStore((setState, getState) => ({
   readReplyCounts: {},
   setReadReplyCount: (commentCid, readReplyCount) => {
-    setState(state => ({
-      readReplyCounts: {...state.readReplyCounts, [commentCid]: readReplyCount}
+    setState((state) => ({
+      readReplyCounts: {...state.readReplyCounts, [commentCid]: readReplyCount},
     }))
     readReplyCountsDb.setItem(commentCid, readReplyCount)
-  }
+  },
 }))
 
 // load reply counts from database once on load
 const initializeReadReplyCountsStore = async () => {
   const commentCids = await readReplyCountsDb.keys()
-  const readReplyCounts = {} 
-  await Promise.all(commentCids.map(commentCid => readReplyCountsDb.getItem(commentCid).then(readReplyCount => {
-    readReplyCounts[commentCid] = readReplyCount
-  })))
-  useReadReplyCountsStore.setState(state => ({
-    readReplyCounts: {...readReplyCounts, ...state.readReplyCounts}
+  const readReplyCounts = {}
+  await Promise.all(
+    commentCids.map((commentCid) =>
+      readReplyCountsDb.getItem(commentCid).then((readReplyCount) => {
+        readReplyCounts[commentCid] = readReplyCount
+      })
+    )
+  )
+  useReadReplyCountsStore.setState((state) => ({
+    readReplyCounts: {...readReplyCounts, ...state.readReplyCounts},
   }))
 }
 initializeReadReplyCountsStore()
 
 const useUnreadReplyCount = (post) => {
-  const readReplyCount = useReadReplyCountsStore(state => state.readReplyCounts[post?.cid?.substring(2, 14)])
-  const setReadReplyCount = useReadReplyCountsStore(state => state.setReadReplyCount)
+  const readReplyCount = useReadReplyCountsStore((state) => state.readReplyCounts[post?.cid?.substring(2, 14)])
+  const setReadReplyCount = useReadReplyCountsStore((state) => state.setReadReplyCount)
   const setRepliesToRead = () => {
     if (post?.cid && typeof post?.replyCount === 'number') {
       // don't set if readReplyCount is defined and bigger or equal, could happen if post.replyCount is outdated
@@ -55,7 +59,7 @@ export const incrementReadReplyCount = (commentCid) => {
   assert(commentCid, `readReplyCountsStore.incrementReadReplyCount invalid commentCid argument '${commentCid}'`)
   commentCid = commentCid?.substring(2, 14)
   let nextCount
-  useReadReplyCountsStore.setState(state => {
+  useReadReplyCountsStore.setState((state) => {
     nextCount = (state.readReplyCounts[commentCid] || 0) + 1
     return {readReplyCounts: {...state.readReplyCounts, [commentCid]: nextCount}}
   })

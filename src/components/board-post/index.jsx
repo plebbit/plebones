@@ -1,1 +1,1 @@
-export {default} from "./board-post"
+export {default} from './board-post'

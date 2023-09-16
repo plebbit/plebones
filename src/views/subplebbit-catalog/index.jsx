@@ -1,1 +1,1 @@
-export {default} from "./subplebbit-catalog"
+export {default} from './subplebbit-catalog'

@@ -7,14 +7,17 @@ const useDownvote = (comment) => {
   const {addChallenge} = useChallenges()
   const {vote} = useAccountVote({commentCid: comment?.cid})
 
-  const publishVoteOptions = useMemo(() => ({
-    commentCid: comment?.cid,
-    vote: vote !== -1 ? -1 : 0,
-    subplebbitAddress: comment?.subplebbitAddress,
-    onChallenge: (...args) => addChallenge([...args, comment]),
-    onChallengeVerification: alertChallengeVerificationFailed,
-    onError: console.error
-  }), [comment, vote, addChallenge])
+  const publishVoteOptions = useMemo(
+    () => ({
+      commentCid: comment?.cid,
+      vote: vote !== -1 ? -1 : 0,
+      subplebbitAddress: comment?.subplebbitAddress,
+      onChallenge: (...args) => addChallenge([...args, comment]),
+      onChallengeVerification: alertChallengeVerificationFailed,
+      onError: console.error,
+    }),
+    [comment, vote, addChallenge]
+  )
   const {publishVote} = usePublishVote(publishVoteOptions)
 
   return [vote === -1, publishVote]

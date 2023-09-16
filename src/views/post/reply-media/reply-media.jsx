@@ -1,35 +1,21 @@
 import utils from '../../../lib/utils'
 import styles from './reply-media.module.css'
-import { useState } from "react"
-import {
-  useFloating,
-  useDismiss,
-  useRole,
-  useClick,
-  useInteractions,
-  FloatingFocusManager,
-  useId,
-  FloatingOverlay,
-  FloatingPortal
-} from "@floating-ui/react"
+import {useState} from 'react'
+import {useFloating, useDismiss, useRole, useClick, useInteractions, FloatingFocusManager, useId, FloatingOverlay, FloatingPortal} from '@floating-ui/react'
 
 function ImageModal({url}) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const { refs, context } = useFloating({
+  const {refs, context} = useFloating({
     open: isOpen,
-    onOpenChange: setIsOpen
+    onOpenChange: setIsOpen,
   })
 
   const click = useClick(context)
   const role = useRole(context)
-  const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" })
+  const dismiss = useDismiss(context, {outsidePressEvent: 'mousedown'})
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    click,
-    role,
-    dismiss
-  ])
+  const {getReferenceProps, getFloatingProps} = useInteractions([click, role, dismiss])
 
   const refProps = getReferenceProps()
   // prevent opening the reply modal on click
@@ -44,7 +30,9 @@ function ImageModal({url}) {
 
   return (
     <>
-      <div className={styles.replyMediaWrapper}><img ref={refs.setReference} {...refProps} onClick={onClickAndStopPropagation} className={styles.replyMedia} src={url} alt='' /></div>
+      <div className={styles.replyMediaWrapper}>
+        <img ref={refs.setReference} {...refProps} onClick={onClickAndStopPropagation} className={styles.replyMedia} src={url} alt="" />
+      </div>
       <FloatingPortal>
         {isOpen && (
           <FloatingOverlay>
@@ -56,7 +44,7 @@ function ImageModal({url}) {
                 aria-describedby={descriptionId}
                 {...getFloatingProps()}
               >
-                <img onClick={stopPropagation} className={styles.modalMedia} src={url} alt='' />
+                <img onClick={stopPropagation} className={styles.modalMedia} src={url} alt="" />
               </div>
             </FloatingFocusManager>
           </FloatingOverlay>
@@ -69,20 +57,16 @@ function ImageModal({url}) {
 function VideoModal({url}) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const { refs, context } = useFloating({
+  const {refs, context} = useFloating({
     open: isOpen,
-    onOpenChange: setIsOpen
+    onOpenChange: setIsOpen,
   })
 
   const click = useClick(context)
   const role = useRole(context)
-  const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" })
+  const dismiss = useDismiss(context, {outsidePressEvent: 'mousedown'})
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    click,
-    role,
-    dismiss
-  ])
+  const {getReferenceProps, getFloatingProps} = useInteractions([click, role, dismiss])
 
   const refProps = getReferenceProps()
   // prevent opening the reply modal on click
@@ -97,7 +81,9 @@ function VideoModal({url}) {
 
   return (
     <>
-      <div className={styles.replyMediaWrapper}><video ref={refs.setReference} {...refProps} onClick={onClickAndStopPropagation} className={styles.replyMedia} controls={false} autoPlay={false} src={url} /></div>
+      <div className={styles.replyMediaWrapper}>
+        <video ref={refs.setReference} {...refProps} onClick={onClickAndStopPropagation} className={styles.replyMedia} controls={false} autoPlay={false} src={url} />
+      </div>
       <FloatingPortal>
         {isOpen && (
           <FloatingOverlay>
@@ -130,7 +116,13 @@ const ReplyMedia = ({reply}) => {
   if (mediaType === 'video') {
     return <VideoModal url={reply?.link} />
   }
-  return <div className={styles.replyLink}><a href={reply?.link} target='_blank' rel='noreferrer'>{reply?.link?.trim?.()}</a></div>
+  return (
+    <div className={styles.replyLink}>
+      <a href={reply?.link} target="_blank" rel="noreferrer">
+        {reply?.link?.trim?.()}
+      </a>
+    </div>
+  )
 }
 
 export default ReplyMedia

@@ -1,19 +1,11 @@
-import {
-  useFloating,
-  useDismiss,
-  useRole,
-  useClick,
-  useInteractions,
-  FloatingFocusManager,
-  useId
-} from "@floating-ui/react"
+import {useFloating, useDismiss, useRole, useClick, useInteractions, FloatingFocusManager, useId} from '@floating-ui/react'
 import styles from './go-to-subplebbit-modal.module.css'
 import {useNavigate} from 'react-router-dom'
 import createStore from 'zustand'
 
 const useSubplebbitAddress = createStore((setState) => ({
   subplebbitAddress: '',
-  setSubplebbitAddress: (subplebbitAddress) => setState(state => ({subplebbitAddress}))
+  setSubplebbitAddress: (subplebbitAddress) => setState((state) => ({subplebbitAddress})),
 }))
 
 const GoToSubplebbit = () => {
@@ -31,14 +23,16 @@ const GoToSubplebbit = () => {
 
   const onChange = (e) => setSubplebbitAddress(e.target.value)
 
-  return <div className={styles.goToSubplebbit}>
-    <input defaultValue={subplebbitAddress} onChange={onChange} onKeyPress={go} placeholder='address.eth' />
-    <button onClick={go}>go</button>
-  </div>
+  return (
+    <div className={styles.goToSubplebbit}>
+      <input defaultValue={subplebbitAddress} onChange={onChange} onKeyPress={go} placeholder="address.eth" />
+      <button onClick={go}>go</button>
+    </div>
+  )
 }
 
 function GoToSubplebbitModal({isOpen, setIsOpen}) {
-  const { refs, context } = useFloating({
+  const {refs, context} = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
   })
@@ -47,11 +41,7 @@ function GoToSubplebbitModal({isOpen, setIsOpen}) {
   const dismiss = useDismiss(context)
   const role = useRole(context)
 
-  const { getFloatingProps } = useInteractions([
-    click,
-    dismiss,
-    role
-  ])
+  const {getFloatingProps} = useInteractions([click, dismiss, role])
 
   const headingId = useId()
 
@@ -59,12 +49,7 @@ function GoToSubplebbitModal({isOpen, setIsOpen}) {
     <>
       {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
-          <div
-            className={styles.modal}
-            ref={refs.setFloating}
-            aria-labelledby={headingId}
-            {...getFloatingProps()}
-          >
+          <div className={styles.modal} ref={refs.setFloating} aria-labelledby={headingId} {...getFloatingProps()}>
             <GoToSubplebbit />
           </div>
         </FloatingFocusManager>

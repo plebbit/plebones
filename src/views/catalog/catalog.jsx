@@ -1,7 +1,7 @@
-import { useMemo, useRef, useEffect } from 'react'
+import {useMemo, useRef, useEffect} from 'react'
 import useDefaultSubplebbitAddresses from '../../hooks/use-default-subplebbit-addresses'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
-import { Virtuoso } from 'react-virtuoso'
+import {Virtuoso} from 'react-virtuoso'
 import useWindowWidth from '../../hooks/use-window-width'
 import {useParams} from 'react-router-dom'
 import utils from '../../lib/utils'
@@ -15,8 +15,7 @@ const useFeedRows = (feed, columnCount) => {
       // if previous rows have the row, use the previous row so it uses the same array and avoids rerenders
       if (rowsRef.current?.[rows.length] && rowsRef.current[rows.length].length === columnCount) {
         rows.push(rowsRef.current[rows.length])
-      }
-      else {
+      } else {
         rows.push(feed.slice(i, i + columnCount))
       }
     }
@@ -56,12 +55,13 @@ function Catalog() {
   // save last virtuoso state on each scroll
   const virtuosoRef = useRef()
   useEffect(() => {
-    const setLastVirtuosoState = () => virtuosoRef.current?.getState((snapshot) => {
-      // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
-      if (snapshot?.ranges?.length) {
-        lastVirtuosoStates[sortType] = snapshot
-      }
-    })
+    const setLastVirtuosoState = () =>
+      virtuosoRef.current?.getState((snapshot) => {
+        // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
+        if (snapshot?.ranges?.length) {
+          lastVirtuosoStates[sortType] = snapshot
+        }
+      })
     // TODO: doesn't work if the user hasn't scrolled
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
@@ -72,18 +72,17 @@ function Catalog() {
   return (
     <div>
       <Virtuoso
-        increaseViewportBy={ { bottom: 600, top: 600 } }
-        totalCount={ rows?.length || 0 }
-        data={ rows }
+        increaseViewportBy={{bottom: 600, top: 600}}
+        totalCount={rows?.length || 0}
+        data={rows}
         itemContent={(index, row) => <CatalogRow index={index} row={row} />}
-        useWindowScroll={ true }
-        components={ {Footer} }
-        endReached={ loadMore }
+        useWindowScroll={true}
+        components={{Footer}}
+        endReached={loadMore}
         ref={virtuosoRef}
         restoreStateFrom={lastVirtuosoState}
         initialScrollTop={lastVirtuosoState?.scrollTop}
       />
-
     </div>
   )
 }

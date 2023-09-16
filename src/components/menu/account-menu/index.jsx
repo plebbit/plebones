@@ -1,1 +1,1 @@
-export {default} from "./account-menu"
+export {default} from './account-menu'

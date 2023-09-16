@@ -15,14 +15,13 @@ export const getPublicationType = (publication) => {
 }
 
 export const getVotePreview = (publication) => {
- if (typeof publication?.vote !== 'number') {
+  if (typeof publication?.vote !== 'number') {
     return ''
   }
   let votePreview = ''
   if (publication.vote === -1) {
     votePreview += ' -1'
-  }
-  else {
+  } else {
     votePreview += ` +${publication.vote}`
   }
   return votePreview

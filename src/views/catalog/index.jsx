@@ -1,1 +1,1 @@
-export {default} from "./catalog"
+export {default} from './catalog'

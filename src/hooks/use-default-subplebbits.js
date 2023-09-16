@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 
 let cache
 
@@ -9,16 +9,15 @@ const useDefaultSubplebbits = () => {
     if (cache) {
       return
     }
-    ;(async() => {
+    ;(async () => {
       try {
         const value = await fetch(
-          'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json',
+          'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json'
           // { cache: 'no-cache' }
-        ).then(res => res.json())
+        ).then((res) => res.json())
         cache = value
         setValue(value)
-      }
-      catch (e) {
+      } catch (e) {
         console.error(e)
       }
     })()

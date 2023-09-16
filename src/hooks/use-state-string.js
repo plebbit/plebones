@@ -59,15 +59,14 @@ const useStateString = (commentOrSubplebbit) => {
     const getClientHost = (clientUrl) => {
       try {
         clientUrl = new URL(clientUrl).hostname || clientUrl
-      }
-      catch (e) {}
+      } catch (e) {}
       return clientUrl
     }
 
     let stateString = ''
     for (const state in states) {
       const clientUrls = states[state]
-      const clientHosts = clientUrls.map(clientUrl => getClientHost(clientUrl))
+      const clientHosts = clientUrls.map((clientUrl) => getClientHost(clientUrl))
 
       // if there are no valid hosts, skip this state
       if (clientHosts.length === 0) {
@@ -87,8 +86,7 @@ const useStateString = (commentOrSubplebbit) => {
     if (!stateString) {
       if (commentOrSubplebbit?.publishingState && commentOrSubplebbit?.publishingState !== 'stopped' && commentOrSubplebbit?.publishingState !== 'succeeded') {
         stateString = commentOrSubplebbit.publishingState
-      }
-      else if (commentOrSubplebbit?.updatingState !== 'stopped' && commentOrSubplebbit?.updatingState !== 'succeeded') {
+      } else if (commentOrSubplebbit?.updatingState !== 'stopped' && commentOrSubplebbit?.updatingState !== 'succeeded') {
         stateString = commentOrSubplebbit.updatingState
       }
     }

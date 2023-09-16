@@ -1,1 +1,1 @@
-export {default} from "./subscriptions-catalog"
+export {default} from './subscriptions-catalog'

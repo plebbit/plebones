@@ -1,1 +1,1 @@
-export {default} from "./reply-media"
+export {default} from './reply-media'
