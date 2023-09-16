@@ -21,7 +21,9 @@
     "electron:before": "yarn electron:before:download-ipfs && yarn electron:before:delete-data",
     "electron:before:download-ipfs": "node electron/downloadIpfs",
     "electron:before:delete-data": "rimraf .plebbit",
-    "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#000000'"
+    "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#000000'",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "prettier": "prettier src/**/*.{js,jsx} --write"
   },
   "dependencies": {
     "@capacitor/app": "1.1.1",
@@ -57,7 +59,11 @@
     "electron": "19.1.8",
     "electron-builder": "23.0.9",
     "source-map-explorer": "2.5.3",
-    "wait-on": "7.0.1"
+    "wait-on": "7.0.1",
+    "conventional-changelog-cli": "4.1.0",
+    "cz-conventional-changelog": "3.3.0",
+    "lint-staged": "12.3.8",
+    "prettier": "2.3.2"
   },
   "main": "electron/main.js",
   "build": {
@@ -115,5 +121,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && cz --hook || true",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
