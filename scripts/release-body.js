@@ -1,7 +1,14 @@
 const {execSync} = require('child_process')
+const path = require('path')
+const conventionalChangelog = path.join('node_modules', '.bin', 'conventional-changelog')
 
-let releaseChangelog = execSync('node_modules/.bin/conventional-changelog --preset angular --release-count 1')
-releaseChangelog = String(releaseChangelog).trim().replace(/\n\n+/g, '\n\n')
+// sometimes release-count 1 is empty
+let releaseChangelog = 
+  execSync(`${conventionalChangelog} --preset angular --release-count 1`).toString() || 
+  execSync(`${conventionalChangelog} --preset angular --release-count 2`).toString()
+
+// format
+releaseChangelog = releaseChangelog.trim().replace(/\n\n+/g, '\n\n')
 
 const releaseBody = `Progressive web app mirrors:
 - https://plebones.eth.limo
