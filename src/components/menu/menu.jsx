@@ -5,11 +5,14 @@ import AccountMenu from './account-menu'
 import Submit from './submit'
 import {useState} from 'react'
 import GoToSubplebbitModal from './go-to-subplebbit-modal'
+import {useTranslation} from 'react-i18next'
 
 const pages = new Set(['profile', 'settings', 'about', 'inbox', 'u'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
 
 const PostMenu = () => {
+  const {t} = useTranslation()
+
   return (
     <div className={styles.menu}>
       <span className={styles.leftMenu}></span>
@@ -18,7 +21,7 @@ const PostMenu = () => {
           p/all
         </Link>{' '}
         <Link to={'/about'} className={styles.menuItem}>
-          about
+          {t('about')}
         </Link>
       </span>
     </div>
