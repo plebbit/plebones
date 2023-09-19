@@ -63,7 +63,7 @@ const Reply = ({reply, depth, isLast}) => {
         <div className={[styles.replyWrapper, replyDepthEven ? styles.replyDepthEven : undefined, isLast ? styles.replyIsLast : undefined].join(' ')}>
           <div className={styles.replyHeader}>
             <span className={styles.replyScore}>{reply?.upvoteCount - reply?.downvoteCount || 0}</span>
-            <span className={styles.replyAuthor}> {shortAuthorAddress || reply?.author?.shortAddress}</span>
+            <span className={styles.replyAuthor}> {shortAuthorAddress}</span>
             <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
             {state && (
               <>

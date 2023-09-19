@@ -4,7 +4,7 @@ import {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from '../post/post.module.css'
-import {useAccountComment} from '@plebbit/plebbit-react-hooks'
+import {useAccountComment, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useStateString from '../../hooks/use-state-string'
 import Embed, {canEmbed} from '../../components/embed'
 
@@ -43,7 +43,7 @@ function Post() {
   const {accountCommentIndex: commentIndex} = useParams()
   const navigate = useNavigate()
   const post = useAccountComment({commentIndex})
-  const shortAuthorAddress = post?.author?.shortAddress
+  const {shortAuthorAddress} = useAuthorAddress({comment: post})
 
   let hostname
   try {
@@ -104,7 +104,7 @@ function Post() {
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
             <span className={styles.author}>
               {' '}
-              by <Link to="/profile">{shortAuthorAddress || post?.author?.shortAddress}</Link> to{' '}
+              by <Link to="/profile">{shortAuthorAddress}</Link> to{' '}
             </span>
             <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>
               {post?.subplebbitAddress}
