@@ -5,6 +5,7 @@ import useWindowWidth from '../../hooks/use-window-width'
 import {useParams} from 'react-router-dom'
 import utils from '../../lib/utils'
 import CatalogRow from '../../components/catalog-row'
+import useFeedStateString from '../../hooks/use-feed-state-string'
 
 const useFeedRows = (feed, columnCount) => {
   const rowsRef = useRef()
@@ -29,7 +30,6 @@ const lastVirtuosoStates = {}
 // column width in px
 const columnWidth = 180
 
-const Loading = () => 'loading...'
 const NoSubscriptions = () => 'no subscriptions'
 const NoPosts = () => 'no image posts'
 
@@ -41,6 +41,7 @@ function Catalog() {
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'active'
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 20, filter: utils.catalogFilter})
+  const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   // split feed into rows
   const rows = useFeedRows(feed, columnCount)
@@ -53,7 +54,7 @@ function Catalog() {
     Footer = NoSubscriptions
   }
   if (hasMore || !account) {
-    Footer = Loading
+    Footer = () => loadingStateString
   }
 
   // save last virtuoso state on each scroll

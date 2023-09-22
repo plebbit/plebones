@@ -5,10 +5,10 @@ import {Virtuoso} from 'react-virtuoso'
 import FeedPost from './feed-post'
 import {useParams, useLocation} from 'react-router-dom'
 import PostModal from './post-modal'
+import useFeedStateString from '../../hooks/use-feed-state-string'
 
 const lastVirtuosoStates = {}
 
-const Loading = () => 'loading...'
 const NoPosts = () => 'no posts'
 
 function Home() {
@@ -18,13 +18,14 @@ function Home() {
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer
   if (feed?.length === 0) {
     Footer = NoPosts
   }
   if (hasMore || subplebbitAddresses.length === 0) {
-    Footer = Loading
+    Footer = () => loadingStateString
   }
 
   // save last virtuoso state on each scroll

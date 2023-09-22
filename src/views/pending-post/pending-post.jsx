@@ -119,11 +119,7 @@ function Post() {
       <div className={styles.pendingMedia}>
         <PostMedia post={post} />
       </div>
-      {publishingStateString && (
-        <div className={styles.stateString} title={publishingStateString}>
-          {publishingStateString}...
-        </div>
-      )}
+      {publishingStateString && <div className={styles.stateString}>{publishingStateString}</div>}
     </div>
   )
 }

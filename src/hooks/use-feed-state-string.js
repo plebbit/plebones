@@ -1,90 +1,96 @@
 import {useMemo} from 'react'
+import useStateString from './use-state-string'
+import {useSubplebbit, useSubplebbitsStates} from '@plebbit/plebbit-react-hooks'
 
-const useFeedStateString = (subplebbits) => {
-  return useMemo(() => {
-    const getClientHost = (clientUrl) => {
-      try {
-        clientUrl = new URL(clientUrl).hostname || clientUrl
-      } catch (e) {}
-      return clientUrl
+const clientHosts = {}
+const getClientHost = (clientUrl) => {
+  if (!clientHosts[clientUrl]) {
+    try {
+      clientHosts[clientUrl] = new URL(clientUrl).hostname || clientUrl
+    } catch (e) {
+      clientHosts[clientUrl] = clientUrl
     }
-    const getClientUrls = (regex) => {
-      const clientUrls = new Set()
-      const addClientUrl = (client, clientUrl) => client?.state?.match?.(regex) && clientUrls.add(getClientHost(clientUrl))
-      for (const subplebbit of subplebbits) {
-        for (const clientUrl in subplebbit?.clients?.ipfsGateways) {
-          addClientUrl(subplebbit.clients.ipfsGateways[clientUrl], clientUrl)
-        }
-        for (const clientUrl in subplebbit?.clients?.ipfsClients) {
-          addClientUrl(subplebbit.clients.ipfsClients[clientUrl], clientUrl)
-        }
-        for (const chainTicker in subplebbit?.clients?.chainProviders) {
-          for (const clientUrl in subplebbit.clients.chainProviders[chainTicker]) {
-            addClientUrl(subplebbit.clients.chainProviders[chainTicker][clientUrl], clientUrl)
-          }
-        }
-        // find subplebbit pages states
-        if (subplebbit?.posts?.clients) {
-          for (const clientType in subplebbit.posts.clients) {
-            for (const sortType in subplebbit.posts.clients[clientType]) {
-              for (const clientUrl in subplebbit.posts.clients[clientType][sortType]) {
-                addClientUrl(subplebbit.posts.clients[clientType][sortType][clientUrl], clientUrl)
-              }
-            }
-          }
-        }
-      }
-      return [...clientUrls]
-    }
+  }
+  return clientHosts[clientUrl]
+}
 
-    if (!subplebbits) {
+const useFeedStateString = (subplebbitAddresses) => {
+  // single subplebbit feed state string
+  const subplebbitAddress = subplebbitAddresses?.length === 1 ? subplebbitAddresses[0] : undefined
+  const subplebbit = useSubplebbit({subplebbitAddress})
+  const singleSubplebbitFeedStateString = useStateString(subplebbit)
+
+  // multiple subplebbit feed state string
+  const {states} = useSubplebbitsStates({subplebbitAddresses})
+
+  const multipleSubplebbitsFeedStateString = useMemo(() => {
+    if (subplebbitAddress) {
       return
     }
 
-    const states = {}
-    for (const subplebbit of subplebbits) {
-      states[subplebbit?.updatingState] = (states[subplebbit?.updatingState] || 0) + 1
-      // find subplebbit pages states
-      for (const clientType in subplebbit?.posts?.clients) {
-        for (const sortType in subplebbit.posts.clients[clientType]) {
-          for (const clientUrl in subplebbit.posts.clients[clientType][sortType]) {
-            const state = subplebbit.posts.clients[clientType][sortType][clientUrl].state
-            states[state] = (states[state] || 0) + 1
-          }
-        }
+    // e.g. infura.io: 2 resolving-address, cloudflare-ipfs.com/ipfs.io: 2 fetching-ipns 1 fetching-ipfs
+    let stateString = ''
+
+    if (states['resolving-address']) {
+      const {subplebbitAddresses, clientUrls} = states['resolving-address']
+      if (subplebbitAddresses.length && clientUrls.length) {
+        stateString += `${clientUrls.join('/')}: ${subplebbitAddresses.length} resolving-address`
       }
     }
 
-    // e.g. infura.io: 2 resolving-address cloudflare-ipfs.com/ipfs.io: 2 fetching-ipns 1 fetching-ipfs
-    let stateString = ''
-    if (states['resolving-address']) {
-      const clientUrls = getClientUrls(/address/)
-      if (clientUrls.length) {
-        stateString += `${clientUrls.join('/')}: ${states['resolving-address']} resolving-address`
+    // find all page client and sub addresses
+    const pagesStatesClientHosts = new Set()
+    const pagesStatesSubplebbitAddresses = new Set()
+    for (const state in states) {
+      if (state.match('page')) {
+        states[state].clientUrls.forEach((clientUrl) => pagesStatesClientHosts.add(getClientHost(clientUrl)))
+        states[state].subplebbitAddresses.forEach((subplebbitAddress) => pagesStatesSubplebbitAddresses.add(subplebbitAddress))
       }
     }
-    if (states['fetching-ipns'] || states['fetching-ipfs']) {
+
+    if (states['fetching-ipns'] || states['fetching-ipfs'] || pagesStatesSubplebbitAddresses.size) {
+      // separate 2 different states using ', '
       if (stateString) {
-        stateString += ' '
+        stateString += ', '
       }
-      const clientUrls = getClientUrls(/ipfs|ipns/)
-      if (clientUrls.length) {
-        stateString += `${clientUrls.join('/')}: `
+
+      // find all client urls
+      const clientHosts = new Set([...pagesStatesClientHosts])
+      states['fetching-ipns']?.clientUrls.forEach((clientUrl) => clientHosts.add(getClientHost(clientUrl)))
+      states['fetching-ipfs']?.clientUrls.forEach((clientUrl) => clientHosts.add(getClientHost(clientUrl)))
+
+      if (clientHosts.size) {
+        stateString += `${[...clientHosts].join('/')}: `
         if (states['fetching-ipns']) {
-          stateString += `${states['fetching-ipns']} fetching-ipns`
+          stateString += `${states['fetching-ipns'].subplebbitAddresses.length} fetching-ipns`
         }
         if (states['fetching-ipfs']) {
           if (states['fetching-ipns']) {
             stateString += ' '
           }
-          stateString += `${states['fetching-ipfs']} fetching-ipfs`
+          stateString += `${states['fetching-ipfs'].subplebbitAddresses.length} fetching-ipfs`
+        }
+        if (pagesStatesSubplebbitAddresses.size) {
+          if (states['fetching-ipns'] || states['fetching-ipfs']) {
+            stateString += ' '
+          }
+          stateString += `${pagesStatesSubplebbitAddresses.size} fetching-page`
         }
       }
     }
 
+    if (stateString) {
+      stateString += '...'
+    }
+
     // if string is empty, return undefined instead
-    return stateString || undefined
-  }, [subplebbits])
+    return stateString === '' ? undefined : stateString
+  }, [states, subplebbitAddress])
+
+  if (singleSubplebbitFeedStateString) {
+    return singleSubplebbitFeedStateString
+  }
+  return multipleSubplebbitsFeedStateString
 }
 
 export default useFeedStateString

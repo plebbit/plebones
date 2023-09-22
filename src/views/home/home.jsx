@@ -4,10 +4,10 @@ import {useFeed} from '@plebbit/plebbit-react-hooks'
 import {Virtuoso} from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
+import useFeedStateString from '../../hooks/use-feed-state-string'
 
 const lastVirtuosoStates = {}
 
-const Loading = () => 'loading...'
 const NoPosts = () => 'no posts'
 
 function Home() {
@@ -15,13 +15,14 @@ function Home() {
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10})
+  const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer
   if (feed?.length === 0) {
     Footer = NoPosts
   }
   if (hasMore || subplebbitAddresses.length === 0) {
-    Footer = Loading
+    Footer = () => loadingStateString
   }
 
   // save last virtuoso state on each scroll

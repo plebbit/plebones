@@ -74,7 +74,7 @@ const Reply = ({reply, depth, isLast}) => {
             {publishingStateString && (
               <>
                 {' '}
-                <span>{publishingStateString}...</span>
+                <span>{publishingStateString}</span>
               </>
             )}
           </div>
@@ -214,11 +214,7 @@ function Post() {
       <div className={hidden ? styles.hidden : undefined}>
         <PostMedia post={post} />
       </div>
-      {stateString && (
-        <div className={styles.stateString} title={stateString}>
-          {stateString}...
-        </div>
-      )}
+      {stateString && <div className={styles.stateString}>{stateString}</div>}
       <div className={styles.replies}>{replies}</div>
     </div>
   )
