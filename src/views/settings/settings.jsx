@@ -41,7 +41,8 @@ const AccountSettings = () => {
   const saveAccount = async () => {
     try {
       const newAccount = JSON.parse(text).account
-      await setAccount(newAccount)
+      // force keeping the same id, makes it easier to copy paste
+      await setAccount({...newAccount, id: account?.id})
       alert(`saved`)
     } catch (e) {
       console.warn(e)
