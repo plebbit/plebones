@@ -34,7 +34,7 @@ const useFeedStateString = (subplebbitAddresses) => {
     if (states['resolving-address']) {
       const {subplebbitAddresses, clientUrls} = states['resolving-address']
       if (subplebbitAddresses.length && clientUrls.length) {
-        stateString += `${clientUrls.join('/')}: ${subplebbitAddresses.length} resolving-address`
+        stateString += `${clientUrls.map(getClientHost).join('/')}: ${subplebbitAddresses.length} resolving-address`
       }
     }
 
@@ -49,9 +49,9 @@ const useFeedStateString = (subplebbitAddresses) => {
     }
 
     if (states['fetching-ipns'] || states['fetching-ipfs'] || pagesStatesSubplebbitAddresses.size) {
-      // separate 2 different states using ', '
+      // separate 2 different states using ' '
       if (stateString) {
-        stateString += ', '
+        stateString += ' '
       }
 
       // find all client urls

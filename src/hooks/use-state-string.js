@@ -28,7 +28,7 @@ const useStateString = (commentOrSubplebbit) => {
 
       // separate 2 different states using ' '
       if (stateString) {
-        stateString += ', '
+        stateString += ' '
       }
 
       // e.g. 'cloudflare-ipfs.com/ipfs.io: fetching-ipfs'
