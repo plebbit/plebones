@@ -26,7 +26,7 @@ const useReplyStore = createStore((setState, getState) => ({
           alertChallengeVerificationFailed(challengeVerification, comment)
         },
         onError: (error) => {
-          console.error(error)
+          console.warn(error)
           alert(error)
         },
       }

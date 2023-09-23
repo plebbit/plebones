@@ -14,7 +14,7 @@ const useDownvote = (comment) => {
       subplebbitAddress: comment?.subplebbitAddress,
       onChallenge: (...args) => addChallenge([...args, comment]),
       onChallengeVerification: alertChallengeVerificationFailed,
-      onError: console.error,
+      onError: console.warn,
     }),
     [comment, vote, addChallenge]
   )

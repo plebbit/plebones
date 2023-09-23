@@ -44,7 +44,7 @@ const AccountSettings = () => {
       await setAccount(newAccount)
       alert(`saved`)
     } catch (e) {
-      console.error(e)
+      console.warn(e)
       alert(`failed editing account: ${e.message}`)
     }
   }

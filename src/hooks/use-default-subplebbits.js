@@ -18,7 +18,7 @@ const useDefaultSubplebbits = () => {
         cache = value
         setValue(value)
       } catch (e) {
-        console.error(e)
+        console.warn(e)
       }
     })()
   }, [])

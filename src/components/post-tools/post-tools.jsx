@@ -58,7 +58,7 @@ const ModTools = ({post, closeModal}) => {
     onChallenge: (...args) => addChallenge([...args, post]),
     onChallengeVerification: alertChallengeVerificationFailed,
     onError: (error) => {
-      console.error(error)
+      console.warn(error)
       alert(error)
     },
   }

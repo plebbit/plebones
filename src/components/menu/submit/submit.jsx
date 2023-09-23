@@ -32,7 +32,7 @@ const useSubmitStore = createStore((setState, getState) => ({
         onChallenge: (...args) => addChallenge(args),
         onChallengeVerification: alertChallengeVerificationFailed,
         onError: (error) => {
-          console.error(error)
+          console.warn(error)
           alert(error)
         },
       }
