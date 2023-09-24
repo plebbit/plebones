@@ -124,6 +124,8 @@
 .authorAddressVisible {
   float: left;
   width: 0;
+  /* sometimes the text wraps with float left */
+  white-space: nowrap;
 }
 
 @keyframes authorAddressChangedAnimation {
