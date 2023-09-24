@@ -40,6 +40,10 @@ const useUnreadReplyCount = (post) => {
       if (typeof readReplyCount === 'number' && readReplyCount >= post?.replyCount) {
         return
       }
+      // don't set readReplyCount if comment is a reply
+      if (post?.parentCid) {
+        return
+      }
       setReadReplyCount(post.cid.substring(2, 14), post.replyCount)
     }
   }
