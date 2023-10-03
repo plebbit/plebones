@@ -4,7 +4,7 @@ import styles from './submit.module.css'
 import {usePublishComment} from '@plebbit/plebbit-react-hooks'
 import createStore from 'zustand'
 import challengesStore from '../../../hooks/use-challenges'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {isLink, useDefaultAndSubscriptionsSubplebbits} from './utils'
 import {alertChallengeVerificationFailed} from '../../../lib/utils'
 
@@ -47,6 +47,7 @@ const useSubmitStore = createStore((setState, getState) => ({
 }))
 
 const Submit = ({onSubmit}) => {
+  const params = useParams()
   const subplebbits = useDefaultAndSubscriptionsSubplebbits()
   const {subplebbitAddress, title, content, publishCommentOptions, setSubmitStore, resetSubmitStore} = useSubmitStore()
   const {index, publishComment} = usePublishComment(publishCommentOptions)
@@ -80,12 +81,24 @@ const Submit = ({onSubmit}) => {
 
   return (
     <div className={styles.submit}>
-      <SubplebbitSelect subplebbits={subplebbits} subplebbitAddress={subplebbitAddress} setSubmitStore={setSubmitStore} />
+      <SubplebbitSelect subplebbits={subplebbits} subplebbitAddress={subplebbitAddress || params.subplebbitAddress} setSubmitStore={setSubmitStore} />
       <div>
-        <input onChange={(e) => setSubmitStore({title: e.target.value})} defaultValue={title} className={styles.submitTitle} placeholder="title" />
+        {/* set params.subplebbitAddress as default if subplebbitAddress is not yet defined */}
+        <input
+          onChange={(e) => setSubmitStore({title: e.target.value, subplebbitAddress: !subplebbitAddress ? params.subplebbitAddress : undefined})}
+          defaultValue={title}
+          className={styles.submitTitle}
+          placeholder="title"
+        />
       </div>
       <div>
-        <textarea onChange={(e) => setSubmitStore({content: e.target.value})} defaultValue={content} rows={6} className={styles.submitContent} placeholder="link" />
+        <textarea
+          onChange={(e) => setSubmitStore({content: e.target.value, subplebbitAddress: !subplebbitAddress ? params.subplebbitAddress : undefined})}
+          defaultValue={content}
+          rows={6}
+          className={styles.submitContent}
+          placeholder="link"
+        />
       </div>
       <div className={styles.submitButtonWrapper}>
         <button onClick={onPublish} className={styles.submitButton}>
