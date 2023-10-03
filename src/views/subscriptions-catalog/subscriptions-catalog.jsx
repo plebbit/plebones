@@ -40,7 +40,10 @@ function Catalog() {
   const account = useAccount()
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'active'
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 20, filter: utils.catalogFilter})
+  // postPerPage based on columnCount for optimized feed, dont change value after first render
+  // eslint-disable-next-line
+  const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), [])
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage, filter: utils.catalogFilter})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   // split feed into rows
