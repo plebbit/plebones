@@ -55,16 +55,16 @@ const Submit = ({onSubmit}) => {
   const navigate = useNavigate()
 
   const onPublish = () => {
-    if (!subplebbitAddress) {
-      alert(`missing subplebbit`)
-      return
-    }
     if (!title) {
       alert(`missing title`)
       return
     }
     if (!content) {
       alert(`missing link`)
+      return
+    }
+    if (!subplebbitAddress) {
+      alert(`missing subplebbit`)
       return
     }
     publishComment()
