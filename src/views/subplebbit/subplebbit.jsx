@@ -13,6 +13,9 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
   const {subscribed, subscribe, unsubscribe} = useSubscribe({subplebbitAddress})
   const toggleSubscribe = () => (!subscribed ? subscribe() : unsubscribe())
 
+  // TODO: remove debug updatedAt
+  console.log(subplebbit?.updatedAt, subplebbit?.updatedAt && new Date(subplebbit?.updatedAt * 1000).toISOString())
+
   let description = subplebbit?.title || ''
   if (subplebbit?.description) {
     if (description) {
