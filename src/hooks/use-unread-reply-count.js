@@ -16,18 +16,17 @@ const useReadReplyCountsStore = createStore((setState, getState) => ({
 
 // load reply counts from database once on load
 const initializeReadReplyCountsStore = async () => {
-  const commentCids = await readReplyCountsDb.keys()
+  const readReplyCountsEntries = await readReplyCountsDb.entries()
   const readReplyCounts = {}
-  await Promise.all(
-    commentCids.map((commentCid) =>
-      readReplyCountsDb.getItem(commentCid).then((readReplyCount) => {
-        readReplyCounts[commentCid] = readReplyCount
-      })
-    )
-  )
-  useReadReplyCountsStore.setState((state) => ({
-    readReplyCounts: {...readReplyCounts, ...state.readReplyCounts},
-  }))
+  readReplyCountsEntries.forEach(([commentCid, readReplyCount]) => {
+    readReplyCounts[commentCid] = readReplyCount
+  })
+
+  useReadReplyCountsStore.setState((state) => {
+    // TODO: remove debug readReplyCounts
+    console.log({readReplyCounts, stateReadReplyCounts: state.readReplyCounts})
+    return {readReplyCounts: {...readReplyCounts, ...state.readReplyCounts}}
+  })
 }
 initializeReadReplyCountsStore()
 
