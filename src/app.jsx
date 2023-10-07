@@ -52,23 +52,36 @@ function App() {
     <div className={[styles.app, theme].join(' ')}>
       <Routes>
         <Route element={layout}>
-          <Route path="/modal/:sortType?" element={<HomeModal />} />
-          <Route path="/modal/p/:subplebbitAddress/c/:commentCid" element={<HomeModal />} />
+          {/* post page */}
+          <Route path="/p/:subplebbitAddress/c/:commentCid" element={<Post />} />
+
+          {/* feed pages */}
           <Route path="/:sortType?" element={<Home />} />
+          <Route path="/catalog/:sortType?" element={<Catalog />} />
           <Route path="/p/subscriptions/catalog/:sortType?" element={<SubscriptionsCatalog />} />
           <Route path="/p/subscriptions/:sortType?" element={<Subscriptions />} />
-          <Route path="/text-only/:sortType?" element={<TextOnly />} />
-          <Route path="/catalog/:sortType?" element={<Catalog />} />
-          <Route path="/board/:sortType?" element={<Board />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/:accountCommentIndex" element={<PendingPost />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/inbox" element={<Inbox />} />
+
+          {/* subplebbit pages */}
           <Route path="/p/:subplebbitAddress/catalog/:sortType?" element={<SubplebbitCatalog />} />
           <Route path="/p/:subplebbitAddress/:sortType?" element={<Subplebbit />} />
-          <Route path="/p/:subplebbitAddress/c/:commentCid" element={<Post />} />
+
+          {/* profile and settings pages */}
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:accountCommentIndex" element={<PendingPost />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/about" element={<About />} />
+
+          {/* author post history page */}
           <Route path="/u/:authorAddress/c/:commentCid?" element={<Author />} />
+
+          {/* examples and experimental pages */}
+          <Route path="/modal/:sortType?" element={<HomeModal />} />
+          <Route path="/modal/p/:subplebbitAddress/c/:commentCid" element={<HomeModal />} />
+          <Route path="/text-only/:sortType?" element={<TextOnly />} />
+          <Route path="/board/:sortType?" element={<Board />} />
+
+          {/* not found */}
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
