@@ -8,6 +8,7 @@ const useCommentLabels = (comment, editedCommentState) => {
     if (editedCommentState === 'failed') editLabel = 'failed edit'
 
     const commentLabels = []
+    if (comment?.deleted) commentLabels.push('deleted')
     if (comment?.removed) commentLabels.push('removed')
     if (comment?.locked) commentLabels.push('locked')
     if (comment?.spoiler) commentLabels.push('spoiler')
