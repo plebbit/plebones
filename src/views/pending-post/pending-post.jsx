@@ -90,7 +90,7 @@ function Post() {
         <div className={styles.column}>
           <div className={styles.header}>
             <Link to={post?.link} target={post?.link ? '_blank' : undefined} rel="noreferrer" className={styles.title}>
-              {post?.title || post?.content || '-'}
+              {post?.title || '-'}
             </Link>{' '}
             <span className={stateStyle}>{state}</span>
             {hostname && (
