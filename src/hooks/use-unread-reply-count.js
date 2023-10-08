@@ -1,12 +1,15 @@
 import createStore from 'zustand'
 import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru'
 import assert from 'assert'
+import {useCallback} from 'react'
 
 const readReplyCountsDb = localForageLru.createInstance({name: `plebonesReadReplyCounts`, size: 2000})
 
 const useReadReplyCountsStore = createStore((setState, getState) => ({
   readReplyCounts: {},
   setReadReplyCount: (commentCid, readReplyCount) => {
+    // TODO: remove debug setReadReplyCount
+    console.log('setReadReplyCount', commentCid, readReplyCount)
     setState((state) => ({
       readReplyCounts: {...state.readReplyCounts, [commentCid]: readReplyCount},
     }))
@@ -33,7 +36,7 @@ initializeReadReplyCountsStore()
 const useUnreadReplyCount = (post) => {
   const readReplyCount = useReadReplyCountsStore((state) => state.readReplyCounts[post?.cid?.substring(2, 14)])
   const setReadReplyCount = useReadReplyCountsStore((state) => state.setReadReplyCount)
-  const setRepliesToRead = () => {
+  const setRepliesToRead = useCallback(() => {
     if (post?.cid && typeof post?.replyCount === 'number') {
       // don't set if readReplyCount is defined and bigger or equal, could happen if post.replyCount is outdated
       if (typeof readReplyCount === 'number' && readReplyCount >= post?.replyCount) {
@@ -45,7 +48,7 @@ const useUnreadReplyCount = (post) => {
       }
       setReadReplyCount(post.cid.substring(2, 14), post.replyCount)
     }
-  }
+  }, [post, readReplyCount, setReadReplyCount])
   let unreadReplyCount
   if (typeof post?.replyCount === 'number' && typeof readReplyCount === 'number') {
     unreadReplyCount = post.replyCount - readReplyCount
