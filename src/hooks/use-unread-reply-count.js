@@ -8,8 +8,6 @@ const readReplyCountsDb = localForageLru.createInstance({name: `plebonesReadRepl
 const useReadReplyCountsStore = createStore((setState, getState) => ({
   readReplyCounts: {},
   setReadReplyCount: (commentCid, readReplyCount) => {
-    // TODO: remove debug setReadReplyCount
-    console.log('setReadReplyCount', commentCid, readReplyCount)
     setState((state) => ({
       readReplyCounts: {...state.readReplyCounts, [commentCid]: readReplyCount},
     }))
@@ -26,8 +24,6 @@ const initializeReadReplyCountsStore = async () => {
   })
 
   useReadReplyCountsStore.setState((state) => {
-    // TODO: remove debug readReplyCounts
-    console.log({readReplyCounts, stateReadReplyCounts: state.readReplyCounts})
     return {readReplyCounts: {...readReplyCounts, ...state.readReplyCounts}}
   })
 }
