@@ -6,6 +6,7 @@ import Submit from './submit'
 import {useState} from 'react'
 import GoToSubplebbitModal from './go-to-subplebbit-modal'
 import {useTranslation} from 'react-i18next'
+import useTimeFilter from '../../hooks/use-time-filter'
 
 const pages = new Set(['profile', 'settings', 'about', 'inbox', 'u'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
@@ -31,6 +32,7 @@ const PostMenu = () => {
 }
 
 const Menu = () => {
+  const {timeFilterNames} = useTimeFilter()
   const [goToSubplebbitModalIsOpen, setGoToSubplebbitModalIsOpen] = useState(false)
   const navigate = useNavigate()
   const params = useParams()
@@ -52,12 +54,12 @@ const Menu = () => {
   const isCatalog = pathNames[1] === 'catalog' || pathNames[3] === 'catalog'
   const showCatalogLink = !isCatalog && !isPage
   const feedName = pathNames[1] === 'p' ? pathNames[2] : undefined
-  const feedLink = createFeedLink(feedName, params.sortType)
-  const catalogLink = createCatalogLink(feedName, params.sortType)
+  const feedLink = createFeedLink(feedName, params.sortType, params.timeFilterName)
+  const catalogLink = createCatalogLink(feedName, params.sortType, params.timeFilterName)
 
   const changeSortType = (event) => {
     const sortType = event.target.value
-    const link = isCatalog ? createCatalogLink(feedName, sortType) : createFeedLink(feedName, sortType)
+    const link = isCatalog ? createCatalogLink(feedName, sortType, params.timeFilterName) : createFeedLink(feedName, sortType, params.timeFilterName)
     navigate(link)
   }
 
@@ -68,7 +70,13 @@ const Menu = () => {
       return setGoToSubplebbitModalIsOpen(true)
     }
 
-    const link = isCatalog ? createCatalogLink(feedName, params.sortType) : createFeedLink(feedName, params.sortType)
+    const link = isCatalog ? createCatalogLink(feedName, params.sortType, params.timeFilterName) : createFeedLink(feedName, params.sortType, params.timeFilterName)
+    navigate(link)
+  }
+
+  const changeTimeFilter = (event) => {
+    const timeFilterName = event.target.value
+    const link = isCatalog ? createCatalogLink(feedName, params.sortType, timeFilterName) : createFeedLink(feedName, params.sortType, timeFilterName)
     navigate(link)
   }
 
@@ -96,6 +104,11 @@ const Menu = () => {
             <option value="active">active</option>
             <option value="controversialAll">cont</option>
           </select>{' '}
+          <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem].join(' ')} value={params.timeFilterName}>
+            {timeFilterNames.map((timeFilterName) => (
+              <option value={timeFilterName}>{timeFilterName}</option>
+            ))}
+          </select>{' '}
           <Link to={showCatalogLink ? catalogLink : feedLink} className={styles.menuItem}>
             {showCatalogLink ? 'catalog' : 'feed'}
           </Link>{' '}
@@ -112,7 +125,7 @@ const Menu = () => {
   )
 }
 
-const createFeedLink = (feedName, sortType) => {
+const createFeedLink = (feedName, sortType, timeFilterName) => {
   let feedLink = ''
   if (feedName && feedName !== 'all') {
     feedLink = `/p/${feedName}`
@@ -120,19 +133,25 @@ const createFeedLink = (feedName, sortType) => {
   if (sortType) {
     feedLink += `/${sortType}`
   }
+  if (timeFilterName) {
+    feedLink += `/${timeFilterName}`
+  }
   if (feedLink === '') {
     feedLink = '/'
   }
   return feedLink
 }
 
-const createCatalogLink = (feedName, sortType) => {
+const createCatalogLink = (feedName, sortType, timeFilterName) => {
   let catalogLink = '/catalog'
   if (feedName && feedName !== 'all') {
     catalogLink = `/p/${feedName}/catalog`
   }
   if (sortType) {
     catalogLink += `/${sortType}`
+  }
+  if (timeFilterName) {
+    catalogLink += `/${timeFilterName}`
   }
   return catalogLink
 }

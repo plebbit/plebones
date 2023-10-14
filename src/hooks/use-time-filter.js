@@ -1,4 +1,3 @@
-import createStore from 'zustand'
 import assert from 'assert'
 
 const timeFilters = {
@@ -18,19 +17,14 @@ const timeFilters = {
   '1y-active': (comment) => (comment.lastReplyTimestamp || comment.timestamp) > Date.now() / 1000 - 60 * 60 * 24 * 365,
   all: undefined,
 }
-const defaultTimeFilterName = 'all'
 
-const useTimeFilterStore = createStore((setState, getState) => ({
-  timeFilterName: defaultTimeFilterName,
-  timeFilter: timeFilters[defaultTimeFilterName],
-  setTimeFilter: (sortType, timeFilterName) =>
-    setState(() => {
-      assert(typeof sortType === 'string', `useTimeFilterStore setTimeFilter sortType argument '${sortType}' not a string`)
-      assert(typeof timeFilterName === 'string', `useTimeFilterStore setTimeFilter timeFilterName argument '${timeFilterName}' not a string`)
-      const timeFilter = sortType === 'active' ? timeFilters[timeFilterName + '-active'] : timeFilters[timeFilterName]
-      assert(timeFilter, `useTimeFilterStore no filter for sortType '${sortType}' timeFilterName '${timeFilterName}'`)
-      return {timeFilterName, timeFilter}
-    }),
-}))
+const timeFilterNames = ['1h', '12h', '24h', '48h', '1w', '1m', '1y', 'all']
 
-export default useTimeFilterStore
+const useTimeFilter = (sortType, timeFilterName) => {
+  assert(!sortType || typeof sortType === 'string', `useTimeFilterStore setTimeFilter sortType argument '${sortType}' not a string`)
+  assert(!timeFilterName || typeof timeFilterName === 'string', `useTimeFilterStore setTimeFilter timeFilterName argument '${timeFilterName}' not a string`)
+  const timeFilter = sortType === 'active' ? timeFilters[timeFilterName + '-active'] : timeFilters[timeFilterName]
+  return {timeFilter, timeFilterNames}
+}
+
+export default useTimeFilter

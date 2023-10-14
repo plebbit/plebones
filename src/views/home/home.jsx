@@ -15,7 +15,8 @@ function Home() {
   const params = useParams()
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
-  const {timeFilter, timeFilterName, setTimeFilter} = useTimeFilter()
+  const timeFilterName = params.timeFilterName
+  const {timeFilter} = useTimeFilter(sortType, timeFilterName)
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, filter: timeFilter})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
@@ -45,17 +46,6 @@ function Home() {
 
   return (
     <div>
-      {/* TODO: remove inline style, only used as a temporary experiment */}
-      <select style={{position: 'fixed', top: -3, left: -1, zIndex: 1}} onChange={(e) => setTimeFilter(sortType, e.target.value)} value={timeFilterName}>
-        <option value="1h">1h</option>
-        <option value="12h">12h</option>
-        <option value="24h">24h</option>
-        <option value="48h">48h</option>
-        <option value="1w">1w</option>
-        <option value="1m">1m</option>
-        <option value="1y">1y</option>
-        <option value="all">all</option>
-      </select>
       <Virtuoso
         increaseViewportBy={{bottom: 600, top: 600}}
         totalCount={feed?.length || 0}

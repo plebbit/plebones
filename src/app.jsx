@@ -56,14 +56,14 @@ function App() {
           <Route path="/p/:subplebbitAddress/c/:commentCid" element={<Post />} />
 
           {/* feed pages */}
-          <Route path="/:sortType?" element={<Home />} />
-          <Route path="/catalog/:sortType?" element={<Catalog />} />
-          <Route path="/p/subscriptions/catalog/:sortType?" element={<SubscriptionsCatalog />} />
-          <Route path="/p/subscriptions/:sortType?" element={<Subscriptions />} />
+          <Route path="/:sortType?/:timeFilterName?" element={<Home />} />
+          <Route path="/catalog/:sortType?/:timeFilterName?" element={<Catalog />} />
+          <Route path="/p/subscriptions/catalog/:sortType?/:timeFilterName?" element={<SubscriptionsCatalog />} />
+          <Route path="/p/subscriptions/:sortType?/:timeFilterName?" element={<Subscriptions />} />
 
           {/* subplebbit pages */}
-          <Route path="/p/:subplebbitAddress/catalog/:sortType?" element={<SubplebbitCatalog />} />
-          <Route path="/p/:subplebbitAddress/:sortType?" element={<Subplebbit />} />
+          <Route path="/p/:subplebbitAddress/catalog/:sortType?/:timeFilterName?" element={<SubplebbitCatalog />} />
+          <Route path="/p/:subplebbitAddress/:sortType?/:timeFilterName?" element={<Subplebbit />} />
 
           {/* profile and settings pages */}
           <Route path="/inbox" element={<Inbox />} />
