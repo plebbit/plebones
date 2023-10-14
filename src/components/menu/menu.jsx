@@ -190,11 +190,12 @@ if (!window.STICKY_MENU_SCROLL_LISTENER) {
       return
     }
 
-    // control progress of the animation using negative animation-delay (0 to -1s)
     const menuElement = document.getElementById('sticky-menu')
     if (!menuElement) {
       return
     }
+
+    // control progress of the animation using negative animation-delay (0 to -1s)
     const animationPercent = currentScrollInRange / scrollRange
     menuElement.style.animationDelay = animationPercent * -1 + 's'
   })
