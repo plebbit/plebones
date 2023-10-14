@@ -1,4 +1,9 @@
 .menu {
+  /* placeholder height for sticky menu */
+  height: 15px;
+}
+
+.stickyMenu {
   color: var(--light2);
   background-color: var(--dark1);
   font-size: 12px;
@@ -9,6 +14,33 @@
 
   /* menus are buttons so it's annoying to select them by accident */
   user-select: none;
+
+  /* sticky menu style */
+  padding: 0 2px;
+  width: 100vw;
+
+  /* sticky menu */
+  position: fixed;
+  left: 0;
+  z-index: 1; /* needed to be above virtuoso */
+
+  /* sticky menu animation */
+  animation-name: stickyMenuAnimation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+/* edit 100%: {top} to change how fast to appear menu on scroll up, must also edit scrollRange variable in js */
+@keyframes stickyMenuAnimation {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: -50px;
+  }
 }
 
 .aboutMenu {

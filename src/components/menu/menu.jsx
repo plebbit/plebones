@@ -15,15 +15,17 @@ const PostMenu = () => {
 
   return (
     <div className={styles.menu}>
-      <span className={styles.leftMenu}></span>
-      <span className={styles.rightMenu}>
-        <Link to={'/'} className={styles.menuItem}>
-          p/all
-        </Link>{' '}
-        <Link to={'/about'} className={styles.menuItem}>
-          {t('about')}
-        </Link>
-      </span>
+      <div id="sticky-menu" className={styles.stickyMenu}>
+        <span className={styles.leftMenu}></span>
+        <span className={styles.rightMenu}>
+          <Link to={'/'} className={styles.menuItem}>
+            p/all
+          </Link>{' '}
+          <Link to={'/about'} className={styles.menuItem}>
+            {t('about')}
+          </Link>
+        </span>
+      </div>
     </div>
   )
 }
@@ -75,35 +77,37 @@ const Menu = () => {
 
   return (
     <div className={styles.menu}>
-      <span className={styles.leftMenu}></span>
+      <div id="sticky-menu" className={styles.stickyMenu}>
+        <span className={styles.leftMenu}></span>
 
-      <span className={styles.rightMenu}>
-        <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
-          {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? (
-            <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option>
-          ) : undefined}
-          <option value="all">p/all</option>
-          <option value="subscriptions">p/subs</option>
-          <option value="goToSubplebbit">p/</option>
-        </select>{' '}
-        <select className={[styles.sortType, styles.menuItem].join(' ')} onChange={changeSortType} value={selectedSortType}>
-          <option value="hot">hot</option>
-          <option value="new">new</option>
-          <option value="topAll">top</option>
-          <option value="active">active</option>
-          <option value="controversialAll">cont</option>
-        </select>{' '}
-        <Link to={showCatalogLink ? catalogLink : feedLink} className={styles.menuItem}>
-          {showCatalogLink ? 'catalog' : 'feed'}
-        </Link>{' '}
-        <Submit className={styles.menuItem} /> <AccountMenu className={styles.menuItem} />
-      </span>
+        <span className={styles.rightMenu}>
+          <select onChange={changeFeedName} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedFeedName}>
+            {isPage || (selectedFeedName && !defaultFeeds.has(selectedFeedName)) ? (
+              <option value="">p/{selectedFeedName?.substring(0, 3).toLowerCase() || ''}</option>
+            ) : undefined}
+            <option value="all">p/all</option>
+            <option value="subscriptions">p/subs</option>
+            <option value="goToSubplebbit">p/</option>
+          </select>{' '}
+          <select className={[styles.sortType, styles.menuItem].join(' ')} onChange={changeSortType} value={selectedSortType}>
+            <option value="hot">hot</option>
+            <option value="new">new</option>
+            <option value="topAll">top</option>
+            <option value="active">active</option>
+            <option value="controversialAll">cont</option>
+          </select>{' '}
+          <Link to={showCatalogLink ? catalogLink : feedLink} className={styles.menuItem}>
+            {showCatalogLink ? 'catalog' : 'feed'}
+          </Link>{' '}
+          <Submit className={styles.menuItem} /> <AccountMenu className={styles.menuItem} />
+        </span>
 
-      <GoToSubplebbitModal isOpen={goToSubplebbitModalIsOpen} setIsOpen={setGoToSubplebbitModalIsOpen} />
+        <GoToSubplebbitModal isOpen={goToSubplebbitModalIsOpen} setIsOpen={setGoToSubplebbitModalIsOpen} />
 
-      <button onClick={() => window.scrollTo(0, 0)} className={styles.scrollToTopButton}>
-        top
-      </button>
+        <button onClick={() => window.scrollTo(0, 0)} className={styles.scrollToTopButton}>
+          top
+        </button>
+      </div>
     </div>
   )
 }
@@ -131,6 +135,43 @@ const createCatalogLink = (feedName, sortType) => {
     catalogLink += `/${sortType}`
   }
   return catalogLink
+}
+
+// sticky menu animation
+// will trigger more than once with hot reloading during development
+if (!window.STICKY_MENU_SCROLL_LISTENER) {
+  window.STICKY_MENU_SCROLL_LISTENER = true
+
+  const scrollRange = 50 // the animation css px range in stickyMenuAnimation, must also edit css animation 100%: {top}
+  let currentScrollInRange = 0,
+    previousScroll = 0
+  window.addEventListener('scroll', () => {
+    // find difference between current and last scroll position
+    const currentScroll = window.scrollY
+    const scrollDifference = currentScroll - previousScroll
+    previousScroll = currentScroll
+
+    // find new current scroll in range
+    const previousScrollInRange = currentScrollInRange
+    currentScrollInRange += scrollDifference
+    if (currentScrollInRange > scrollRange) {
+      currentScrollInRange = scrollRange
+    } else if (currentScrollInRange < 0) {
+      currentScrollInRange = 0
+    }
+    // no changes
+    if (currentScrollInRange === previousScrollInRange) {
+      return
+    }
+
+    // control progress of the animation using negative animation-delay (0 to -1s)
+    const menuElement = document.getElementById('sticky-menu')
+    if (!menuElement) {
+      return
+    }
+    const animationPercent = currentScrollInRange / scrollRange
+    menuElement.style.animationDelay = animationPercent * -1 + 's'
+  })
 }
 
 export default Menu
