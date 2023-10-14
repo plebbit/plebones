@@ -82,6 +82,7 @@ const Menu = () => {
 
   const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
   const selectedFeedName = feedName || ''
+  const selectedTimeFilterName = params.timeFilterName || 'all'
 
   return (
     <div className={styles.menu}>
@@ -104,7 +105,7 @@ const Menu = () => {
             <option value="active">active</option>
             <option value="controversialAll">cont</option>
           </select>{' '}
-          <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem].join(' ')} value={params.timeFilterName}>
+          <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedTimeFilterName}>
             {timeFilterNames.map((timeFilterName) => (
               <option value={timeFilterName}>{timeFilterName}</option>
             ))}
@@ -134,6 +135,9 @@ const createFeedLink = (feedName, sortType, timeFilterName) => {
     feedLink += `/${sortType}`
   }
   if (timeFilterName) {
+    if (!sortType) {
+      feedLink += '/hot'
+    }
     feedLink += `/${timeFilterName}`
   }
   if (feedLink === '') {
@@ -151,6 +155,9 @@ const createCatalogLink = (feedName, sortType, timeFilterName) => {
     catalogLink += `/${sortType}`
   }
   if (timeFilterName) {
+    if (!sortType) {
+      catalogLink += '/hot'
+    }
     catalogLink += `/${timeFilterName}`
   }
   return catalogLink

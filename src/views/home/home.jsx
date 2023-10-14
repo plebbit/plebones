@@ -15,7 +15,7 @@ function Home() {
   const params = useParams()
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
-  const timeFilterName = params.timeFilterName
+  const timeFilterName = params.timeFilterName || 'all'
   const {timeFilter} = useTimeFilter(sortType, timeFilterName)
   const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, filter: timeFilter})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
