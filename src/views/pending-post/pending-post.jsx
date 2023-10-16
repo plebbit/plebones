@@ -53,12 +53,16 @@ function Post() {
   // scroll to top on first load
   useEffect(() => window.scrollTo(0, 0), [])
 
-  // redirect to post when post.cid is received
+  // redirect to post when post.cid is received, or to parent post if post is a reply
   useEffect(() => {
     if (post?.cid && post?.subplebbitAddress) {
       navigate(`/p/${post?.subplebbitAddress}/c/${post?.cid}`, {replace: true})
     }
-  }, [post?.cid, post?.subplebbitAddress, navigate])
+    // post is not a post, is a reply, redirect to post
+    else if (post?.parentCid && post?.subplebbitAddress) {
+      navigate(`/p/${post?.subplebbitAddress}/c/${post?.parentCid}`, {replace: true})
+    }
+  }, [post?.cid, post?.subplebbitAddress, navigate, post?.parentCid])
 
   let state
   if (post?.timestamp) {
