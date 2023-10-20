@@ -51,7 +51,7 @@ function Profile() {
     <div>
       <ProfileInfo />
       <Virtuoso
-        increaseViewportBy={{bottom: 600, top: 600}}
+        increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={accountComments?.length || 0}
         data={accountComments}
         itemContent={(index, post) => <FeedPost index={index} post={post} />}

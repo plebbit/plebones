@@ -36,7 +36,7 @@ function Inbox() {
         mark as read
       </button>
       <Virtuoso
-        increaseViewportBy={{bottom: 600, top: 600}}
+        increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={notifications?.length || 0}
         data={notifications}
         itemContent={(index, notification) => (

@@ -64,7 +64,7 @@ function Author() {
     <div>
       <AuthorInfo authorAddress={authorAddress} commentCid={commentCid} />
       <Virtuoso
-        increaseViewportBy={{bottom: 600, top: 600}}
+        increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={authorComments?.length || 0}
         data={authorComments}
         itemContent={(index, post) => <FeedPost index={index} post={post} />}

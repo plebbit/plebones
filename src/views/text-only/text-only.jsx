@@ -43,7 +43,7 @@ function TextOnly() {
   return (
     <div>
       <Virtuoso
-        increaseViewportBy={{bottom: 600, top: 600}}
+        increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={feed?.length || 0}
         data={feed}
         itemContent={(index, post) => <TextOnlyPost index={index} post={post} />}
