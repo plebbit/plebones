@@ -82,7 +82,7 @@ const Menu = () => {
 
   const selectedSortType = params.sortType || (isCatalog ? 'active' : 'hot')
   const selectedFeedName = feedName || ''
-  const selectedTimeFilterName = params.timeFilterName || 'all'
+  const selectedTimeFilterName = params.timeFilterName
 
   return (
     <div className={styles.menu}>
