@@ -1,9 +1,9 @@
 import createStore from 'zustand'
 
 const useThemeStore = createStore((setState, getState) => ({
-  theme: localStorage.getItem('theme') || 'dark',
+  theme: localStorage.getItem('plebonesTheme') || 'dark',
   setTheme: (theme) => {
-    localStorage.setItem('theme', theme)
+    localStorage.setItem('plebonesTheme', theme)
     setState((state) => ({theme}))
   },
 }))
