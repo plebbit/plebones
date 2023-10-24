@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 let cache
 
 const useDefaultSubplebbits = () => {
-  const [value, setValue] = useState([])
+  const [subplebbits, setSubplebbits] = useState([])
 
   useEffect(() => {
     if (cache) {
@@ -11,19 +11,19 @@ const useDefaultSubplebbits = () => {
     }
     ;(async () => {
       try {
-        const value = await fetch(
-          'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json'
+        const multisub = await fetch(
+          'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/multisub.json'
           // { cache: 'no-cache' }
         ).then((res) => res.json())
-        cache = value
-        setValue(value)
+        cache = multisub.subplebbits
+        setSubplebbits(multisub.subplebbits)
       } catch (e) {
         console.warn(e)
       }
     })()
   }, [])
 
-  return cache || value
+  return cache || subplebbits
 }
 
 export default useDefaultSubplebbits
