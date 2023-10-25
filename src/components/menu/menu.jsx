@@ -107,7 +107,7 @@ const Menu = () => {
           </select>{' '}
           <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedTimeFilterName}>
             {timeFilterNames.map((timeFilterName) => (
-              <option value={timeFilterName}>{timeFilterName}</option>
+              <option value={timeFilterName}>{timeFilterName.substring(0, 4)}</option>
             ))}
           </select>{' '}
           <Link to={showCatalogLink ? catalogLink : feedLink} className={styles.menuItem}>
