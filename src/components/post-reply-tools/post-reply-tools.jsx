@@ -1,7 +1,14 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {useFloating, autoUpdate, offset, shift, useDismiss, useRole, useClick, useInteractions, FloatingFocusManager, useId} from '@floating-ui/react'
-import styles from './reply-tools.module.css'
+import styles from './post-reply-tools.module.css'
 import useReply from '../../hooks/use-reply'
+
+const getQuote = () => {
+  const selection = window.getSelection().toString()
+  if (selection) {
+    return `>${selection}\n`
+  }
+}
 
 const Menu = ({reply, onPublished}) => {
   const {content, setContent, resetContent, replyIndex, publishReply} = useReply(reply)
@@ -22,10 +29,23 @@ const Menu = ({reply, onPublished}) => {
     }
   }, [replyIndex, onPublished, resetContent])
 
+  const textareaRef = useRef()
+  useEffect(() => {
+    // set cursor at end of text
+    textareaRef.current.selectionStart = textareaRef.current.value.length
+  }, [])
+
   return (
     <div className={styles.replyToolsMenu}>
       <div>
-        <textarea className={styles.submitContent} rows={2} placeholder="content" defaultValue={content} onChange={(e) => setContent(e.target.value)} />
+        <textarea
+          ref={textareaRef}
+          className={styles.submitContent}
+          rows={2}
+          placeholder="content"
+          defaultValue={content || getQuote()}
+          onChange={(e) => setContent(e.target.value)}
+        />
       </div>
       <div className={styles.submitButtonWrapper}>
         <button onClick={onPublish} className={styles.submitButton}>

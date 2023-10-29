@@ -108,6 +108,9 @@
   font-size: 13px;
   word-break: break-word;
   white-space: pre-wrap;
+
+  /* reply text can be selected to quote */
+  cursor: text;
 }
 
 /* add indent to each nested reply */

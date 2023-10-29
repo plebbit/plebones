@@ -8,6 +8,13 @@ import useDownvote from '../../hooks/use-downvote'
 import useReply from '../../hooks/use-reply'
 import {Link} from 'react-router-dom'
 
+const getQuote = () => {
+  const selection = window.getSelection().toString()
+  if (selection) {
+    return `>${selection}\n`
+  }
+}
+
 const Menu = ({reply, onPublished}) => {
   const {blocked: hidden, block: hide, unblock: unhide} = useBlock({cid: reply?.cid})
   const {blocked: authorBlocked, block: blockAuthor, unblock: unblockAuthor} = useBlock({address: reply?.author?.address})
@@ -41,7 +48,11 @@ const Menu = ({reply, onPublished}) => {
 
   // autofocus textarea without scrolling
   const textareaRef = useRef()
-  useEffect(() => textareaRef.current.focus({preventScroll: true}), [])
+  useEffect(() => {
+    textareaRef.current.focus({preventScroll: true})
+    // set cursor at end of text
+    textareaRef.current.selectionStart = textareaRef.current.value.length
+  }, [])
 
   return (
     <div className={styles.replyToolsMenu}>
@@ -72,7 +83,14 @@ const Menu = ({reply, onPublished}) => {
         </div>
       </div>
       <div>
-        <textarea ref={textareaRef} className={styles.submitContent} rows={2} placeholder="content" defaultValue={content} onChange={(e) => setContent(e.target.value)} />
+        <textarea
+          ref={textareaRef}
+          className={styles.submitContent}
+          rows={2}
+          placeholder="content"
+          defaultValue={content || getQuote()}
+          onChange={(e) => setContent(e.target.value)}
+        />
       </div>
       <div className={styles.submitButtonWrapper}>
         <button onClick={onPublish} className={styles.submitButton}>
