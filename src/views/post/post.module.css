@@ -27,6 +27,11 @@
   margin: 0 0 0 -2px;
 }
 
+/* videos can't be scrolled comfortably, so max the height */
+video.media {
+  max-height: 85vh;
+}
+
 /* make it darker so user knows a media is loading */
 .mediaWrapper {
   background-color: var(--dark1b);
