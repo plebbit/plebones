@@ -52,6 +52,7 @@ const Challenge = ({challenge, closeModal}) => {
           {currentChallengeIndex + 1} of {challenges?.length}
         </div>
         <span>
+          <button onClick={() => closeModal()}>cancel</button>
           {challenges.length > 1 && (
             <button disabled={!challenges[currentChallengeIndex - 1]} onClick={() => setCurrentChallengeIndex((prev) => prev - 1)}>
               previous
@@ -79,7 +80,7 @@ function ChallengeModal() {
   })
 
   const click = useClick(context)
-  const dismiss = useDismiss(context)
+  const dismiss = useDismiss(context, {outsidePress: false})
   const role = useRole(context)
 
   const {getFloatingProps} = useInteractions([click, dismiss, role])
