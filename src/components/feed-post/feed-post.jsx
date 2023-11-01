@@ -158,7 +158,7 @@ const FeedPost = ({post, index}) => {
           </div>
         </div>
       </div>
-      <div className={hidden ? styles.hidden : undefined}>
+      <div className={hidden || post?.removed ? styles.hidden : undefined}>
         <FeedPostMedia mediaType={mediaType} mediaUrl={post?.link} link={internalLink} />
       </div>
     </div>
