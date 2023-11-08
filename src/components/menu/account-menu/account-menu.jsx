@@ -9,8 +9,16 @@ const version = commitRef || `v${packageJson.version}`
 
 const Menu = ({onMenuLinkClick}) => {
   const {accounts} = useAccounts()
-  const accountsOptions = accounts.map((account) => <option value={account?.name}>u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</option>)
-  accountsOptions[accountsOptions.length] = <option value="createAccount">+create</option>
+  const accountsOptions = accounts.map((account) => (
+    <option key={account?.id} value={account?.name}>
+      u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}
+    </option>
+  ))
+  accountsOptions[accountsOptions.length] = (
+    <option key="create" value="createAccount">
+      +create
+    </option>
+  )
   const account = useAccount()
 
   const onAccountSelectChange = async (event) => {
