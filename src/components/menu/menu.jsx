@@ -8,7 +8,7 @@ import GoToSubplebbitModal from './go-to-subplebbit-modal'
 import {useTranslation} from 'react-i18next'
 import useTimeFilter from '../../hooks/use-time-filter'
 
-const pages = new Set(['profile', 'settings', 'about', 'inbox', 'u'])
+const pages = new Set(['profile', 'settings', 'subplebbits', 'about', 'inbox', 'u'])
 const defaultFeeds = new Set(['all', 'subscriptions'])
 
 const PostMenu = () => {

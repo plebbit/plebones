@@ -16,6 +16,7 @@ import Profile from './views/profile'
 import About from './views/about'
 import Inbox from './views/inbox'
 import Author from './views/author'
+import Subplebbits from './views/subplebbits'
 import {useAccount} from '@plebbit/plebbit-react-hooks'
 
 import styles from './app.module.css'
@@ -70,6 +71,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:accountCommentIndex" element={<PendingPost />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/subplebbits" element={<Subplebbits />} />
           <Route path="/about" element={<About />} />
 
           {/* author post history page */}
