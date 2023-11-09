@@ -69,7 +69,7 @@ const FeedPost = ({subplebbit, index}) => {
     labels.push(subplebbit.role.role)
   }
 
-  let title = subplebbit?.title?.trim?.()
+  let title = subplebbit?.title?.trim?.()?.substring?.(0, 300)
   if (title) {
     title += ` (p/${subplebbit?.shortAddress})`
   } else {
@@ -123,7 +123,7 @@ const FeedPost = ({subplebbit, index}) => {
               </Link>
             )}
           </div>
-          <div className={styles.content}>{subplebbit?.description}</div>
+          <div className={styles.content}>{subplebbit?.description?.substring?.(0, 300)}</div>
           <div className={styles.footer}>
             <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
               {stats.allPostCount} posts

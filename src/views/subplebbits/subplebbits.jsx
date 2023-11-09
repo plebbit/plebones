@@ -11,7 +11,7 @@ function Subplebbits() {
 
   return (
     <div className={styles.subplebbits}>
-      <input onChange={(e) => setTitle(e.target.value)} placeholder="sub title" />
+      <input onChange={(e) => setTitle(e.target.value)} placeholder="title" />
       <button onClick={createSubplebbit}>+create</button>
       {accountSubplebbitsArray.map((subplebbit) => (
         <Subplebbit key={subplebbit.address} subplebbit={subplebbit} />
