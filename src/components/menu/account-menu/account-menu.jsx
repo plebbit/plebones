@@ -48,14 +48,14 @@ const Menu = ({onMenuLinkClick}) => {
           profile
         </div>
       </Link>
-      <Link to="/subplebbits">
-        <div onClick={onMenuLinkClick} className={styles.menuItem}>
-          subs
-        </div>
-      </Link>
       <Link to="/settings">
         <div onClick={onMenuLinkClick} className={styles.menuItem}>
           settings
+        </div>
+      </Link>
+      <Link to="/subplebbits">
+        <div onClick={onMenuLinkClick} className={styles.menuItem}>
+          subs
         </div>
       </Link>
       <Link to="/about">

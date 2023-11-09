@@ -7,12 +7,6 @@ import './index.css'
 import './themes.css'
 import {App as CapacitorApp} from '@capacitor/app'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-import PlebbitJs from '@plebbit/plebbit-js'
-// inject native functions into renderer
-// https://github.com/plebbit/plebbit-js/blob/master/docs/cross-platform-native-functions.md
-if (window.plebbitJsNativeFunctions) {
-  PlebbitJs.setNativeFunctions(window.plebbitJsNativeFunctions)
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

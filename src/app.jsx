@@ -17,6 +17,7 @@ import About from './views/about'
 import Inbox from './views/inbox'
 import Author from './views/author'
 import Subplebbits from './views/subplebbits'
+import SubplebbitSettings from './views/subplebbit-settings'
 import {useAccount} from '@plebbit/plebbit-react-hooks'
 
 import styles from './app.module.css'
@@ -63,6 +64,7 @@ function App() {
           <Route path="/p/subscriptions/:sortType?/:timeFilterName?" element={<Subscriptions />} />
 
           {/* subplebbit pages */}
+          <Route path="/p/:subplebbitAddress/settings" element={<SubplebbitSettings />} />
           <Route path="/p/:subplebbitAddress/catalog/:sortType?/:timeFilterName?" element={<SubplebbitCatalog />} />
           <Route path="/p/:subplebbitAddress/:sortType?/:timeFilterName?" element={<Subplebbit />} />
 

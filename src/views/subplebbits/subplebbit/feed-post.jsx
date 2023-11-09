@@ -49,7 +49,8 @@ const FeedPost = ({subplebbit, index}) => {
   const mediaUrl = subplebbit?.suggested?.avatarUrl || subplebbit?.suggested?.bannerUrl
   const mediaType = mediaUrl ? 'image' : undefined
 
-  const internalLink = `/p/${subplebbit?.address}`
+  const subplebbitLink = `/p/${subplebbit?.address}`
+  const subplebbitSettingsLink = `${subplebbitLink}/settings`
 
   const {blocked: hidden} = useBlock({address: subplebbit?.address})
 
@@ -102,10 +103,10 @@ const FeedPost = ({subplebbit, index}) => {
         </div>
         <div className={[styles.secondColumn, hidden ? styles.hidden : undefined].join(' ')}>
           <div className={hidden || subplebbit?.removed ? styles.hidden : undefined}>
-            <FeedPostMedia mediaType={mediaType} mediaUrl={mediaUrl} link={internalLink} />
+            <FeedPostMedia mediaType={mediaType} mediaUrl={mediaUrl} link={subplebbitLink} />
           </div>
           <div className={styles.header}>
-            <Link to={internalLink} className={styles.title}>
+            <Link to={subplebbitLink} className={styles.title}>
               {title}
             </Link>
             {labels.map((label) => (
@@ -125,11 +126,14 @@ const FeedPost = ({subplebbit, index}) => {
           </div>
           <div className={styles.content}>{subplebbit?.description?.substring?.(0, 300)}</div>
           <div className={styles.footer}>
-            <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
+            <Link to={subplebbitLink} className={[styles.button, styles.replyCount].join(' ')}>
               {stats.allPostCount} posts
             </Link>
-            <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
+            <Link to={subplebbitLink} className={[styles.button, styles.replyCount].join(' ')}>
               {stats.allActiveUserCount} users
+            </Link>
+            <Link to={subplebbitSettingsLink} className={[styles.button, styles.replyCount].join(' ')}>
+              edit
             </Link>
           </div>
         </div>
