@@ -30,12 +30,12 @@ const start = async () => {
       return
     }
     const plebbitWebSocketServer = await PlebbitWsServer({port, plebbitOptions: defaultPlebbitOptions})
-    console.log(`plebbit json-rpc websocket server listening on port ${port}`)
+    console.log(`plebbit rpc: listening on port ${port}`)
     plebbitWebSocketServer.ws.on('connection', (socket, request) => {
-      console.log('new plebbit json-rpc websocket client connection')
+      console.log('plebbit rpc: new connection')
       // debug raw JSON RPC messages in console
       // if (isDev) {
-        socket.on('message', (message) => console.log(message.toString()))
+        socket.on('message', (message) => console.log(`plebbit rpc: ${message.toString()}`))
       // }
     })
   }

@@ -12,7 +12,7 @@ const {
 const isDev = require('electron-is-dev')
 const path = require('path')
 const startIpfs = require('./start-ipfs')
-const startPlebbitRpcServer = require('./start-plebbit-rpc-server')
+const startPlebbitRpcServer = require('./start-plebbit-rpc')
 const { URL } = require('node:url')
 const tcpPortUsed = require('tcp-port-used')
 
