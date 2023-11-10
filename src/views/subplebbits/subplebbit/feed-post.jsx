@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import utils from '../../../lib/utils'
 import styles from './feed-post.module.css'
 import Arrow from '../../../components/icons/arrow'
 import PostTools from '../../../components/post-tools'
@@ -65,6 +66,10 @@ const FeedPost = ({subplebbit, index}) => {
   }
 
   const labels = []
+  // add created time as a label
+  if (subplebbit?.createdAt) {
+    labels.push(utils.getFormattedTime(subplebbit.createdAt).replace(' ago', ''))
+  }
   // if you have a role, add it
   if (subplebbit?.role?.role) {
     labels.push(subplebbit.role.role)
