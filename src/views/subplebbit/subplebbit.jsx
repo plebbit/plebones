@@ -26,7 +26,9 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
     <div className={styles.info}>
       <div className={styles.header}>
         <div className={styles.title}>
-          <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress}</Link>
+          <Link title="edit" to={`/p/${subplebbitAddress}/settings`}>
+            p/{subplebbitAddress}
+          </Link>
           <img alt="" className={styles.avatar} src={subplebbit?.suggested?.avatarUrl} />
         </div>
         <div className={styles.stats}>
