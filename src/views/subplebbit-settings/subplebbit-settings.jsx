@@ -59,14 +59,17 @@ function SubplebbitSettings() {
     }
   }
 
+  const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false)
   const _deleteSubplebbit = async () => {
     const confirmed = window.confirm(`delete p/${subplebbitAddress} permanently?`)
     if (!confirmed) {
       return
     }
     try {
+      setDeleteButtonDisabled(true)
       console.log(`deleting ${subplebbitAddress}...`)
       await deleteSubplebbit(subplebbitAddress)
+      console.log(`deleted ${subplebbitAddress}`)
       navigate(`/subplebbits`, {replace: true})
     } catch (e) {
       console.warn(e)
@@ -78,7 +81,9 @@ function SubplebbitSettings() {
     <div className={styles.settings}>
       <textarea onChange={(e) => setText(e.target.value)} autoCorrect="off" rows="24" value={text} />
       <button onClick={saveSubplebbit}>save</button>
-      <button onClick={_deleteSubplebbit}>delete p/{subplebbit?.shortAddress}</button>
+      <button disabled={deleteButtonDisabled} onClick={_deleteSubplebbit}>
+        delete p/{subplebbit?.shortAddress}
+      </button>
     </div>
   )
 }

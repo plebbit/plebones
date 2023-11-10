@@ -6,7 +6,7 @@ import {HashRouter as Router} from 'react-router-dom'
 import './index.css'
 import './themes.css'
 import {App as CapacitorApp} from '@capacitor/app'
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import * as serviceWorkerRegistration from './service-worker-registration'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

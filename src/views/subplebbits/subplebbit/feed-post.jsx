@@ -109,10 +109,10 @@ const FeedPost = ({subplebbit, index}) => {
             <Link to={subplebbitLink} className={styles.title}>
               {title}
             </Link>
-            {labels.map((label) => (
+            {labels.map((label, i) => (
               <>
                 {' '}
-                <span key={label} className={styles.label}>
+                <span key={label + i} className={styles.label}>
                   {label}
                 </span>
               </>

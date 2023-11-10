@@ -6,7 +6,7 @@ import {initReactI18next} from 'react-i18next'
 // put the translations in e.g. /public/translations/en/default.json
 // lng -> language,
 // ns -> namespace, which is set to default
-const loadPath = `/translations/{{lng}}/{{ns}}.json`
+const loadPath = `./translations/{{lng}}/{{ns}}.json`
 
 i18next
   .use(HttpBackend)

@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react'
+import {useMemo, useState, useRef} from 'react'
 import styles from './subplebbits.module.css'
 import {useAccountSubplebbits, useCreateSubplebbit} from '@plebbit/plebbit-react-hooks'
 import Subplebbit from './subplebbit'
@@ -9,10 +9,18 @@ function Subplebbits() {
   const {accountSubplebbits} = useAccountSubplebbits()
   const accountSubplebbitsArray = useMemo(() => Object.values(accountSubplebbits), [accountSubplebbits])
 
+  const inputRef = useRef()
+
+  const create = () => {
+    createSubplebbit()
+    setTitle('')
+    inputRef.current.value = ''
+  }
+
   return (
     <div className={styles.subplebbits}>
-      <input onChange={(e) => setTitle(e.target.value)} placeholder="title" />
-      <button onClick={createSubplebbit}>+create</button>
+      <input ref={inputRef} onChange={(e) => setTitle(e.target.value)} placeholder="title" />
+      <button onClick={create}>+create</button>
       {accountSubplebbitsArray.map((subplebbit) => (
         <Subplebbit key={subplebbit.address} subplebbit={subplebbit} />
       ))}
