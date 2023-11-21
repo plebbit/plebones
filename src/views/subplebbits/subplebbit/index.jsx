@@ -1,1 +1,1 @@
-export {default} from './feed-post'
+export {default} from './subplebbit'

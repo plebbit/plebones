@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom'
+import {Fragment} from 'react'
 import utils from '../../../lib/utils'
-import styles from './feed-post.module.css'
+import styles from '../../../components/feed-post/feed-post.module.css'
 import Arrow from '../../../components/icons/arrow'
-import PostTools from '../../../components/post-tools'
 import {useBlock, useSubplebbitStats} from '@plebbit/plebbit-react-hooks'
 import useUpvote from '../../../hooks/use-upvote'
 import useDownvote from '../../../hooks/use-downvote'
 
-const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
+const SubplebbitMedia = ({mediaType, mediaUrl, link}) => {
   if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }
@@ -39,13 +39,8 @@ const FeedPostMedia = ({mediaType, mediaUrl, link}) => {
   return <div className={styles.noMedia}></div>
 }
 
-const FeedPost = ({subplebbit, index}) => {
+const Subplebbit = ({subplebbit, index}) => {
   const stats = useSubplebbitStats({subplebbitAddress: subplebbit?.address})
-
-  let hostname
-  try {
-    hostname = new URL(subplebbit?.link).hostname.replace(/^www\./, '')
-  } catch (e) {}
 
   const mediaUrl = subplebbit?.suggested?.avatarUrl || subplebbit?.suggested?.bannerUrl
   const mediaType = mediaUrl ? 'image' : undefined
@@ -75,9 +70,10 @@ const FeedPost = ({subplebbit, index}) => {
     labels.push(subplebbit.role.role)
   }
 
+  let subplebbitAddress
   let title = subplebbit?.title?.trim?.()?.substring?.(0, 300)
   if (title) {
-    title += ` (p/${subplebbit?.shortAddress})`
+    subplebbitAddress = `p/${subplebbit?.shortAddress}`
   } else {
     title = subplebbit?.address
   }
@@ -90,17 +86,13 @@ const FeedPost = ({subplebbit, index}) => {
             <div className={[styles.upvote, upvoted ? styles.voteSelected : undefined].join(' ')}>
               <Arrow />
             </div>
-            <PostTools post={subplebbit}>
-              <div
-                className={[
-                  styles.scoreNumber,
-                  largeScoreNumber ? styles.largeScoreNumber : undefined,
-                  negativeScoreNumber ? styles.negativeScoreNumber : undefined,
-                ].join(' ')}
-              >
-                {scoreNumber}
-              </div>
-            </PostTools>
+            <div
+              className={[styles.scoreNumber, largeScoreNumber ? styles.largeScoreNumber : undefined, negativeScoreNumber ? styles.negativeScoreNumber : undefined].join(
+                ' '
+              )}
+            >
+              {scoreNumber}
+            </div>
             <div className={[styles.downvote, downvoted ? styles.voteSelected : undefined].join(' ')}>
               <Arrow />
             </div>
@@ -108,26 +100,19 @@ const FeedPost = ({subplebbit, index}) => {
         </div>
         <div className={[styles.secondColumn, hidden ? styles.hidden : undefined].join(' ')}>
           <div className={hidden || subplebbit?.removed ? styles.hidden : undefined}>
-            <FeedPostMedia mediaType={mediaType} mediaUrl={mediaUrl} link={subplebbitLink} />
+            <SubplebbitMedia mediaType={mediaType} mediaUrl={mediaUrl} link={subplebbitLink} />
           </div>
           <div className={styles.header}>
             <Link to={subplebbitLink} className={styles.title}>
               {title}
             </Link>
-            {labels.map((label, i) => (
-              <>
+            {labels.map((label) => (
+              <Fragment key={label}>
                 {' '}
-                <span key={label + i} className={styles.label}>
-                  {label}
-                </span>
-              </>
+                <span className={styles.label}>{label}</span>
+              </Fragment>
             ))}
-            {hostname && (
-              <Link to={subplebbit?.link} target="_blank" rel="noreferrer">
-                {' '}
-                {hostname}
-              </Link>
-            )}
+            {subplebbitAddress && <Link to={subplebbitLink}> {subplebbitAddress}</Link>}
           </div>
           <div className={styles.content}>{subplebbit?.description?.substring?.(0, 300)}</div>
           <div className={styles.footer}>
@@ -147,4 +132,4 @@ const FeedPost = ({subplebbit, index}) => {
   )
 }
 
-export default FeedPost
+export default Subplebbit
