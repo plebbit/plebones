@@ -40,10 +40,16 @@ const AccountSettings = () => {
 
   const saveAccount = async () => {
     try {
+      const oldAccount = account
       const newAccount = JSON.parse(text).account
       // force keeping the same id, makes it easier to copy paste
       await setAccount({...newAccount, id: account?.id})
       alert(`saved`)
+
+      // editing plebbitOptions requires a page reload
+      if (JSON.stringify(oldAccount.plebbitOptions) !== JSON.stringify(newAccount.plebbitOptions)) {
+        window.location.reload()
+      }
     } catch (e) {
       console.warn(e)
       alert(`failed editing account: ${e.message}`)
