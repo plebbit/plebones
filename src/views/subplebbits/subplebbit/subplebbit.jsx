@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 import {Fragment} from 'react'
 import utils from '../../../lib/utils'
-import styles from '../../../components/feed-post/feed-post.module.css'
+import styles from './subplebbit.module.css'
 import Arrow from '../../../components/icons/arrow'
 import {useBlock, useSubplebbitStats} from '@plebbit/plebbit-react-hooks'
 import useUpvote from '../../../hooks/use-upvote'
