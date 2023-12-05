@@ -1,7 +1,9 @@
 const tcpPortUsed = require('tcp-port-used')
 const {PlebbitWsServer} = require('@plebbit/plebbit-js/rpc')
 const path = require('path')
-const envPaths = require('env-paths').default('plebbit', { suffix: false });
+const envPaths = require('env-paths').default('plebbit', { suffix: false })
+const {randomBytes} = require('crypto')
+const fs = require('fs-extra')
 
 let isDev = true
 try {
@@ -18,6 +20,18 @@ const defaultPlebbitOptions = {
   pubsubHttpClientsOptions: ['http://localhost:5001/api/v0'],
 }
 
+// generate plebbit rpc auth key if doesn't exist
+const plebbitRpcAuthKeyPath = path.join(defaultPlebbitOptions.dataPath, 'auth-key')
+let plebbitRpcAuthKey
+try {
+  plebbitRpcAuthKey = fs.readFileSync(plebbitRpcAuthKeyPath, 'utf8')
+}
+catch (e) {
+  plebbitRpcAuthKey = randomBytes(32).toString('base64').replace(/[/+=]/g, '').substring(0, 40)
+  fs.ensureFileSync(plebbitRpcAuthKeyPath)
+  fs.writeFileSync(plebbitRpcAuthKeyPath, plebbitRpcAuthKey)
+}
+
 let pendingStart = false
 const start = async () => {
   if (pendingStart) {
@@ -29,14 +43,16 @@ const start = async () => {
     if (started) {
       return
     }
-    const plebbitWebSocketServer = await PlebbitWsServer({port, plebbitOptions: defaultPlebbitOptions})
-    console.log(`plebbit rpc: listening on port ${port}`)
+    const plebbitWebSocketServer = await PlebbitWsServer({port, plebbitOptions: defaultPlebbitOptions, authKey: plebbitRpcAuthKey})
+
+    console.log(`plebbit rpc: listening on ws://localhost:${port} (local connections only)`)
+    console.log(`plebbit rpc: listening on ws://localhost:${port}/${plebbitRpcAuthKey} (secret auth key for remote connections)`)
     plebbitWebSocketServer.ws.on('connection', (socket, request) => {
       console.log('plebbit rpc: new connection')
       // debug raw JSON RPC messages in console
-      // if (isDev) {
+      if (isDev) {
         socket.on('message', (message) => console.log(`plebbit rpc: ${message.toString()}`))
-      // }
+      }
     })
   }
   catch (e) {
