@@ -30,23 +30,21 @@ export const useDefaultAndSubscriptionsSubplebbits = () => {
     if (subplebbitAddressParam) {
       subplebbits[subplebbitAddressParam] = {address: subplebbitAddressParam, displayAddress: subplebbitAddressParam}
     }
-    // add subplebbits from subscriptions
     for (const address of account.subscriptions) {
-      subplebbits[address] = {address, displayAddress: address}
+      subplebbits[address] = {address, displayAddress: getShortAddress(address)}
     }
-    // add default subplebbits
-    for (const address of defaultSubplebbits) {
-      subplebbits[address] = {address, displayAddress: address}
-    }
-    // add title to display address if not crypto name
-    for (const subplebbitAddress in subplebbits) {
-      if (!subplebbitAddress.includes('.')) {
-        subplebbits[subplebbitAddress].displayAddress = getShortAddress(subplebbitAddress)
-        if (subplebbits[subplebbitAddress].title) {
-          subplebbits[subplebbitAddress].displayAddress += ` ${subplebbits[subplebbitAddress].title}`
+    for (const subplebbit of defaultSubplebbits) {
+      if (!subplebbit.address) {
+        continue
+      }
+      subplebbits[subplebbit.address] = {address: subplebbit.address, displayAddress: subplebbit.address}
+      if (!subplebbit.address.includes('.')) {
+        subplebbits[subplebbit.address].displayAddress = getShortAddress(subplebbit.address)
+        if (subplebbit.title) {
+          subplebbits[subplebbit.address].displayAddress += ` ${subplebbit.title}`
         }
-        if (subplebbits[subplebbitAddress].displayAddress.length > 40) {
-          subplebbits[subplebbitAddress].displayAddress = subplebbits[subplebbitAddress].displayAddress.substring(0, 40) + '...'
+        if (subplebbits[subplebbit.address].displayAddress.length > 40) {
+          subplebbits[subplebbit.address].displayAddress = subplebbits[subplebbit.address].displayAddress.substring(0, 40) + '...'
         }
       }
     }
