@@ -173,16 +173,12 @@ if (!window.STICKY_MENU_SCROLL_LISTENER) {
   const scrollRange = 50 // the animation css px range in stickyMenuAnimation, must also edit css animation 100%: {top}
   let currentScrollInRange = 0,
     previousScroll = 0
+
   window.addEventListener('scroll', () => {
     // find difference between current and last scroll position
     const currentScroll = window.scrollY
     const scrollDifference = currentScroll - previousScroll
     previousScroll = currentScroll
-
-    // no changes on mobile overscroll behavior
-    if (currentScroll <= 0) {
-      return
-    }
 
     // find new current scroll in range
     const previousScrollInRange = currentScrollInRange
@@ -192,11 +188,18 @@ if (!window.STICKY_MENU_SCROLL_LISTENER) {
     } else if (currentScrollInRange < 0) {
       currentScrollInRange = 0
     }
+
+    // fix mobile overflow scroll bug
+    if (currentScroll <= 0) {
+      currentScrollInRange = 0
+    }
+
     // no changes
     if (currentScrollInRange === previousScrollInRange) {
       return
     }
 
+    // Get the menu element
     const menuElement = document.getElementById('sticky-menu')
     if (!menuElement) {
       return
