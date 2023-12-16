@@ -1,7 +1,7 @@
 const tcpPortUsed = require('tcp-port-used')
 const {PlebbitWsServer} = require('@plebbit/plebbit-js/rpc')
 const path = require('path')
-const envPaths = require('env-paths').default('plebbit', { suffix: false })
+const envPaths = require('env-paths').default('plebbit', {suffix: false})
 const {randomBytes} = require('crypto')
 const fs = require('fs-extra')
 
@@ -25,8 +25,7 @@ const plebbitRpcAuthKeyPath = path.join(defaultPlebbitOptions.dataPath, 'auth-ke
 let plebbitRpcAuthKey
 try {
   plebbitRpcAuthKey = fs.readFileSync(plebbitRpcAuthKeyPath, 'utf8')
-}
-catch (e) {
+} catch (e) {
   plebbitRpcAuthKey = randomBytes(32).toString('base64').replace(/[/+=]/g, '').substring(0, 40)
   fs.ensureFileSync(plebbitRpcAuthKeyPath)
   fs.writeFileSync(plebbitRpcAuthKeyPath, plebbitRpcAuthKey)
@@ -54,14 +53,13 @@ const start = async () => {
         socket.on('message', (message) => console.log(`plebbit rpc: ${message.toString()}`))
       }
     })
-  }
-  catch (e) {
+  } catch (e) {
     console.log('failed starting plebbit rpc server', e)
   }
   pendingStart = false
 }
 
-// retry starting the plebbit rpc server every 1 second, 
+// retry starting the plebbit rpc server every 1 second,
 // in case it was started by another client that shut down and shut down the server with it
 start()
 setInterval(() => {

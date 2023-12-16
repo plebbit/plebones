@@ -1,22 +1,13 @@
 require('./log')
-const {
-  app,
-  BrowserWindow,
-  Menu,
-  MenuItem,
-  Tray,
-  screen: electronScreen,
-  shell,
-  dialog
-} = require('electron')
+const {app, BrowserWindow, Menu, MenuItem, Tray, screen: electronScreen, shell, dialog} = require('electron')
 const isDev = require('electron-is-dev')
 const path = require('path')
 const startIpfs = require('./start-ipfs')
 const startPlebbitRpcServer = require('./start-plebbit-rpc')
-const { URL } = require('node:url')
+const {URL} = require('node:url')
 const tcpPortUsed = require('tcp-port-used')
 
-// retry starting ipfs every 10 second, 
+// retry starting ipfs every 10 second,
 // in case it was started by another client that shut down and shut down ipfs with it
 let startIpfsError
 setInterval(async () => {
@@ -26,8 +17,7 @@ setInterval(async () => {
       return
     }
     await startIpfs()
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e)
     startIpfsError = e
     dialog.showErrorBox('IPFS error', startIpfsError.message)
@@ -38,11 +28,9 @@ setInterval(async () => {
 // https://www.whatismybrowser.com/guides/the-latest-version/chrome
 // https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome
 // NOTE: eventually should probably fake sec-ch-ua header as well
-let fakeUserAgent =  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-if (process.platform === 'darwin')
-  fakeUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-if (process.platform === 'linux')
-  fakeUserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+let fakeUserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+if (process.platform === 'darwin') fakeUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+if (process.platform === 'linux') fakeUserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
 const realUserAgent = `plebones/${require('../package.json').version}`
 
 // add right click menu
@@ -135,9 +123,7 @@ const createMainWindow = () => {
     callback({responseHeaders: details.responseHeaders})
   })
 
-  const startURL = isDev
-    ? 'http://localhost:3000'
-    : `file://${path.join(__dirname, '../build/index.html')}`
+  const startURL = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`
 
   mainWindow.loadURL(startURL)
 
@@ -241,12 +227,7 @@ const createMainWindow = () => {
 
   if (process.platform !== 'darwin') {
     // tray
-    const trayIconPath = path.join(
-      __dirname,
-      '..',
-      isDev ? 'public' : 'build',
-      'electron-tray-icon.png'
-    )
+    const trayIconPath = path.join(__dirname, '..', isDev ? 'public' : 'build', 'electron-tray-icon.png')
     const tray = new Tray(trayIconPath)
     tray.setToolTip('plebones')
     const trayMenu = Menu.buildFromTemplate([
@@ -313,9 +294,7 @@ const createMainWindow = () => {
     Menu.setApplicationMenu(appMenu)
   } else {
     // Other platforms
-    const originalAppMenuWithoutHelp = Menu.getApplicationMenu()?.items.filter(
-      (item) => item.role !== 'help'
-    )
+    const originalAppMenuWithoutHelp = Menu.getApplicationMenu()?.items.filter((item) => item.role !== 'help')
     const appMenu = [appMenuBack, appMenuForward, appMenuReload, ...originalAppMenuWithoutHelp]
     Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu))
   }

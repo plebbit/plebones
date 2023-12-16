@@ -22,7 +22,7 @@
     "electron:before:download-ipfs": "node electron/download-ipfs",
     "electron:before:delete-data": "rimraf .plebbit",
     "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#000000'",
-    "prettier": "prettier src/**/*.{js,jsx} --write",
+    "prettier": "prettier {src,electron}/**/*.{js,jsx} --write",
     "changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0"
   },
   "dependencies": {
@@ -127,7 +127,7 @@
     ]
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
+    "{src,electron}/**/*.{js,jsx}": [
       "prettier --write"
     ]
   },
