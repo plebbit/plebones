@@ -199,7 +199,6 @@ if (!window.STICKY_MENU_SCROLL_LISTENER) {
       return
     }
 
-    // Get the menu element
     const menuElement = document.getElementById('sticky-menu')
     if (!menuElement) {
       return
