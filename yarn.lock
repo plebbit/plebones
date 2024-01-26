@@ -2698,9 +2698,9 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#70f898084d7ffb4dd6187fcb00bb36b6fa3e9d25":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#4a7ced7497fcbf863e9457b7e83a7bb2889bd518":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#70f898084d7ffb4dd6187fcb00bb36b6fa3e9d25"
+  resolved "https://github.com/plebbit/plebbit-js.git#4a7ced7497fcbf863e9457b7e83a7bb2889bd518"
   dependencies:
     "@ensdomains/eth-ens-namehash" "2.0.15"
     "@keyv/sqlite" "3.6.2"
@@ -2718,6 +2718,7 @@
     debounce "1.2.1"
     err-code "3.0.1"
     ethers "6.7.0"
+    ext-name "5.0.0"
     file-type "16.5.4"
     form-data "4.0.0"
     hpagent "1.2.0"
@@ -2737,7 +2738,7 @@
     p-limit "3.1.0"
     p-timeout "4.1.0"
     peer-id "0.16.0"
-    probe-image-size "^7.2.3"
+    probe-image-size "7.2.3"
     retry "0.13.1"
     rpc-websockets "7.6.0"
     safe-stable-stringify "2.4.1"
@@ -2763,11 +2764,11 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#4d667f7ad7a77cfd416184acffd6f561761ebc9b":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#8293c15b666b6b57128d750410f3f6060dfdc6d4":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#4d667f7ad7a77cfd416184acffd6f561761ebc9b"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#8293c15b666b6b57128d750410f3f6060dfdc6d4"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#70f898084d7ffb4dd6187fcb00bb36b6fa3e9d25"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#4a7ced7497fcbf863e9457b7e83a7bb2889bd518"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
@@ -12205,7 +12206,7 @@ pretty-format@^28.1.3:
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
-probe-image-size@^7.2.3:
+probe-image-size@7.2.3:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/probe-image-size/-/probe-image-size-7.2.3.tgz#d49c64be540ec8edea538f6f585f65a9b3ab4309"
   integrity sha512-HubhG4Rb2UH8YtV4ba0Vp5bQ7L78RTONYu/ujmCu5nBI8wGv24s4E9xSKBi0N1MowRpxk76pFCpJtW0KPzOK0w==
