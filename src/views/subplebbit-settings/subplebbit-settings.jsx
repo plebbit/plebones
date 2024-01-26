@@ -29,7 +29,9 @@ function SubplebbitSettings() {
         pubsubTopic: undefined,
         lastPostCid: undefined,
         shortAddress: undefined,
-        challenges: undefined,
+        postUpdates: undefined,
+        // could be useful to show public subplebbit.challenges data if subpebbit.settings.challenges isn't defined
+        challenges: !subplebbit.settings ? subplebbit.challenges : undefined,
       }),
     [subplebbit]
   )
