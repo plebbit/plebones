@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom'
 const getQuote = () => {
   const selection = window.getSelection().toString()
   if (selection) {
-    return `>${selection}\n`
+    return `>${selection}\n\n`
   }
 }
 
@@ -86,7 +86,7 @@ const Menu = ({reply, onPublished}) => {
         <textarea
           ref={textareaRef}
           className={styles.submitContent}
-          rows={2}
+          rows={3}
           placeholder="content"
           defaultValue={content || getQuote()}
           onChange={(e) => setContent(e.target.value)}
