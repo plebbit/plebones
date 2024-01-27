@@ -15,9 +15,8 @@ function Home() {
   const params = useParams()
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
-  const timeFilterName = params.timeFilterName
-  const {timeFilter} = useTimeFilter(sortType, timeFilterName)
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, filter: timeFilter})
+  const {timeFilterSeconds} = useTimeFilter()
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer
@@ -35,14 +34,14 @@ function Home() {
       virtuosoRef.current?.getState((snapshot) => {
         // TODO: not sure if checking for empty snapshot.ranges works for all scenarios
         if (snapshot?.ranges?.length) {
-          lastVirtuosoStates[sortType + timeFilterName] = snapshot
+          lastVirtuosoStates[sortType + timeFilterSeconds] = snapshot
         }
       })
     window.addEventListener('scroll', setLastVirtuosoState)
     // clean listener on unmount
     return () => window.removeEventListener('scroll', setLastVirtuosoState)
-  }, [sortType, timeFilterName])
-  const lastVirtuosoState = lastVirtuosoStates?.[sortType + timeFilterName]
+  }, [sortType, timeFilterSeconds])
+  const lastVirtuosoState = lastVirtuosoStates?.[sortType + timeFilterSeconds]
 
   return (
     <div>

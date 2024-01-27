@@ -4,6 +4,7 @@ import {Virtuoso} from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
 import {useParams} from 'react-router-dom'
 import useFeedStateString from '../../hooks/use-feed-state-string'
+import useTimeFilter from '../../hooks/use-time-filter'
 
 const lastVirtuosoStates = {}
 
@@ -15,7 +16,8 @@ function Subscriptions() {
   const account = useAccount()
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'hot'
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10})
+  const {timeFilterSeconds} = useTimeFilter()
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer

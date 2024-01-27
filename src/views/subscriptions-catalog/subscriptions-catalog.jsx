@@ -6,6 +6,7 @@ import {useParams} from 'react-router-dom'
 import utils from '../../lib/utils'
 import CatalogRow from '../../components/catalog-row'
 import useFeedStateString from '../../hooks/use-feed-state-string'
+import useTimeFilter from '../../hooks/use-time-filter'
 
 const useFeedRows = (feed, columnCount) => {
   const rowsRef = useRef()
@@ -40,10 +41,11 @@ function Catalog() {
   const account = useAccount()
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'active'
+  const {timeFilterSeconds} = useTimeFilter()
   // postPerPage based on columnCount for optimized feed, dont change value after first render
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), [])
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage, filter: utils.catalogFilter})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage, filter: utils.catalogFilter, newerThan: timeFilterSeconds})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   // split feed into rows

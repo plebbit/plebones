@@ -6,6 +6,7 @@ import {useParams} from 'react-router-dom'
 import styles from './subplebbit.module.css'
 import {Link} from 'react-router-dom'
 import useFeedStateString from '../../hooks/use-feed-state-string'
+import useTimeFilter from '../../hooks/use-time-filter'
 
 const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
@@ -60,7 +61,8 @@ function Subplebbit() {
   const subplebbitAddress = params.subplebbitAddress
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress])
   const sortType = params?.sortType || 'hot'
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {timeFilterSeconds} = useTimeFilter()
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, newerThan: timeFilterSeconds})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer
