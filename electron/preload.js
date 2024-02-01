@@ -8,9 +8,7 @@ const defaultPlebbitOptions = {
 }
 
 contextBridge.exposeInMainWorld('defaultPlebbitOptions', defaultPlebbitOptions)
-
-// expose a flag to indicate that we are running in electron
-contextBridge.exposeInMainWorld('electron', {isElectron: true})
+contextBridge.exposeInMainWorld('defaultMediaIpfsGatewayUrl', 'http://localhost:6473')
 
 // uncomment for logs
 // localStorage.debug = 'plebbit-js:*,plebbit-react-hooks:*,plebones:*'
