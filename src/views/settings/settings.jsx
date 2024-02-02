@@ -1,6 +1,6 @@
 import {useMemo, useState, useEffect} from 'react'
 import styles from './settings.module.css'
-import {useAccount, setAccount, deleteAccount} from '@plebbit/plebbit-react-hooks'
+import {useAccount, setAccount, deleteAccount, useResolvedAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import stringify from 'json-stringify-pretty-compact'
 import useTheme from '../../hooks/use-theme'
 // import useSetting from '../../hooks/use-setting'
@@ -9,6 +9,7 @@ const Theme = () => {
   const [theme, setTheme] = useTheme()
   return (
     <div>
+      <div>theme:</div>
       <select value={theme} onChange={(e) => setTheme(e.target.value)}>
         <option value="dark">dark</option>
         <option value="light">light</option>
@@ -23,6 +24,46 @@ const PlebonesSettings = () => {
   return (
     <div className={styles.plebonesSettings}>
       {/*<div><input onChange={(e) => setNonImagesInCatalog(e.target.checked)} checked={nonImagesInCatalog} type='checkbox' id='nonImagesInCatalog'/ ><label for='nonImagesInCatalog'>non images in catalog</label></div>*/}
+    </div>
+  )
+}
+
+const AuthorAddress = () => {
+  const account = useAccount()
+  const {resolvedAddress, state, error} = useResolvedAuthorAddress({author: account?.author, cache: false})
+  let helpText = ''
+  if (resolvedAddress) {
+    if (resolvedAddress === account?.signer?.address) {
+      helpText = 'crypto name set correctly'
+    } else {
+      helpText = `crypto name set to wrong plebbit-author-address (set to ${resolvedAddress} instead of ${account?.signer?.address})`
+    }
+  }
+  if (state === 'succeeded') {
+    if (!resolvedAddress) {
+      helpText = `crypto name not set`
+    }
+  } else if (state === 'failed') {
+    helpText = `failed resolving crypto name with error: ${error?.message}`
+  } else {
+    if (helpText) {
+      helpText += ', '
+    }
+    helpText += state + '...'
+  }
+
+  // default ipfs author address, do nothing
+  if (account?.author?.address?.startsWith('12D3KooW')) {
+    helpText = undefined
+  }
+
+  const [inputValue, setInputValue] = useState()
+
+  return (
+    <div>
+      <div>address:</div>
+      <input defaultValue={account?.author?.address} onChange={(e) => setInputValue(e.target.value)} />
+      <button onClick={() => setAccount({...account, author: {...account?.author, address: inputValue}})}>save</button> <span>{helpText}</span>
     </div>
   )
 }
@@ -66,6 +107,7 @@ const AccountSettings = () => {
 
   return (
     <div>
+      <div>account:</div>
       <textarea onChange={(e) => setText(e.target.value)} autoCorrect="off" rows="32" value={text} />
       <button onClick={saveAccount}>save</button>
       <button onClick={() => _deleteAccount(account?.name)}>delete account u/{account?.author?.shortAddress?.toLowerCase?.().substring(0, 8) || ''}</button>
@@ -78,6 +120,7 @@ function Settings() {
     <div className={styles.settings}>
       <Theme />
       <PlebonesSettings />
+      <AuthorAddress />
       <AccountSettings />
     </div>
   )
