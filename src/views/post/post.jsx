@@ -1,4 +1,4 @@
-import {useComment, useEditedComment} from '@plebbit/plebbit-react-hooks'
+import {useComment, useEditedComment, useAuthorAvatar} from '@plebbit/plebbit-react-hooks'
 import utils from '../../lib/utils'
 import {useEffect} from 'react'
 import {Link, useNavigate, useParams} from 'react-router-dom'
@@ -16,6 +16,18 @@ import useCommentLabels from '../../hooks/use-comment-labels'
 import useStateString from '../../hooks/use-state-string'
 import ReplyMedia from './reply-media'
 import Embed, {canEmbed} from '../../components/embed'
+
+const AuthorAvatar = ({comment}) => {
+  const {imageUrl} = useAuthorAvatar({author: comment?.author})
+  if (!imageUrl) {
+    return
+  }
+  return (
+    <span className={styles.authorAvatarWrapper}>
+      <img className={styles.authorAvatar} alt="" src={imageUrl} />
+    </span>
+  )
+}
 
 const PostMedia = ({post}) => {
   if (!post?.link) {
@@ -62,8 +74,9 @@ const Reply = ({reply, depth, isLast}) => {
       <ReplyTools reply={reply}>
         <div className={[styles.replyWrapper, replyDepthEven ? styles.replyDepthEven : undefined, isLast ? styles.replyIsLast : undefined].join(' ')}>
           <div className={styles.replyHeader}>
-            <span className={styles.replyScore}>{reply?.upvoteCount - reply?.downvoteCount || 0}</span>
-            <span className={styles.replyAuthor}> {shortAuthorAddress}</span>
+            <span className={styles.replyScore}>{reply?.upvoteCount - reply?.downvoteCount || 0} </span>
+            <AuthorAvatar comment={reply} />
+            <span className={styles.replyAuthor}>{shortAuthorAddress}</span>
             <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
             {state && (
               <>
@@ -196,7 +209,8 @@ function Post() {
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
             <span className={styles.author}>
               {' '}
-              by <Link to={`/u/${post?.author?.address}/c/${post?.cid}`}>{shortAuthorAddress}</Link> to{' '}
+              by <AuthorAvatar comment={post} />
+              <Link to={`/u/${post?.author?.address}/c/${post?.cid}`}>{shortAuthorAddress}</Link> to{' '}
             </span>
             <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>
               {post?.subplebbitAddress}

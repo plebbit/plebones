@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import styles from './feed-post.module.css'
 import Arrow from '../icons/arrow'
 import PostTools from '../post-tools'
-import {useBlock, useAuthorAddress, useEditedComment, useSubplebbit} from '@plebbit/plebbit-react-hooks'
+import {useBlock, useAuthorAddress, useEditedComment, useSubplebbit, useAuthorAvatar} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
@@ -52,6 +52,18 @@ const FeedPostAuthorAddress = ({post}) => {
       {/* add css animation if the author address changed */}
       <span className={[styles.authorAddressVisible, authorAddressChanged ? styles.authorAddressChanged : undefined].join(' ')}>{shortAuthorAddress}</span>
     </Link>
+  )
+}
+
+const FeedPostAuthorAvatar = ({post}) => {
+  const {imageUrl} = useAuthorAvatar({author: post?.author})
+  if (!imageUrl) {
+    return
+  }
+  return (
+    <span className={styles.authorAvatarWrapper}>
+      <img className={styles.authorAvatar} alt="" src={imageUrl} />
+    </span>
   )
 }
 
@@ -145,7 +157,9 @@ const FeedPost = ({post, index}) => {
             <span className={styles.timestamp}>{utils.getFormattedTime(post?.timestamp)}</span>
             <span className={styles.author}>
               {' '}
-              by <FeedPostAuthorAddress post={post} /> to{' '}
+              by <FeedPostAuthorAvatar post={post} />
+              <FeedPostAuthorAddress post={post} />
+              to{' '}
             </span>
             <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>
               {subplebbitAddress}

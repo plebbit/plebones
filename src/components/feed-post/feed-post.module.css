@@ -121,6 +121,19 @@
   }
 }
 
+.authorAvatarWrapper {
+  width: 18px;
+  display: inline-block;
+  position: relative;
+}
+
+.authorAvatar {
+  width: 18px;
+  max-height: 18px;
+  position: absolute;
+  bottom: -6px; /* align vertically so it looks ok, not centered */
+}
+
 /* use the crypto name as the width of the html element, but hide it and display the verified author address instead */
 .authorAddressHidden {
   visibility: hidden;

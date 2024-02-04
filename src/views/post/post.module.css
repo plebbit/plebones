@@ -184,3 +184,16 @@ video.media {
 .pendingMedia img, .pendingMedia video {
   max-height: 50vh;
 }
+
+.authorAvatarWrapper {
+  width: 18px;
+  display: inline-block;
+  position: relative;
+}
+
+.authorAvatar {
+  width: 18px;
+  max-height: 18px;
+  position: absolute;
+  bottom: -2px; /* align vertically so it looks ok, not centered */
+}
