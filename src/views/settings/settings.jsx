@@ -184,7 +184,7 @@ const NftAvatarWithAccount = ({account}) => {
         </div>
       </div>
       <div>
-        <input onChange={(e) => setSignature(e.target.value)} defaultValue={account?.author?.avatar?.signature?.signature} placeholder="signature" />
+        <input onChange={(e) => setSignature(e.target.value)} defaultValue={account?.author?.avatar?.signature?.signature} placeholder="signature e.g. 0x..." />
         <button onClick={save}>save</button>
       </div>
       <NftAvatarPreview avatar={avatar} />
