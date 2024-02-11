@@ -36,12 +36,12 @@ const AuthorAddress = () => {
     if (resolvedAddress === account?.signer?.address) {
       helpText = 'crypto name set correctly'
     } else {
-      helpText = `crypto name set to wrong plebbit-author-address (set to ${resolvedAddress} instead of ${account?.signer?.address})`
+      helpText = `failed: crypto name text record plebbit-author-address set to wrong address (set to ${resolvedAddress} instead of ${account?.signer?.address})`
     }
   }
   if (state === 'succeeded') {
     if (!resolvedAddress) {
-      helpText = `crypto name not set`
+      helpText = `failed: crypto name text record plebbit-author-address not set`
     }
   } else if (state === 'failed') {
     helpText = `failed resolving crypto name with error: ${error?.message}`
