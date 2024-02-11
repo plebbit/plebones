@@ -68,20 +68,6 @@ const AuthorAddress = () => {
   )
 }
 
-const getMessageToSign = (authorAddress, timestamp, tokenAddress, tokenId) => {
-  let messageToSign = {}
-  // the property names must be in this order for the signature to match
-  // insert props one at a time otherwise babel/webpack will reorder
-  messageToSign.domainSeparator = 'plebbit-author-avatar'
-  messageToSign.authorAddress = authorAddress
-  messageToSign.timestamp = timestamp
-  messageToSign.tokenAddress = tokenAddress
-  messageToSign.tokenId = String(tokenId) // must be a type string, not number
-  // use plain JSON so the user can read what he's signing
-  messageToSign = JSON.stringify(messageToSign)
-  return messageToSign
-}
-
 const NftAvatarPreview = ({avatar}) => {
   const account = useAccount()
   let author = useMemo(() => ({...account?.author, avatar}), [account, avatar])
@@ -89,7 +75,6 @@ const NftAvatarPreview = ({avatar}) => {
   // if avatar already set, and user hasn't typed anything yet, preview already set author
   if (account?.author?.avatar && !avatar?.chainTicker && !avatar?.address && !avatar?.id && !avatar?.signature) {
     author = account.author
-    console.log('using old avatar', author)
   }
 
   const {imageUrl, state, error} = useAuthorAvatar({author})
@@ -109,10 +94,24 @@ const NftAvatarPreview = ({avatar}) => {
   )
 }
 
-const NftAvatarWithAccount = ({account}) => {
+const getMessageToSign = (authorAddress, timestamp, tokenAddress, tokenId) => {
+  let messageToSign = {}
+  // the property names must be in this order for the signature to match
+  // insert props one at a time otherwise babel/webpack will reorder
+  messageToSign.domainSeparator = 'plebbit-author-avatar'
+  messageToSign.authorAddress = authorAddress
+  messageToSign.timestamp = timestamp
+  messageToSign.tokenAddress = tokenAddress
+  messageToSign.tokenId = String(tokenId) // must be a type string, not number
+  // use plain JSON so the user can read what he's signing
+  messageToSign = JSON.stringify(messageToSign)
+  return messageToSign
+}
+
+const NftAvatarForm = ({account}) => {
   // force account to be defined to be able to use account as default values
   if (!account) {
-    throw Error('NftAvatarWithAccount account must be defined')
+    throw Error('NftAvatarForm account prop must be defined')
   }
   const authorAddress = account?.author?.address
   const [chainTicker, setChainTicker] = useState(account?.author?.avatar?.chainTicker)
@@ -168,8 +167,7 @@ const NftAvatarWithAccount = ({account}) => {
   }
 
   return (
-    <div>
-      <div>avatar:</div>
+    <>
       <div>
         <input onChange={(e) => setChainTicker(e.target.value)} defaultValue={account?.author?.avatar?.chainTicker} placeholder="chain ticker e.g. eth, matic..." />
         <input onChange={(e) => setTokenAddress(e.target.value)} defaultValue={account?.author?.avatar?.address} placeholder="token address e.g. 0x..." />
@@ -188,16 +186,26 @@ const NftAvatarWithAccount = ({account}) => {
         <button onClick={save}>save</button>
       </div>
       <NftAvatarPreview avatar={avatar} />
-    </div>
+    </>
   )
 }
 
 const NftAvatar = () => {
   const account = useAccount()
   if (!account) {
-    return
+    return (
+      <div>
+        <div>avatar:</div>
+      </div>
+    )
   }
-  return <NftAvatarWithAccount account={account} />
+
+  return (
+    <div>
+      <div>avatar:</div>
+      <NftAvatarForm account={account} />
+    </div>
+  )
 }
 
 const AccountSettings = () => {
