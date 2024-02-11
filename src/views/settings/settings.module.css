@@ -6,3 +6,7 @@
   font-size: 13px;
   padding: 0 0 2px 0;
 }
+
+.nftAvatarPreviewImage {
+  max-height: 200px;
+}
