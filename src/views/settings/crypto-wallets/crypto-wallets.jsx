@@ -39,7 +39,7 @@ const CryptoWalletsForm = ({account}) => {
   const walletsInputs = walletsArray.map((wallet, index) => (
     <div>
       <input onChange={(e) => setWalletsArrayProperty(index, 'chainTicker', e.target.value)} value={wallet.chainTicker} placeholder="chain ticker e.g. eth, matic..." />
-      <input onChange={(e) => setWalletsArrayProperty(index, 'address', e.target.value)} value={wallet.address} placeholder="token address e.g. 0x..." />
+      <input onChange={(e) => setWalletsArrayProperty(index, 'address', e.target.value)} value={wallet.address} placeholder="wallet address e.g. 0x..." />
       <button
         onClick={() => {
           if (!wallet.chainTicker) {
