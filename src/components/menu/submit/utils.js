@@ -1,8 +1,9 @@
 import {useAccount} from '@plebbit/plebbit-react-hooks'
 import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits'
-import {getShortAddress} from '@plebbit/plebbit-js'
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js'
 import {useMemo} from 'react'
 import {useParams} from 'react-router-dom'
+const {getShortAddress} = Plebbit
 
 export const isLink = (content) => {
   if (!content) {
