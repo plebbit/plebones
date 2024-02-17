@@ -158,8 +158,7 @@ const FeedPost = ({post, index}) => {
             <span className={styles.author}>
               {' '}
               by <FeedPostAuthorAvatar post={post} />
-              <FeedPostAuthorAddress post={post} />
-              to{' '}
+              <FeedPostAuthorAddress post={post} /> to{' '}
             </span>
             <Link to={`/p/${post?.subplebbitAddress}`} className={styles.subplebbit}>
               {subplebbitAddress}
