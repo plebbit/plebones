@@ -1,5 +1,5 @@
 import {useMemo} from 'react'
-import useStateString from './use-state-string'
+import useStateString from './use-state-string.js'
 import {useSubplebbit, useSubplebbitsStates} from '@plebbit/plebbit-react-hooks'
 
 const clientHosts = {}

@@ -1,4 +1,4 @@
-import useDefaultSubplebbits from './use-default-subplebbits'
+import useDefaultSubplebbits from './use-default-subplebbits.js'
 import {useMemo} from 'react'
 
 const useDefaultSubplebbitAddresses = () => {

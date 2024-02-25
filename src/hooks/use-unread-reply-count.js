@@ -1,5 +1,5 @@
 import createStore from 'zustand'
-import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru'
+import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru/index.js'
 import assert from 'assert'
 import {useCallback} from 'react'
 

@@ -1,5 +1,5 @@
 import {useAccount} from '@plebbit/plebbit-react-hooks'
-import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits'
+import useDefaultSubplebbits from '../../../hooks/use-default-subplebbits.js'
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js'
 import {useMemo} from 'react'
 import {useParams} from 'react-router-dom'

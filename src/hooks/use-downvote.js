@@ -1,7 +1,7 @@
 import {usePublishVote, useAccountVote} from '@plebbit/plebbit-react-hooks'
 import {useMemo} from 'react'
-import {alertChallengeVerificationFailed} from '../lib/utils'
-import useChallenges from './use-challenges'
+import {alertChallengeVerificationFailed} from '../lib/utils.js'
+import useChallenges from './use-challenges.js'
 
 const useDownvote = (comment) => {
   const {addChallenge} = useChallenges()
