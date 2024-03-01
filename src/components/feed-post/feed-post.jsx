@@ -57,7 +57,9 @@ const FeedPostAuthorAddress = ({post}) => {
 
 const FeedPostAuthorAvatar = ({post}) => {
   const {imageUrl} = useAuthorAvatar({author: post?.author})
-  if (!imageUrl) {
+  // if comment.author.avatar is defined, load empty space even without imageUrl
+  // to not displace the feed after image loads
+  if (!post?.author?.avatar) {
     return
   }
   return (

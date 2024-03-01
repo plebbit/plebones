@@ -19,7 +19,9 @@ import Embed, {canEmbed} from '../../components/embed'
 
 const AuthorAvatar = ({comment}) => {
   const {imageUrl} = useAuthorAvatar({author: comment?.author})
-  if (!imageUrl) {
+  // if comment.author.avatar is defined, load empty space even without imageUrl
+  // to not displace the feed after image loads
+  if (!comment?.author?.avatar) {
     return
   }
   return (
