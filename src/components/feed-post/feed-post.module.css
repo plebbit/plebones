@@ -15,6 +15,10 @@
 
 .footer {
   font-weight: bold;
+
+  /* make sure buttons are above author avatar */
+  z-index: 1;
+  position: relative;
 }
 
 .score {
