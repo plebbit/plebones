@@ -19,12 +19,15 @@ import Author from './views/author'
 import Subplebbits from './views/subplebbits'
 import SubplebbitSettings from './views/subplebbit-settings'
 import {useAccount} from '@plebbit/plebbit-react-hooks'
-
 import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
 import {useEffect} from 'react'
 import Menu from './components/menu'
 import ChallengeModal from './components/challenge-modal'
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js'
+
+// debug util
+window.PlebbitJs = Plebbit
 
 function App() {
   const [theme] = useTheme()
