@@ -18,6 +18,7 @@ if [ -z "${DEPLOY_PASSWORD+xxx}" ]; then echo "DEPLOY_PASSWORD not set" && exit;
 # save version
 PLEBONES_VERSION=$(node -e "console.log(require('../package.json').version)")
 PLEBONES_HTML_NAME="plebones-html-$PLEBONES_VERSION"
+PLEBONES_PREVIOUS_VERSIONS=$(git tag | sed 's/v//g' | tr '\n' ' ')
 
 SCRIPT="
 # download html
@@ -29,6 +30,21 @@ wget https://github.com/plebbit/plebones/releases/download/v$PLEBONES_VERSION/$P
 # extract html
 unzip $PLEBONES_HTML_NAME.zip || exit
 rm $PLEBONES_HTML_NAME.zip || exit
+
+# add previous versions as folders e.g. /0.1.1
+cd $PLEBONES_HTML_NAME
+for PLEBONES_PREVIOUS_VERSION in $PLEBONES_PREVIOUS_VERSIONS
+do
+  # download previous version
+  PLEBONES_PREVIOUS_VERSION_HTML_NAME="plebones-html-\$PLEBONES_PREVIOUS_VERSION"
+  echo \$PLEBONES_PREVIOUS_VERSION_HTML_NAME
+  wget https://github.com/plebbit/plebones/releases/download/v\$PLEBONES_PREVIOUS_VERSION/\$PLEBONES_PREVIOUS_VERSION_HTML_NAME.zip
+  # extract previous version html
+  unzip \$PLEBONES_PREVIOUS_VERSION_HTML_NAME.zip
+  rm \$PLEBONES_PREVIOUS_VERSION_HTML_NAME.zip
+  mv \$PLEBONES_PREVIOUS_VERSION_HTML_NAME \$PLEBONES_PREVIOUS_VERSION
+done
+cd ..
 
 # add to ipfs
 CID=\`ipfs add --recursive --pin --quieter $PLEBONES_HTML_NAME | tail -n 1\`
