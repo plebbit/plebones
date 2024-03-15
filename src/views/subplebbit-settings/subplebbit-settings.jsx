@@ -28,6 +28,7 @@ function SubplebbitSettings() {
         statsCid: undefined,
         pubsubTopic: undefined,
         lastPostCid: undefined,
+        lastCommentCid: undefined,
         shortAddress: undefined,
         postUpdates: undefined,
         // could be useful to show public subplebbit.challenges data if private subplebbit.settings.challenges isn't defined
