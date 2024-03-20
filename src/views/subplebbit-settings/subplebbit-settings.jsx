@@ -31,6 +31,7 @@ function SubplebbitSettings() {
         lastCommentCid: undefined,
         shortAddress: undefined,
         postUpdates: undefined,
+        started: undefined,
         // could be useful to show public subplebbit.challenges data if private subplebbit.settings.challenges isn't defined
         challenges: !subplebbit?.settings ? subplebbit?.challenges : undefined,
       }),
