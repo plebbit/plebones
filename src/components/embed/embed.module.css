@@ -9,3 +9,9 @@
   height: 640px;
   max-width: 360px;
 }
+
+.soundcloudEmbed {
+  height: 166px; /* default height of soundcloud embeds */
+  width: 100%;
+  max-width: 640px;
+}

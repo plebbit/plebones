@@ -31,6 +31,9 @@ const Embed = ({parsedUrl}) => {
   if (spotifyHosts.has(parsedUrl.host)) {
     return <SpotifyEmbed parsedUrl={parsedUrl} />
   }
+  if (soundcloudHosts.has(parsedUrl.host)) {
+    return <SoundcloudEmbed parsedUrl={parsedUrl} />
+  }
 }
 
 const youtubeHosts = new Set(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'])
@@ -266,6 +269,25 @@ const SpotifyEmbed = ({parsedUrl}) => {
   )
 }
 
+const soundcloudHosts = new Set(['soundcloud.com', 'www.soundcloud.com', 'on.soundcloud.com', 'api.soundcloud.com', 'w.soundcloud.com'])
+
+const SoundcloudEmbed = ({parsedUrl}) => {
+  return (
+    <iframe
+      className={styles.soundcloudEmbed}
+      height="100%"
+      width="100%"
+      frameborder="0"
+      credentialless
+      referrerpolicy="no-referrer"
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      title={parsedUrl.href}
+      src={`https://w.soundcloud.com/player/?url=${parsedUrl.href}`}
+    />
+  )
+}
+
 const canEmbedHosts = new Set([
   ...youtubeHosts,
   ...twitterHosts,
@@ -277,6 +299,7 @@ const canEmbedHosts = new Set([
   ...bitchuteHosts,
   ...streamableHosts,
   ...spotifyHosts,
+  ...soundcloudHosts,
 ])
 
 export const canEmbed = (parsedUrl) => canEmbedHosts.has(parsedUrl.host)
