@@ -271,6 +271,7 @@ const SpotifyEmbed = ({parsedUrl}) => {
 
 const soundcloudHosts = new Set(['soundcloud.com', 'www.soundcloud.com', 'on.soundcloud.com', 'api.soundcloud.com', 'w.soundcloud.com'])
 
+// not officially documented https://stackoverflow.com/questions/20870270/how-to-get-soundcloud-embed-code-by-soundcloud-com-url
 const SoundcloudEmbed = ({parsedUrl}) => {
   return (
     <iframe
