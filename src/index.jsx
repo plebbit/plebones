@@ -50,7 +50,7 @@ CapacitorApp.addListener('backButton', ({canGoBack}) => {
 })
 
 // set whitelisted avatars token addresses
-fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/author-avatars-whitelisted-token-addresses.json')
+fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/author-avatars-whitelisted-tokens.json')
   .then((res) => res.json())
   .then((tokens) => setAuthorAvatarsWhitelistedTokenAddresses(tokens.map((token) => token.address)))
   .catch(console.error)
