@@ -1,4 +1,4 @@
-import {useRef, useEffect} from 'react'
+import {useRef, useEffect, memo} from 'react'
 import useDefaultSubplebbitAddresses from '../../hooks/use-default-subplebbit-addresses'
 import {useFeed} from '@plebbit/plebbit-react-hooks'
 import {Virtuoso} from 'react-virtuoso'
@@ -10,6 +10,9 @@ import useTimeFilter from '../../hooks/use-time-filter'
 const lastVirtuosoStates = {}
 
 const NoPosts = () => 'no posts'
+
+// memo feed post so back button loads faster
+const FeedPostMemo = memo(({index, post}) => <FeedPost index={index} post={post} />)
 
 function Home() {
   const params = useParams()
@@ -49,7 +52,7 @@ function Home() {
         increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={feed?.length || 0}
         data={feed}
-        itemContent={(index, post) => <FeedPost index={index} post={post} />}
+        itemContent={(index, post) => <FeedPostMemo index={index} post={post} />}
         useWindowScroll={true}
         components={{Footer}}
         endReached={loadMore}
