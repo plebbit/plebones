@@ -7,6 +7,7 @@ import './index.css'
 import './themes.css'
 import {App as CapacitorApp} from '@capacitor/app'
 import * as serviceWorkerRegistration from './service-worker-registration'
+import {setAuthorAvatarsWhitelistedTokenAddresses} from '@plebbit/plebbit-react-hooks'
 
 // add p2p publishing by default
 // window.defaultPlebbitOptions = {
@@ -47,3 +48,9 @@ CapacitorApp.addListener('backButton', ({canGoBack}) => {
     CapacitorApp.exitApp()
   }
 })
+
+// set whitelisted avatars token addresses
+fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/author-avatars-whitelisted-token-addresses.json')
+  .then((res) => res.json())
+  .then((tokens) => setAuthorAvatarsWhitelistedTokenAddresses(tokens.map((token) => token.address)))
+  .catch(console.error)
