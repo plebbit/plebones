@@ -1,4 +1,4 @@
-import {useMemo, useRef, useEffect} from 'react'
+import {useMemo, useRef, useEffect, memo} from 'react'
 import {useFeed, useSubplebbit, useSubplebbitStats, useSubscribe} from '@plebbit/plebbit-react-hooks'
 import {Virtuoso} from 'react-virtuoso'
 import FeedPost from '../../components/feed-post'
@@ -7,6 +7,8 @@ import styles from './subplebbit.module.css'
 import {Link} from 'react-router-dom'
 import useFeedStateString from '../../hooks/use-feed-state-string'
 import useTimeFilter from '../../hooks/use-time-filter'
+
+const FeedPostMemo = memo(({post, index}) => <FeedPost index={index} post={post} />)
 
 const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
@@ -100,7 +102,7 @@ function Subplebbit() {
         increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={feed?.length || 0}
         data={feed}
-        itemContent={(index, post) => <FeedPost index={index} post={post} />}
+        itemContent={(index, post) => <FeedPostMemo index={index} post={post} />}
         useWindowScroll={true}
         components={{Footer}}
         endReached={loadMore}
