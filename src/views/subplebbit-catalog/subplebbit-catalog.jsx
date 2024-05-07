@@ -42,7 +42,7 @@ function Catalog() {
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress])
   const sortType = params?.sortType || 'active'
   const {timeFilterSeconds} = useTimeFilter()
-  // single sub feeds only need time filter for sort type new and controversial
+  // single sub feeds only need time filter for sort type top and controversial
   const newerThan = sortType === 'topAll' || sortType === 'controversialAll' ? timeFilterSeconds : undefined
   // postPerPage based on columnCount for optimized feed, dont change value after first render
   // eslint-disable-next-line
