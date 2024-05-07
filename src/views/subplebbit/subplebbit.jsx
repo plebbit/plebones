@@ -91,7 +91,9 @@ function Subplebbit() {
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress])
   const sortType = params?.sortType || 'hot'
   const {timeFilterSeconds} = useTimeFilter()
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, newerThan: timeFilterSeconds})
+  // single sub feeds only need time filter for sort type new and controversial
+  const newerThan = sortType === 'topAll' || sortType === 'controversialAll' ? timeFilterSeconds : undefined
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, newerThan})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer
