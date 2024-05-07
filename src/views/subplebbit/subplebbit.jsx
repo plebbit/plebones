@@ -8,6 +8,8 @@ import {Link} from 'react-router-dom'
 import useFeedStateString from '../../hooks/use-feed-state-string'
 import useTimeFilter from '../../hooks/use-time-filter'
 import utils from '../../lib/utils'
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js'
+const {getShortAddress} = Plebbit
 
 const getCreatedAt = (subplebbit) => {
   // set created at time
@@ -22,7 +24,7 @@ const getCreatedAt = (subplebbit) => {
         if (createdAt) {
           createdAt += ' '
         }
-        createdAt += `by ${authorAddress}`
+        createdAt += `by ${getShortAddress(authorAddress)}`
         break
       }
     }
@@ -65,7 +67,7 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
           {stats.allActiveUserCount} members
         </div>
         <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
-        {createdAt && <div className={styles.stats}>{createdAt}</div>}
+        {createdAt && <div className={styles.description}>{createdAt}</div>}
       </div>
       {description && <div className={styles.description}>{description}</div>}
       {subplebbit.rules && (
