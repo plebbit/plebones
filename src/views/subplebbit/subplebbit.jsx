@@ -8,6 +8,31 @@ import {Link} from 'react-router-dom'
 import useFeedStateString from '../../hooks/use-feed-state-string'
 import useTimeFilter from '../../hooks/use-time-filter'
 
+// created at and by example
+// const getCreatedAtAndBy = (subplebbit) => {
+//   // set created at time
+//   let createdAt = ''
+//   if (subplebbit?.createdAt) {
+//     createdAt += utils.getFormattedTime(subplebbit?.createdAt)
+//   }
+//   // set created by
+//   if (subplebbit?.roles) {
+//     for (const authorAddress in subplebbit.roles) {
+//       if (subplebbit.roles[authorAddress]?.role === 'owner') {
+//         if (createdAt) {
+//           createdAt += ' '
+//         }
+//         createdAt += `by ${Plebbit.getShortAddress(authorAddress)}`
+//         break
+//       }
+//     }
+//   }
+//   if (createdAt) {
+//     createdAt = `created ${createdAt}`
+//   }
+//   return createdAt
+// }
+
 const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
   const stats = useSubplebbitStats({subplebbitAddress})
