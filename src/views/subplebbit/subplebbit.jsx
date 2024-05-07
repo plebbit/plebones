@@ -38,7 +38,7 @@ const getCreatedAt = (subplebbit) => {
 const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
   const stats = useSubplebbitStats({subplebbitAddress})
-  const createdAt = getCreatedAt(subplebbit)
+  // const createdAt = getCreatedAt(subplebbit)
   const {subscribed, subscribe, unsubscribe} = useSubscribe({subplebbitAddress})
   const toggleSubscribe = () => (!subscribed ? subscribe() : unsubscribe())
 
@@ -67,8 +67,8 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
           {stats.allActiveUserCount} members
         </div>
         <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
-        {createdAt && <div className={styles.description}>{createdAt}</div>}
       </div>
+      {/*{createdAt && <div className={styles.description}>{createdAt}</div>}*/}
       {description && <div className={styles.description}>{description}</div>}
       {subplebbit.rules && (
         <ol className={styles.rules}>
