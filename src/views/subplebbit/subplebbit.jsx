@@ -7,10 +7,36 @@ import styles from './subplebbit.module.css'
 import {Link} from 'react-router-dom'
 import useFeedStateString from '../../hooks/use-feed-state-string'
 import useTimeFilter from '../../hooks/use-time-filter'
+import utils from '../../lib/utils'
+
+const getCreatedAt = (subplebbit) => {
+  // set created at time
+  let createdAt = ''
+  if (subplebbit?.createdAt) {
+    createdAt += utils.getFormattedTime(subplebbit?.createdAt)
+  }
+  // set created by
+  if (subplebbit?.roles) {
+    for (const authorAddress in subplebbit.roles) {
+      if (subplebbit.roles[authorAddress]?.role === 'owner') {
+        if (createdAt) {
+          createdAt += ' '
+        }
+        createdAt += `by ${authorAddress}`
+        break
+      }
+    }
+  }
+  if (createdAt) {
+    createdAt = `created ${createdAt}`
+  }
+  return createdAt
+}
 
 const SubplebbitInfo = ({subplebbitAddress}) => {
   const subplebbit = useSubplebbit({subplebbitAddress})
   const stats = useSubplebbitStats({subplebbitAddress})
+  const createdAt = getCreatedAt(subplebbit)
   const {subscribed, subscribe, unsubscribe} = useSubscribe({subplebbitAddress})
   const toggleSubscribe = () => (!subscribed ? subscribe() : unsubscribe())
 
@@ -39,6 +65,7 @@ const SubplebbitInfo = ({subplebbitAddress}) => {
           {stats.allActiveUserCount} members
         </div>
         <div className={styles.stats}>{stats.hourActiveUserCount} users here now</div>
+        {createdAt && <div className={styles.stats}>{createdAt}</div>}
       </div>
       {description && <div className={styles.description}>{description}</div>}
       {subplebbit.rules && (
