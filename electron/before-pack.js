@@ -15,13 +15,13 @@ const ipfsClientLinuxPath = path.join(ipfsClientsPath, 'linux')
 // const ipfsClientVersion = '0.20.0'
 // const ipfsClientWindowsUrl = `https://github.com/plebbit/kubo/releases/download/v${ipfsClientVersion}/ipfs-windows-amd64`
 // const ipfsClientMacUrl = `https://github.com/plebbit/kubo/releases/download/v${ipfsClientVersion}/ipfs-darwin-amd64`
-// const ipfsClientLinuxPUrl = `https://github.com/plebbit/kubo/releases/download/v${ipfsClientVersion}/ipfs-linux-amd64`
+// const ipfsClientLinuxUrl = `https://github.com/plebbit/kubo/releases/download/v${ipfsClientVersion}/ipfs-linux-amd64`
 
 // official kubo download links https://docs.ipfs.tech/install/command-line/#install-official-binary-distributions
 const ipfsClientVersion = '0.28.0'
 const ipfsClientWindowsUrl = `https://dist.ipfs.io/kubo/v${ipfsClientVersion}/kubo_v${ipfsClientVersion}_windows-amd64.zip`
 const ipfsClientMacUrl = `https://dist.ipfs.io/kubo/v${ipfsClientVersion}/kubo_v${ipfsClientVersion}_darwin-amd64.tar.gz`
-const ipfsClientLinuxPUrl = `https://dist.ipfs.io/kubo/v${ipfsClientVersion}/kubo_v${ipfsClientVersion}_linux-amd64.tar.gz`
+const ipfsClientLinuxUrl = `https://dist.ipfs.io/kubo/v${ipfsClientVersion}/kubo_v${ipfsClientVersion}_linux-amd64.tar.gz`
 
 const downloadWithProgress = (url) =>
   new Promise((resolve) => {
@@ -31,7 +31,7 @@ const downloadWithProgress = (url) =>
     const req = https.request(url)
     req.on('response', (res) => {
       // handle redirects
-      if (res.statusCode == 302) {
+      if (res.statusCode == 301 || res.statusCode === 302) {
         resolve(downloadWithProgress(res.headers.location))
         return
       }
@@ -102,7 +102,7 @@ const downloadAndExtract = async (url, destinationPath) => {
 export const downloadIpfsClients = async () => {
   await downloadAndExtract(ipfsClientWindowsUrl, ipfsClientWindowsPath)
   await downloadAndExtract(ipfsClientMacUrl, ipfsClientMacPath)
-  await downloadAndExtract(ipfsClientLinuxPUrl, ipfsClientLinuxPath)
+  await downloadAndExtract(ipfsClientLinuxUrl, ipfsClientLinuxPath)
 }
 
 export default async (context) => {
