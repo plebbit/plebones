@@ -10,12 +10,13 @@ const {addChallenge} = challengesStore.getState()
 const useReplyStore = createStore((setState, getState) => ({
   content: {},
   publishCommentOptions: {},
-  setReplyStore: ({subplebbitAddress, parentCid, content, comment}) =>
+  setReplyStore: ({subplebbitAddress, parentCid, postCid, content, comment}) =>
     setState((state) => {
       const parsedContent = parseContent(content)
       const publishCommentOptions = {
         subplebbitAddress,
         parentCid,
+        postCid,
         content: parsedContent.content,
         link: parsedContent.link,
         onChallenge: (...args) => addChallenge([...args, comment]),
@@ -45,12 +46,16 @@ const useReplyStore = createStore((setState, getState) => ({
 const useReply = (comment) => {
   const subplebbitAddress = comment?.subplebbitAddress
   const parentCid = comment?.cid
+  const postCid = comment?.postCid || parentCid // postCid is now required when has parentCid
   const content = useReplyStore((state) => state.content[parentCid])
   const publishCommentOptions = useReplyStore((state) => state.publishCommentOptions[parentCid])
   const setReplyStore = useReplyStore((state) => state.setReplyStore)
   const resetReplyStore = useReplyStore((state) => state.resetReplyStore)
 
-  const setContent = useMemo(() => (content) => setReplyStore({subplebbitAddress, parentCid, content, comment}), [subplebbitAddress, parentCid, setReplyStore, comment])
+  const setContent = useMemo(
+    () => (content) => setReplyStore({subplebbitAddress, parentCid, postCid, content, comment}),
+    [subplebbitAddress, parentCid, setReplyStore, comment]
+  )
 
   const resetContent = useMemo(() => () => resetReplyStore(parentCid), [parentCid, resetReplyStore])
 
