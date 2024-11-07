@@ -3415,9 +3415,9 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#50e843a5cfb2a39fbd497db077b51ee51c6aed94":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#20b3c91b30a589ea5728f9a20f61e63700fe0dd4":
   version "0.0.4"
-  resolved "https://github.com/plebbit/plebbit-js.git#50e843a5cfb2a39fbd497db077b51ee51c6aed94"
+  resolved "https://github.com/plebbit/plebbit-js.git#20b3c91b30a589ea5728f9a20f61e63700fe0dd4"
   dependencies:
     "@bonfida/spl-name-service" "2.4.2"
     "@chainsafe/libp2p-gossipsub" "12.0.0"
@@ -3491,11 +3491,11 @@
   dependencies:
     debug "4.3.4"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#cb608f5e0cba430801026eda653c0fa468e74c8d":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#2b0a4a5e6a82dc8b5092db28b26e13ddcb14142f":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#cb608f5e0cba430801026eda653c0fa468e74c8d"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#2b0a4a5e6a82dc8b5092db28b26e13ddcb14142f"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#50e843a5cfb2a39fbd497db077b51ee51c6aed94"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#20b3c91b30a589ea5728f9a20f61e63700fe0dd4"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
