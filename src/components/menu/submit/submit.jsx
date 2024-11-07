@@ -28,7 +28,9 @@ const useSubmitStore = createStore((setState, getState) => ({
         nextState.content = content
       }
       nextState.publishCommentOptions = {
-        ...nextState,
+        subplebbitAddress: nextState.subplebbitAddress,
+        title: nextState.title,
+        content: nextState.content,
         onChallenge: (...args) => addChallenge(args),
         onChallengeVerification: alertChallengeVerificationFailed,
         onError: (error) => {
