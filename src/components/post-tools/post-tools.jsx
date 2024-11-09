@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useFloating, autoUpdate, offset, flip, shift, useDismiss, useRole, useClick, useInteractions, FloatingFocusManager, useId} from '@floating-ui/react'
 import styles from './post-tools.module.css'
-import {useSubscribe, useBlock, useAccount, useSubplebbit, usePublishCommentEdit} from '@plebbit/plebbit-react-hooks'
+import {useSubscribe, useBlock, useAccount, useSubplebbit, usePublishCommentModeration} from '@plebbit/plebbit-react-hooks'
 import {alertChallengeVerificationFailed} from '../../lib/utils'
 import challengesStore from '../../hooks/use-challenges'
 const {addChallenge} = challengesStore.getState()
@@ -50,10 +50,12 @@ const Menu = ({post, closeModal}) => {
 
 const ModTools = ({post, closeModal}) => {
   const defaultPublishOptions = {
-    removed: post?.removed,
-    locked: post?.locked,
-    spoiler: post?.spoiler,
-    pinned: post?.pinned,
+    commentModeration: {
+      removed: post?.removed,
+      locked: post?.locked,
+      spoiler: post?.spoiler,
+      pinned: post?.pinned,
+    },
     commentCid: post?.cid,
     subplebbitAddress: post?.subplebbitAddress,
     onChallenge: (...args) => addChallenge([...args, post]),
@@ -63,8 +65,8 @@ const ModTools = ({post, closeModal}) => {
       alert(error)
     },
   }
-  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishOptions)
-  const {state, publishCommentEdit} = usePublishCommentEdit(publishCommentEditOptions)
+  const [publishCommentModerationOptions, setPublishCommentModerationOptions] = useState(defaultPublishOptions)
+  const {state, publishCommentModeration} = usePublishCommentModeration(publishCommentModerationOptions)
 
   // close the modal after publishing
   useEffect(() => {
@@ -73,31 +75,32 @@ const ModTools = ({post, closeModal}) => {
     }
   }, [state, closeModal])
 
-  const onCheckbox = (e) => setPublishCommentEditOptions((state) => ({...state, [e.target.id]: e.target.checked}))
+  const onCheckbox = (e) => setPublishCommentModerationOptions((state) => ({...state, commentModeration: {...state.commentModeration, [e.target.id]: e.target.checked}}))
 
-  const onReason = (e) => setPublishCommentEditOptions((state) => ({...state, reason: e.target.value ? e.target.value : undefined}))
+  const onReason = (e) =>
+    setPublishCommentModerationOptions((state) => ({...state, commentModeration: {...state.commentModeration, reason: e.target.value ? e.target.value : undefined}}))
 
   return (
     <div className={styles.modTools}>
       <div className={styles.menuItem}>
-        <input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type="checkbox" id="removed" />
+        <input onChange={onCheckbox} checked={publishCommentModerationOptions.commentModeration.removed} type="checkbox" id="removed" />
         <label for="removed">removed</label>
       </div>
       <div className={styles.menuItem}>
-        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type="checkbox" id="locked" />
+        <input onChange={onCheckbox} checked={publishCommentModerationOptions.commentModeration.locked} type="checkbox" id="locked" />
         <label for="locked">locked</label>
       </div>
       <div className={styles.menuItem}>
-        <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler} type="checkbox" id="spoiler" />
+        <input onChange={onCheckbox} checked={publishCommentModerationOptions.commentModeration.spoiler} type="checkbox" id="spoiler" />
         <label for="spoiler">spoiler</label>
       </div>
       <div className={styles.menuItem}>
-        <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned} type="checkbox" id="pinned" />
+        <input onChange={onCheckbox} checked={publishCommentModerationOptions.commentModeration.pinned} type="checkbox" id="pinned" />
         <label for="pinned">pinned</label>
       </div>
       <div className={styles.menuItem}>
         <input onChange={onReason} defaultValue={post?.reason} size={14} placeholder="reason" />
-        <button onClick={publishCommentEdit}>edit</button>
+        <button onClick={publishCommentModeration}>edit</button>
       </div>
     </div>
   )

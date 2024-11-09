@@ -3491,9 +3491,9 @@
   dependencies:
     debug "4.3.4"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#2b0a4a5e6a82dc8b5092db28b26e13ddcb14142f":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#0d4219ad95c3322eac78db23091eb57239be8776":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#2b0a4a5e6a82dc8b5092db28b26e13ddcb14142f"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#0d4219ad95c3322eac78db23091eb57239be8776"
   dependencies:
     "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#20b3c91b30a589ea5728f9a20f61e63700fe0dd4"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
