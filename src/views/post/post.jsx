@@ -94,7 +94,7 @@ const Reply = ({reply, depth, isLast}) => {
             )}
           </div>
 
-          <span className={styles.replyContent}>{reply?.content?.trim?.()}</span>
+          <span className={styles.replyContent}>{reply?.removed ? '[removed]' : reply?.deleted ? '[deleted]' : reply?.content?.trim?.()}</span>
           <ReplyMedia reply={reply} />
         </div>
       </ReplyTools>
