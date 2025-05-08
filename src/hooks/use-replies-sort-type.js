@@ -1,14 +1,12 @@
 import createStore from 'zustand'
 
-const repliesSortTypes = ['nested', 'new', 'old', 'new (nested)', 'old (nested)']
-
 const repliesSortTypesToUseRepliesOptions = {
   nested: {sortType: 'best', flat: false},
-  new: {sortType: 'new', flat: true},
-  old: {sortType: 'old', flat: true},
-  'new (nested)': {sortType: 'new', flat: false},
-  'old (nested)': {sortType: 'old', flat: false},
+  flat: {sortType: 'old', flat: true},
+  new: {sortType: 'new', flat: false},
+  newflat: {sortType: 'new', flat: true},
 }
+const repliesSortTypes = Object.keys(repliesSortTypesToUseRepliesOptions)
 
 const useRepliesSortTypeStore = createStore((setState, getState) => ({
   repliesSortType: localStorage.getItem('plebonesRepliesSortType') || 'nested',

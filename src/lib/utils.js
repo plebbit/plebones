@@ -35,7 +35,10 @@ export const getFormattedTime = (timestamp) => {
 export const alertChallengeVerificationFailed = (challengeVerification, publication) => {
   if (challengeVerification?.challengeSuccess === false) {
     console.warn(challengeVerification, publication)
-    alert(`p/${publication?.subplebbitAddress} challenge error: ${[...(challengeVerification?.challengeErrors || []), challengeVerification?.reason].join(' ')}`)
+
+    alert(
+      `p/${publication?.subplebbitAddress} challenge error: ${[...Object.values(challengeVerification?.challengeErrors || {}), challengeVerification?.reason].join(' ')}`
+    )
   } else {
     console.log(challengeVerification, publication)
   }
