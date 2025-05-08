@@ -118,6 +118,12 @@ video.media {
   cursor: text;
 }
 
+.newRepliesButton {
+  font-weight: bold;
+  /* make buttons like links */
+  cursor: pointer;
+}
+
 /* add indent to each nested reply */
 .replies {
   padding: 0 0 0 8px;
@@ -196,4 +202,47 @@ video.media {
   max-height: 18px;
   position: absolute;
   bottom: -2px; /* align vertically so it looks ok, not centered */
+}
+
+select.repliesSortType {
+  width: 34px;
+
+  background-color: var(--dark1);
+  color: var(--light2);
+  text-align: left;
+
+  /* fix borders */
+  outline: unset;
+  /*  border: unset;*/
+  /* compensate for the select border */
+  margin: -1px 0 0 0;
+  /* border width is not 1px in firefox */
+  border-width: 1px;
+  /* border color isn't set in firefox */
+  border-color: var(--dark3);
+
+  /* remove icon */
+  appearance: unset;
+
+  /* firefox adds padding */
+  padding: 0;
+
+  /* firefox messes the font */
+  font-family: verdana, arial, helvetica, sans-serif;
+
+  /* must specify font size and weight of select again for some reason */
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.repliesSortType option {
+  color: var(--light2);
+}
+
+.quote {
+  padding: 1px 0 2px 8px;
+}
+
+.quoteClosed {
+  white-space: nowrap;
 }

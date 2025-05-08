@@ -1,6 +1,6 @@
-import {useComment, useEditedComment, useAuthorAvatar} from '@plebbit/plebbit-react-hooks'
+import {useComment, useEditedComment, useAuthorAvatar, useReplies} from '@plebbit/plebbit-react-hooks'
 import utils from '../../lib/utils'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {Link, useNavigate, useParams} from 'react-router-dom'
 import Arrow from '../../components/icons/arrow'
 import styles from './post.module.css'
@@ -11,7 +11,8 @@ import {useBlock, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
-import useReplies from '../../hooks/use-replies'
+// import useReplies from '../../hooks/use-replies'
+import useRepliesSortType from '../../hooks/use-replies-sort-type'
 import useCommentLabels from '../../hooks/use-comment-labels'
 import useStateString from '../../hooks/use-state-string'
 import ReplyMedia from './reply-media'
@@ -65,21 +66,40 @@ const PostMedia = ({post}) => {
 const Reply = ({reply, depth, isLast}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
-  const replies = useReplies(reply)
+  const {useRepliesOptions} = useRepliesSortType()
+  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({comment: reply, ...useRepliesOptions})
   const replyDepthEven = depth % 2 === 0
 
   const state = reply?.state === 'pending' || reply?.state === 'failed' ? reply?.state : undefined
   const publishingStateString = useStateString(state === 'pending' && reply)
+
+  const _loadMore = (event) => {
+    event.stopPropagation() // don't trigger the reply typing modal
+    loadMore()
+  }
+
+  let score = (reply?.upvoteCount || 0) - (reply?.downvoteCount || 0)
+  if (score === 0) {
+    score = ''
+  } else if (score > 0) {
+    score = `+${score}`
+  }
 
   return (
     <div className={styles.reply}>
       <ReplyTools reply={reply}>
         <div className={[styles.replyWrapper, replyDepthEven ? styles.replyDepthEven : undefined, isLast ? styles.replyIsLast : undefined].join(' ')}>
           <div className={styles.replyHeader}>
-            <span className={styles.replyScore}>{reply?.upvoteCount - reply?.downvoteCount || 0} </span>
+            <span className={styles.replyScore}>{score} </span>
             <AuthorAvatar comment={reply} />
             <span className={styles.replyAuthor}>{shortAuthorAddress}</span>
             <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
+            {hasMore && bufferedReplies?.length !== 0 && (
+              <span onClick={_loadMore} className={styles.newRepliesButton}>
+                {' '}
+                ({bufferedReplies?.length} new replies)
+              </span>
+            )}
             {state && (
               <>
                 {' '}
@@ -94,14 +114,51 @@ const Reply = ({reply, depth, isLast}) => {
             )}
           </div>
 
+          {useRepliesOptions.flat && reply.parentCid !== reply.postCid && <ReplyQuote commentCid={reply.parentCid} depth={(depth || 1) + 1} />}
           <span className={styles.replyContent}>{reply?.content?.trim?.()}</span>
           <ReplyMedia reply={reply} />
         </div>
       </ReplyTools>
       <div className={styles.replies}>
-        {replies.map((reply, index) => (
+        {updatedReplies.map((reply, index) => (
           <Reply key={reply?.cid} depth={(depth || 1) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />
         ))}
+      </div>
+    </div>
+  )
+}
+
+const ReplyQuote = ({commentCid, depth}) => {
+  const comment = useComment({commentCid, onlyIfCached: true})
+  // show the unverified author address for a few ms until the verified arrives
+  const {shortAuthorAddress} = useAuthorAddress({comment})
+  const [isOpen, setIsOpen] = useState(false)
+
+  let content = comment?.content?.trim?.()
+  if (!content) {
+    return ''
+  }
+  const tooLong = content.length > 60
+  if (!isOpen && tooLong) {
+    content = content.substring(0, 60).trim() + '...'
+  }
+  const open = (event) => {
+    if (isOpen || !tooLong) {
+      return
+    }
+    event.stopPropagation() // don't trigger the reply typing modal
+    setIsOpen(true)
+  }
+
+  return (
+    <div onClick={open} className={styles.quote}>
+      <div className={styles.reply}>
+        <div className={[styles.replyDepthEven, styles.replyIsLast].join(' ')}>
+          <div className={styles.replyHeader}>
+            <span className={styles.replyAuthor}>{shortAuthorAddress}</span>
+          </div>
+          <span className={[styles.replyContent, !isOpen ? styles.quoteClosed : undefined].join(' ')}>{content}</span>
+        </div>
       </div>
     </div>
   )
@@ -122,7 +179,9 @@ function Post() {
     hostname = new URL(post?.link).hostname.replace(/^www\./, '')
   } catch (e) {}
 
-  const replies = useReplies(post).map((reply) => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount === 0} />) || ''
+  const {repliesSortType, repliesSortTypes, setRepliesSortType, useRepliesOptions} = useRepliesSortType()
+  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({comment: post, ...useRepliesOptions})
+  const replyComponents = updatedReplies.map((reply) => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount === 0} />) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
@@ -220,6 +279,15 @@ function Post() {
           </div>
           <div className={styles.footer}>
             <span className={[styles.replyCount, styles.button].join(' ')}>{post?.replyCount} comments</span>
+            <span className={styles.button}>
+              <select onChange={(event) => setRepliesSortType(event.target.value)} value={repliesSortType} className={styles.repliesSortType}>
+                {repliesSortTypes.map((repliesSortType) => (
+                  <option key={repliesSortType} value={repliesSortType}>
+                    {repliesSortType}
+                  </option>
+                ))}
+              </select>
+            </span>
             <PostReplyTools reply={post}>
               <span className={styles.button}>reply</span>
             </PostReplyTools>
@@ -231,7 +299,12 @@ function Post() {
         <PostMedia post={post} />
       </div>
       {stateString && <div className={styles.stateString}>{stateString}</div>}
-      <div className={styles.replies}>{replies}</div>
+      <div className={styles.replies}>{replyComponents}</div>
+      {hasMore && bufferedReplies?.length !== 0 && (
+        <div onClick={loadMore} className={styles.button}>
+          <span className={styles.footer}>load more comments</span> ({bufferedReplies?.length} replies)
+        </div>
+      )}
     </div>
   )
 }

@@ -28,3 +28,7 @@ select:focus, input:focus, textarea:focus, video:focus, a:focus {
      font-size: 16px!important;
    }
 }
+
+#webpack-dev-server-client-overlay {
+/*  display: none;*/
+}

@@ -78,6 +78,9 @@
 
   /* undo the app post padding */
   margin: 0 0 0 -2px;
+
+  /* temporary for debugging */
+  display: none;
 }
 
 .button {

@@ -33,6 +33,8 @@ const Challenge = ({challenge, closeModal}) => {
     else onSubmit()
   }
 
+  console.log(challenges[currentChallengeIndex])
+
   return (
     <div className={styles.challenge}>
       <div>
@@ -44,6 +46,7 @@ const Challenge = ({challenge, closeModal}) => {
       <div className={styles.challengeMediaWrapper}>
         <img alt="challenge" className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`} />
       </div>
+      {challenges[currentChallengeIndex]?.caseInsensitive && <div>(case insensitive)</div>}
       <div>
         <input onKeyPress={onEnterKey} onChange={onAnswersChange} value={answers[currentChallengeIndex] || ''} className={styles.challengeInput} />
       </div>

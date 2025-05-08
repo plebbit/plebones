@@ -23,8 +23,9 @@ import styles from './app.module.css'
 import useTheme from './hooks/use-theme'
 import {useEffect} from 'react'
 import Menu from './components/menu'
+import Footer from './components/footer'
 import ChallengeModal from './components/challenge-modal'
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js'
+import Plebbit from '@plebbit/plebbit-js'
 
 // debug util
 window.PlebbitJs = Plebbit
@@ -50,6 +51,7 @@ function App() {
       <ChallengeModal />
       <Menu />
       <Outlet />
+      <Footer />
     </div>
   )
 
