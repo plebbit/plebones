@@ -64,14 +64,21 @@ const PostMedia = ({post}) => {
 }
 
 const Reply = ({reply, depth, isLast}) => {
+  // handle pending mod or author edit
+  const {state: editedReplyState, editedComment: editedReply} = useEditedComment({comment: reply})
+  if (editedReply) {
+    reply = editedReply
+  }
+
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const {useRepliesOptions} = useRepliesSortType()
-  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({comment: reply, ...useRepliesOptions})
+  const {replies, bufferedReplies, loadMore, hasMore} = useReplies({comment: reply, ...useRepliesOptions})
   const replyDepthEven = depth % 2 === 0
 
   const state = reply?.state === 'pending' || reply?.state === 'failed' ? reply?.state : undefined
   const publishingStateString = useStateString(state === 'pending' && reply)
+  const labels = useCommentLabels(reply, editedReplyState)
 
   const _loadMore = (event) => {
     event.stopPropagation() // don't trigger the reply typing modal
@@ -100,6 +107,14 @@ const Reply = ({reply, depth, isLast}) => {
                 ({bufferedReplies?.length} new replies)
               </span>
             )}
+            {labels.map((label) => (
+              <>
+                {' '}
+                <span key={label} className={styles.label}>
+                  {label}
+                </span>
+              </>
+            ))}
             {state && (
               <>
                 {' '}
@@ -120,7 +135,7 @@ const Reply = ({reply, depth, isLast}) => {
         </div>
       </ReplyTools>
       <div className={styles.replies}>
-        {updatedReplies.map((reply, index) => (
+        {replies.map((reply, index) => (
           <Reply key={reply?.cid} depth={(depth || 1) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />
         ))}
       </div>
@@ -180,8 +195,8 @@ function Post() {
   } catch (e) {}
 
   const {repliesSortType, repliesSortTypes, setRepliesSortType, useRepliesOptions} = useRepliesSortType()
-  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({comment: post, ...useRepliesOptions})
-  const replyComponents = updatedReplies.map((reply) => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount === 0} />) || ''
+  let {replies, bufferedReplies, hasMore, loadMore} = useReplies({comment: post, ...useRepliesOptions})
+  const replyComponents = replies.map((reply) => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount === 0} />) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
