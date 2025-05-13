@@ -104,7 +104,7 @@ const Reply = ({reply, depth, isLast}) => {
             {hasMore && bufferedReplies?.length !== 0 && (
               <span onClick={_loadMore} className={styles.newRepliesButton}>
                 {' '}
-                ({bufferedReplies?.length} new replies)
+                ({bufferedReplies?.length} new {bufferedReplies.length === 1 ? 'reply' : 'replies'})
               </span>
             )}
             {labels.map((label) => (

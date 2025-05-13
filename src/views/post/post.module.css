@@ -122,6 +122,10 @@ video.media {
   font-weight: bold;
   /* make buttons like links */
   cursor: pointer;
+  /* position: absolute to never displace the ui */
+  position: absolute;
+  /* don't wrap, but include left space */
+  white-space: pre;
 }
 
 /* add indent to each nested reply */

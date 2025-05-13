@@ -30,7 +30,7 @@
     "@capacitor/app": "1.1.1",
     "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#f760ce2f5961307c93517fed0257b425bbf38c30",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#39cd7c09f1675949193498891fc448f68e42742b",
     "electron-context-menu": "3.3.0",
     "electron-is-dev": "2.0.0",
     "ext-name": "5.0.0",
