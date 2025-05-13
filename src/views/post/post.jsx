@@ -129,7 +129,7 @@ const Reply = ({reply, depth, isLast}) => {
             )}
           </div>
 
-          {useRepliesOptions.flat && reply.parentCid !== reply.postCid && <ReplyQuote commentCid={reply.parentCid} depth={(depth || 1) + 1} />}
+          {useRepliesOptions.flat && reply.depth > 1 && <ReplyQuote commentCid={reply.parentCid} />}
           <span className={styles.replyContent}>{reply?.content?.trim?.()}</span>
           <ReplyMedia reply={reply} />
         </div>
@@ -143,7 +143,7 @@ const Reply = ({reply, depth, isLast}) => {
   )
 }
 
-const ReplyQuote = ({commentCid, depth}) => {
+const ReplyQuote = ({commentCid}) => {
   const comment = useComment({commentCid, onlyIfCached: true})
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment})
