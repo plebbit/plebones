@@ -69,7 +69,11 @@ const FeedPostAuthorAvatar = ({post}) => {
   )
 }
 
-const FeedPost = ({post, index}) => {
+const FeedPost = ({post, updatedPost, index}) => {
+  if (!updatedPost) {
+    updatedPost = post
+  }
+
   // handle pending mod or author edit
   const {state: editedPostState, editedComment: editedPost} = useEditedComment({comment: post})
   if (editedPost) {
@@ -87,20 +91,20 @@ const FeedPost = ({post, index}) => {
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
-  const [unreadReplyCount] = useUnreadReplyCount(post)
+  const [unreadReplyCount] = useUnreadReplyCount(updatedPost)
   const unreadReplyCountText = typeof unreadReplyCount === 'number' ? `+${unreadReplyCount}` : ''
 
   const [upvoted, upvote] = useUpvote(post)
   const [downvoted, downvote] = useDownvote(post)
 
-  let scoreNumber = post?.upvoteCount - post?.downvoteCount
+  let scoreNumber = updatedPost?.upvoteCount - updatedPost?.downvoteCount
   const negativeScoreNumber = scoreNumber < 0
   const largeScoreNumber = String(scoreNumber).length > 3
   if (isNaN(scoreNumber)) {
     scoreNumber = '-'
   }
 
-  const labels = useCommentLabels(post, editedPostState)
+  const labels = useCommentLabels(updatedPost, editedPostState)
 
   const title = (post?.title?.trim?.() || post?.content?.trim?.())?.substring?.(0, 300) || '-'
 
@@ -168,7 +172,7 @@ const FeedPost = ({post, index}) => {
           </div>
           <div className={styles.footer}>
             <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
-              {post?.replyCount} comments <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
+              {updatedPost?.replyCount} comments <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
             </Link>
           </div>
         </div>

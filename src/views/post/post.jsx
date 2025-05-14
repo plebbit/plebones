@@ -63,7 +63,7 @@ const PostMedia = ({post}) => {
   return <div className={styles.noMedia}></div>
 }
 
-const Reply = ({reply, depth, isLast}) => {
+const Reply = ({reply, updatedReply, depth, isLast}) => {
   // handle pending mod or author edit
   const {state: editedReplyState, editedComment: editedReply} = useEditedComment({comment: reply})
   if (editedReply) {
@@ -73,7 +73,7 @@ const Reply = ({reply, depth, isLast}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const {useRepliesOptions} = useRepliesSortType()
-  const {replies, bufferedReplies, loadMore, hasMore} = useReplies({comment: reply, ...useRepliesOptions})
+  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({comment: reply, ...useRepliesOptions})
   const replyDepthEven = depth % 2 === 0
 
   const state = reply?.state === 'pending' || reply?.state === 'failed' ? reply?.state : undefined
@@ -85,7 +85,7 @@ const Reply = ({reply, depth, isLast}) => {
     loadMore()
   }
 
-  let score = (reply?.upvoteCount || 0) - (reply?.downvoteCount || 0)
+  let score = (updatedReply?.upvoteCount || 0) - (updatedReply?.downvoteCount || 0)
   if (score === 0) {
     score = ''
   } else if (score > 0) {
@@ -136,7 +136,13 @@ const Reply = ({reply, depth, isLast}) => {
       </ReplyTools>
       <div className={styles.replies}>
         {replies.map((reply, index) => (
-          <Reply key={reply?.cid} depth={(depth || 1) + 1} reply={reply} isLast={reply?.replyCount > 0 || replies.length === index + 1} />
+          <Reply
+            key={reply?.cid}
+            depth={(depth || 1) + 1}
+            reply={reply}
+            updatedReply={updatedReplies[index]}
+            isLast={reply?.replyCount > 0 || replies.length === index + 1}
+          />
         ))}
       </div>
     </div>
@@ -195,8 +201,9 @@ function Post() {
   } catch (e) {}
 
   const {repliesSortType, repliesSortTypes, setRepliesSortType, useRepliesOptions} = useRepliesSortType()
-  let {replies, bufferedReplies, hasMore, loadMore} = useReplies({comment: post, ...useRepliesOptions})
-  const replyComponents = replies.map((reply) => <Reply key={reply?.cid} reply={reply} isLast={reply?.replyCount === 0} />) || ''
+  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({comment: post, ...useRepliesOptions})
+  const replyComponents =
+    replies.map((reply, index) => <Reply key={reply?.cid} reply={reply} updatedReply={updatedReplies[index]} isLast={reply?.replyCount === 0} />) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 

@@ -89,7 +89,7 @@ function Subplebbit() {
   const {timeFilterSeconds} = useTimeFilter()
   // single sub feeds only need time filter for sort type top and controversial
   const newerThan = sortType === 'topAll' || sortType === 'controversialAll' ? timeFilterSeconds : undefined
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, newerThan})
+  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, newerThan})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer
@@ -127,7 +127,7 @@ function Subplebbit() {
         increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={feed?.length || 0}
         data={feed}
-        itemContent={(index, post) => <FeedPost index={index} post={post} />}
+        itemContent={(index, post) => <FeedPost index={index} post={post} updatedPost={updatedFeed[index]} />}
         useWindowScroll={true}
         components={{Footer}}
         endReached={loadMore}

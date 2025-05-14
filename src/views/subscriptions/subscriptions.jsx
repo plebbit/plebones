@@ -17,7 +17,7 @@ function Subscriptions() {
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'hot'
   const {timeFilterSeconds} = useTimeFilter()
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds})
+  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer
@@ -53,7 +53,7 @@ function Subscriptions() {
         increaseViewportBy={{bottom: 1200, top: 600}}
         totalCount={feed?.length || 0}
         data={feed}
-        itemContent={(index, post) => <FeedPost index={index} post={post} />}
+        itemContent={(index, post) => <FeedPost index={index} post={post} updatedPost={updatedFeed[index]} />}
         useWindowScroll={true}
         components={{Footer}}
         endReached={loadMore}
