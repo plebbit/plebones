@@ -1,14 +1,15 @@
 import {useState, useEffect} from 'react'
 
-let cache
+let cache, pending
 
 const useDefaultSubplebbits = () => {
   const [subplebbits, setSubplebbits] = useState([])
 
   useEffect(() => {
-    if (cache) {
+    if (cache || pending) {
       return
     }
+    pending = true
     ;(async () => {
       try {
         const multisub = await fetch(
@@ -20,6 +21,7 @@ const useDefaultSubplebbits = () => {
       } catch (e) {
         console.warn(e)
       }
+      pending = false
     })()
   }, [])
 
