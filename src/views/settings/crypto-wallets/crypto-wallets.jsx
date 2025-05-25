@@ -35,42 +35,45 @@ const CryptoWalletsForm = ({account}) => {
     setWalletsArray(newArray)
   }
 
-  const walletsInputs = walletsArray.map((wallet, index) => (
-    <div>
-      <input onChange={(e) => setWalletsArrayProperty(index, 'chainTicker', e.target.value)} value={wallet.chainTicker} placeholder="chain ticker e.g. eth, matic..." />
-      <input onChange={(e) => setWalletsArrayProperty(index, 'address', e.target.value)} value={wallet.address} placeholder="wallet address e.g. 0x..." />
-      <button
-        onClick={() => {
-          if (!wallet.chainTicker) {
-            return alert('missing chain ticker')
-          }
-          if (!wallet.address) {
-            return alert('missing address')
-          }
-          const timestamp = wallet.timestamp || Math.floor(Date.now() / 1000)
-          const messageToSign = getWalletMessageToSign(authorAddress, timestamp)
-
-          // if timestamp changed, update it so it gets saved properly
-          if (timestamp !== wallet.timestamp) {
-            setWalletsArrayProperty(index, 'timestamp', timestamp)
-          }
-
-          navigator.clipboard.writeText(messageToSign)
-          alert(messageToSign)
-        }}
-      >
-        copy message to sign
-      </button>
-      <input onChange={(e) => setWalletsArrayProperty(index, 'signature', e.target.value)} value={wallet.signature} placeholder="signature e.g. 0x..." />
+  const walletsInputs = walletsArray.map((wallet, index) => {
+    const blockExplorerUrl = wallet.chainTicker === 'sol' ? 'https://solscan.io/verifiedsignatures' : 'https://etherscan.io/verifiedSignatures'
+    return (
       <div>
-        go to{' '}
-        <a href="https://etherscan.io/verifiedSignatures" target="_blank" rel="noreferrer">
-          https://etherscan.io/verifiedSignatures
-        </a>{' '}
-        and sign, then paste signature
+        <input onChange={(e) => setWalletsArrayProperty(index, 'chainTicker', e.target.value)} value={wallet.chainTicker} placeholder="chain ticker e.g. eth, matic..." />
+        <input onChange={(e) => setWalletsArrayProperty(index, 'address', e.target.value)} value={wallet.address} placeholder="wallet address e.g. 0x..." />
+        <button
+          onClick={() => {
+            if (!wallet.chainTicker) {
+              return alert('missing chain ticker')
+            }
+            if (!wallet.address) {
+              return alert('missing address')
+            }
+            const timestamp = wallet.timestamp || Math.floor(Date.now() / 1000)
+            const messageToSign = getWalletMessageToSign(authorAddress, timestamp)
+
+            // if timestamp changed, update it so it gets saved properly
+            if (timestamp !== wallet.timestamp) {
+              setWalletsArrayProperty(index, 'timestamp', timestamp)
+            }
+
+            navigator.clipboard.writeText(messageToSign)
+            alert(messageToSign)
+          }}
+        >
+          copy message to sign
+        </button>
+        <input onChange={(e) => setWalletsArrayProperty(index, 'signature', e.target.value)} value={wallet.signature} placeholder="signature e.g. 0x..." />
+        <div>
+          go to{' '}
+          <a href={blockExplorerUrl} target="_blank" rel="noreferrer">
+            {blockExplorerUrl}
+          </a>{' '}
+          and sign, then paste signature
+        </div>
       </div>
-    </div>
-  ))
+    )
+  })
 
   const save = () => {
     const wallets = {}
@@ -87,12 +90,13 @@ const CryptoWalletsForm = ({account}) => {
       if (!wallet.timestamp) {
         return alert(`${wallet.chainTicker} missing timestamp, must click "copy message to sign" again and resign`)
       }
+      const type = wallet.chainTicker === 'sol' ? 'sol' : 'eip191'
       wallets[wallet.chainTicker] = {
         address: wallet.address,
         timestamp: wallet.timestamp,
         signature: {
           signature: wallet.signature,
-          type: 'eip191',
+          type,
         },
       }
     }

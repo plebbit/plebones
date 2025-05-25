@@ -78,10 +78,11 @@ const NftAvatarForm = ({account}) => {
     timestamp,
     address: tokenAddress || account?.author?.avatar?.address,
     id: tokenId || account?.author?.avatar?.id,
-    signature: {
-      signature: signature || account?.author?.avatar?.signature?.signature,
-      type: 'eip191',
-    },
+  }
+  const type = avatar.chainTicker === 'sol' ? 'sol' : 'eip191'
+  avatar.signature = {
+    signature: signature || account?.author?.avatar?.signature?.signature,
+    type,
   }
 
   const save = () => {
