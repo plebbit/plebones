@@ -30,6 +30,12 @@ const getEditedPropsOnly = (original, edited) => {
   return editedProps
 }
 
+const tryJsonParse = (string) => {
+  try {
+    return JSON.parse(string)
+  } catch (e) {}
+}
+
 function SubplebbitSettings() {
   const {addChallenge} = useChallenges()
   const navigate = useNavigate()
@@ -70,14 +76,10 @@ function SubplebbitSettings() {
   const subplebbitJson = useMemo(() => stringify(subplebbitEditable), [subplebbit])
 
   const [text, setText] = useState('')
-
-  let editedPropsOnly
-  try {
-    editedPropsOnly = {...getEditedPropsOnly(subplebbitEditable, JSON.parse(text))}
-  } catch (e) {}
+  const editedSubplebbit = tryJsonParse(text) || {}
 
   const {publishSubplebbitEdit} = usePublishSubplebbitEdit({
-    ...editedPropsOnly,
+    ...getEditedPropsOnly(subplebbitEditable, editedSubplebbit),
     subplebbitAddress,
     onChallenge: (...args) => addChallenge([...args, subplebbit]),
     onChallengeVerification: alertChallengeVerificationFailed,
