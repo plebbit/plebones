@@ -33,6 +33,7 @@ const Challenge = ({challenge, closeModal}) => {
     else onSubmit()
   }
 
+  // TODO: remove when done debugging caseInsensitive
   console.log(challenges[currentChallengeIndex])
 
   return (

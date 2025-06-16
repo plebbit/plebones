@@ -11,6 +11,9 @@ export const getPublicationType = (publication) => {
   if (publication.commentCid) {
     return 'edit'
   }
+  if (publication.subplebbitEdit) {
+    return 'subplebbit edit'
+  }
   return 'post'
 }
 

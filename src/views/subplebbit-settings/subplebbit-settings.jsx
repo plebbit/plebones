@@ -3,47 +3,86 @@ import styles from './subplebbit-settings.module.css'
 import {useSubplebbit, usePublishSubplebbitEdit, deleteSubplebbit} from '@plebbit/plebbit-react-hooks'
 import stringify from 'json-stringify-pretty-compact'
 import {useParams, useNavigate} from 'react-router-dom'
+import {alertChallengeVerificationFailed} from '../../lib/utils.js'
+import useChallenges from '../../hooks/use-challenges.js'
+
+// don't publish props that haven't changed, saves bandwidth and avoids uneditable props
+const getEditedPropsOnly = (original, edited) => {
+  const editedProps = {}
+  const allProps = new Set([...Object.keys(original), ...Object.keys(edited)])
+  for (const prop of allProps) {
+    if (original[prop] === undefined && edited[prop] === undefined) {
+      continue
+    }
+    // remove prop
+    else if (edited[prop] === undefined) {
+      editedProps[prop] = null
+    }
+    // add prop
+    else if (original[prop] === undefined) {
+      editedProps[prop] = edited[prop]
+    }
+    // edit prop
+    else if (JSON.stringify(original[prop]) !== JSON.stringify(edited[prop])) {
+      editedProps[prop] = edited[prop]
+    }
+  }
+  return editedProps
+}
 
 function SubplebbitSettings() {
+  const {addChallenge} = useChallenges()
   const navigate = useNavigate()
   const {subplebbitAddress} = useParams()
   const subplebbit = useSubplebbit({subplebbitAddress})
-  const subplebbitJson = useMemo(
-    () =>
-      stringify({
-        ...subplebbit,
-        // remove fields that cant be edited
-        posts: undefined,
-        clients: undefined,
-        state: undefined,
-        startedState: undefined,
-        updatingState: undefined,
-        createdAt: undefined,
-        updatedAt: undefined,
-        fetchedAt: undefined,
-        signature: undefined,
-        errors: undefined,
-        error: undefined,
-        encryption: undefined,
-        statsCid: undefined,
-        pubsubTopic: undefined,
-        lastPostCid: undefined,
-        lastCommentCid: undefined,
-        shortAddress: undefined,
-        postUpdates: undefined,
-        started: undefined,
-        // could be useful to show public subplebbit.challenges data if private subplebbit.settings.challenges isn't defined
-        challenges: !subplebbit?.settings ? subplebbit?.challenges : undefined,
-      }),
-    [subplebbit]
-  )
+  const subplebbitEditable = {
+    ...subplebbit,
+    // remove fields that cant be edited
+    posts: undefined,
+    clients: undefined,
+    state: undefined,
+    startedState: undefined,
+    updatingState: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
+    fetchedAt: undefined,
+    signature: undefined,
+    errors: undefined,
+    error: undefined,
+    encryption: undefined,
+    statsCid: undefined,
+    pubsubTopic: undefined,
+    lastPostCid: undefined,
+    lastCommentCid: undefined,
+    updateCid: undefined,
+    shortAddress: undefined,
+    postUpdates: undefined,
+    started: undefined,
+    raw: undefined,
+    ipnsName: undefined,
+    ipnsPubsubTopic: undefined,
+    ipnsPubsubTopicDhtKey: undefined,
+    pubsubTopicPeersCid: undefined,
+    // could be useful to show public subplebbit.challenges data if private subplebbit.settings.challenges isn't defined
+    challenges: !subplebbit?.settings ? subplebbit?.challenges : undefined,
+  }
+  // eslint-disable-next-line
+  const subplebbitJson = useMemo(() => stringify(subplebbitEditable), [subplebbit])
 
   const [text, setText] = useState('')
-  let usePublishSubplebbitEditOptions
+
+  let editedPropsOnly
   try {
-    usePublishSubplebbitEditOptions = {...JSON.parse(text), subplebbitAddress}
+    editedPropsOnly = {...getEditedPropsOnly(subplebbitEditable, JSON.parse(text))}
   } catch (e) {}
-  const {publishSubplebbitEdit} = usePublishSubplebbitEdit(usePublishSubplebbitEditOptions)
+
+  const {publishSubplebbitEdit} = usePublishSubplebbitEdit({
+    ...editedPropsOnly,
+    subplebbitAddress,
+    onChallenge: (...args) => addChallenge([...args, subplebbit]),
+    onChallengeVerification: alertChallengeVerificationFailed,
+    onError: console.warn,
+  })
 
   // set the initial subplebbit json
   useEffect(() => {
