@@ -9,24 +9,8 @@ import {App as CapacitorApp} from '@capacitor/app'
 import * as serviceWorkerRegistration from './service-worker-registration'
 import {setAuthorAvatarsWhitelistedTokenAddresses} from '@plebbit/plebbit-react-hooks'
 
-// add p2p publishing by default
-// window.defaultPlebbitOptions = {
-//   browserLibp2pJsPublish: true,
-//   ipfsGatewayUrls: ['https://ipfs.io', 'https://ipfsgateway.xyz', 'https://cloudflare-ipfs.com', 'https://gateway.plebpubsub.live', 'https://4everland.io'],
-//   pubsubHttpClientsOptions: ['https://pubsubprovider.xyz/api/v0', 'https://plebpubsub.live/api/v0', 'https://rannithepleb.com/api/v0'],
-//   chainProviders: {
-//     eth: {
-//       urls: ['ethers.js', 'https://ethrpc.xyz', 'viem'],
-//       chainId: 1,
-//     },
-//     avax: {
-//       urls: ['https://api.avax.network/ext/bc/C/rpc'],
-//       chainId: 43114,
-//     },
-//     matic: {urls: ['https://polygon-rpc.com'], chainId: 137},
-//   },
-//   resolveAuthorAddresses: false,
-// }
+// set up libp2pjs as default
+window.defaultPlebbitOptions = {libp2pJsClientsOptions: [{key: 'libp2pjs'}]}
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

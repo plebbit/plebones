@@ -1,18 +1,15 @@
 import {useMemo, useCallback} from 'react'
-import {useAccountComments, useReplies} from '@plebbit/plebbit-react-hooks'
+import {useAccountComments, useReplies as plebbitReactHooksUseReplies} from '@plebbit/plebbit-react-hooks'
 import useRepliesSortType from './use-replies-sort-type'
 
-const useRepliesAndAccountReplies = (comment) => {
+const useReplies = (options) => {
   const {useRepliesOptions} = useRepliesSortType()
-  const {sortType, flat} = useRepliesOptions
+  const {replies, ...rest} = plebbitReactHooksUseReplies({...useRepliesOptions, ...options})
 
   // filter only the parent cid
+  const comment = options?.comment
   const filter = useCallback((accountComment) => accountComment.parentCid === (comment?.cid || 'n/a'), [comment?.cid])
   const {accountComments} = useAccountComments({filter})
-  let {replies, ...rest} = useReplies(comment?.depth === 0 && {comment, sortType, flat})
-  // if (comment?.depth !== 0 && comment?.replies?.pages?.[sortType]?.comments) {
-  //   replies = comment?.replies?.pages?.[sortType]?.comments
-  // }
 
   // the account's replies have a delay before getting published, so get them locally from accountComments instead
   const accountRepliesNotYetPublished = useMemo(() => {
@@ -30,8 +27,7 @@ const useRepliesAndAccountReplies = (comment) => {
     ]
   }, [replies, accountRepliesNotYetPublished])
 
-  // return {replies: repliesAndNotYetPublishedReplies, ...rest}
-  return {replies, ...rest}
+  return {replies: repliesAndNotYetPublishedReplies, ...rest}
 }
 
-export default useRepliesAndAccountReplies
+export default useReplies
