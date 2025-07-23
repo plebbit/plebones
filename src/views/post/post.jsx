@@ -1,4 +1,4 @@
-import {useComment, useEditedComment, useAuthorAvatar} from '@plebbit/plebbit-react-hooks'
+import {useComment, useEditedComment, useAuthorAvatar, useReplies} from '@plebbit/plebbit-react-hooks'
 import utils from '../../lib/utils'
 import {useEffect, useState} from 'react'
 import {Link, useNavigate, useParams} from 'react-router-dom'
@@ -11,7 +11,6 @@ import {useBlock, useAuthorAddress} from '@plebbit/plebbit-react-hooks'
 import useUnreadReplyCount from '../../hooks/use-unread-reply-count'
 import useUpvote from '../../hooks/use-upvote'
 import useDownvote from '../../hooks/use-downvote'
-import useReplies from '../../hooks/use-replies'
 import useRepliesSortType from '../../hooks/use-replies-sort-type'
 import useCommentLabels from '../../hooks/use-comment-labels'
 import useStateString from '../../hooks/use-state-string'
@@ -73,7 +72,7 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const {useRepliesOptions} = useRepliesSortType()
-  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({comment: reply})
+  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({comment: reply, ...useRepliesOptions})
   const replyDepthEven = depth % 2 === 0
 
   const state = reply?.state === 'pending' || reply?.state === 'failed' ? reply?.state : undefined
@@ -137,7 +136,7 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
       <div className={styles.replies}>
         {replies.map((reply, index) => (
           <Reply
-            key={reply?.cid}
+            key={reply?.cid || reply?.index}
             depth={(depth || 1) + 1}
             reply={reply}
             updatedReply={updatedReplies[index]}
@@ -159,9 +158,12 @@ const ReplyQuote = ({commentCid}) => {
   if (!content) {
     return ''
   }
+  let ellipsis = ''
+
   const tooLong = content.length > 60
   if (!isOpen && tooLong) {
-    content = content.substring(0, 60).trim() + '...'
+    content = content.substring(0, 60).trim()
+    ellipsis = <span className={styles.quoteEllipsis}>.....</span>
   }
   const open = (event) => {
     if (isOpen || !tooLong) {
@@ -178,7 +180,9 @@ const ReplyQuote = ({commentCid}) => {
           <div className={styles.replyHeader}>
             <span className={styles.replyAuthor}>{shortAuthorAddress}</span>
           </div>
-          <span className={[styles.replyContent, !isOpen ? styles.quoteClosed : undefined].join(' ')}>{content}</span>
+          <span className={[styles.replyContent, !isOpen ? styles.quoteClosed : undefined].join(' ')}>
+            {content} {ellipsis}
+          </span>
         </div>
       </div>
     </div>
@@ -200,10 +204,10 @@ function Post() {
     hostname = new URL(post?.link).hostname.replace(/^www\./, '')
   } catch (e) {}
 
-  const {repliesSortType, repliesSortTypes, setRepliesSortType} = useRepliesSortType()
-  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({comment: post})
+  const {repliesSortType, repliesSortTypes, setRepliesSortType, useRepliesOptions} = useRepliesSortType()
+  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({comment: post, ...useRepliesOptions})
   const replyComponents =
-    replies.map((reply, index) => <Reply key={reply?.cid} reply={reply} updatedReply={updatedReplies[index]} isLast={reply?.replyCount === 0} />) || ''
+    replies.map((reply, index) => <Reply key={reply?.cid || reply?.index} reply={reply} updatedReply={updatedReplies[index]} isLast={reply?.replyCount === 0} />) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 

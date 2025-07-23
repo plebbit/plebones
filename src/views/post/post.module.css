@@ -249,4 +249,9 @@ select.repliesSortType {
 
 .quoteClosed {
   white-space: nowrap;
+  cursor: pointer;
+}
+
+.quoteEllipsis {
+  opacity: 0.5;
 }
