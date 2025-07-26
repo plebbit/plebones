@@ -103,12 +103,6 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
             <AuthorAvatar comment={reply} />
             <span className={styles.replyAuthor}>{shortAuthorAddress}</span>
             <span className={styles.replyTimestamp}> {utils.getFormattedTime(reply?.timestamp)}</span>
-            {hasMore && bufferedReplies?.length !== 0 && (
-              <span onClick={_loadMore} className={styles.newRepliesButton}>
-                {' '}
-                ({bufferedReplies?.length} new {bufferedReplies.length === 1 ? 'reply' : 'replies'})
-              </span>
-            )}
             {labels.map((label) => (
               <>
                 {' '}
@@ -128,6 +122,13 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
                 {' '}
                 <span>{publishingStateString}</span>
               </>
+            )}
+            {hasMore && bufferedReplies?.length !== 0 && (
+              // must be at the end because position: absolute
+              <span onClick={_loadMore} className={styles.newRepliesButton}>
+                {' '}
+                ({bufferedReplies?.length} new {bufferedReplies.length === 1 ? 'reply' : 'replies'})
+              </span>
             )}
           </div>
 
