@@ -1,6 +1,6 @@
 import createStore from 'zustand'
 
-const repliesPerPage = 5
+const repliesPerPage = 50
 const repliesSortTypesToUseRepliesOptions = {
   nested: {sortType: 'best', flat: false, repliesPerPage, accountComments: {newerThan: Infinity, append: false}},
   flat: {sortType: 'old', flat: true, repliesPerPage, accountComments: {newerThan: Infinity, append: true}}, // appending is more common when sorting by old

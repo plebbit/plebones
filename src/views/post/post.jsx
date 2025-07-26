@@ -72,7 +72,7 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const {useRepliesOptions} = useRepliesSortType()
-  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({...useRepliesOptions, comment: reply, repliesPerPage: 5})
+  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({...useRepliesOptions, comment: reply})
   const replyDepthEven = depth % 2 === 0
 
   // publishing states exist only on account comment
@@ -132,7 +132,6 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
           </div>
 
           {useRepliesOptions.flat && reply.depth > 1 && <ReplyQuote commentCid={reply.parentCid} />}
-          {/*<span className={styles.replyContent}>({reply?.cid?.substring?.(2, 6)} {reply?.index})</span>*/}
           <span className={styles.replyContent}>{reply?.content?.trim?.()}</span>
           <ReplyMedia reply={reply} />
         </div>
@@ -140,7 +139,7 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
       <div className={styles.replies}>
         {replies.map((reply, index) => (
           <Reply
-            key={reply?.cid || reply?.index}
+            key={reply?.index || reply?.cid}
             depth={(depth || 1) + 1}
             reply={reply}
             updatedReply={updatedReplies[index]}
@@ -209,9 +208,9 @@ function Post() {
   } catch (e) {}
 
   const {repliesSortType, repliesSortTypes, setRepliesSortType, useRepliesOptions} = useRepliesSortType()
-  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({...useRepliesOptions, comment: post, repliesPerPage: 50})
+  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({...useRepliesOptions, comment: post})
   const replyComponents =
-    replies.map((reply, index) => <Reply key={reply?.cid || reply?.index} reply={reply} updatedReply={updatedReplies[index]} isLast={reply?.replyCount === 0} />) || ''
+    replies.map((reply, index) => <Reply key={reply?.index || reply?.cid} reply={reply} updatedReply={updatedReplies[index]} isLast={reply?.replyCount === 0} />) || ''
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
