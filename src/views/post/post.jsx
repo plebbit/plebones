@@ -1,4 +1,4 @@
-import {useComment, useEditedComment, useAuthorAvatar, useReplies} from '@plebbit/plebbit-react-hooks'
+import {useComment, useEditedComment, useAccountComment, useAuthorAvatar, useReplies} from '@plebbit/plebbit-react-hooks'
 import utils from '../../lib/utils'
 import {useEffect, useState} from 'react'
 import {Link, useNavigate, useParams} from 'react-router-dom'
@@ -72,11 +72,14 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
   // show the unverified author address for a few ms until the verified arrives
   const {shortAuthorAddress} = useAuthorAddress({comment: reply})
   const {useRepliesOptions} = useRepliesSortType()
-  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({comment: reply, ...useRepliesOptions})
+  const {replies, bufferedReplies, updatedReplies, loadMore, hasMore} = useReplies({...useRepliesOptions, comment: reply, repliesPerPage: 5})
   const replyDepthEven = depth % 2 === 0
 
-  const state = reply?.state === 'pending' || reply?.state === 'failed' ? reply?.state : undefined
-  const publishingStateString = useStateString(state === 'pending' && reply)
+  // publishing states exist only on account comment
+  const accountReply = useAccountComment({commentIndex: reply.index})
+  const state = accountReply?.state === 'pending' || accountReply?.state === 'failed' ? accountReply?.state : undefined
+  const publishingStateString = useStateString(state === 'pending' && accountReply)
+
   const labels = useCommentLabels(reply, editedReplyState)
 
   const _loadMore = (event) => {
@@ -129,6 +132,7 @@ const Reply = ({reply, updatedReply, depth, isLast}) => {
           </div>
 
           {useRepliesOptions.flat && reply.depth > 1 && <ReplyQuote commentCid={reply.parentCid} />}
+          {/*<span className={styles.replyContent}>({reply?.cid?.substring?.(2, 6)} {reply?.index})</span>*/}
           <span className={styles.replyContent}>{reply?.content?.trim?.()}</span>
           <ReplyMedia reply={reply} />
         </div>
@@ -205,7 +209,7 @@ function Post() {
   } catch (e) {}
 
   const {repliesSortType, repliesSortTypes, setRepliesSortType, useRepliesOptions} = useRepliesSortType()
-  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({comment: post, ...useRepliesOptions})
+  let {replies, bufferedReplies, updatedReplies, hasMore, loadMore} = useReplies({...useRepliesOptions, comment: post, repliesPerPage: 50})
   const replyComponents =
     replies.map((reply, index) => <Reply key={reply?.cid || reply?.index} reply={reply} updatedReply={updatedReplies[index]} isLast={reply?.replyCount === 0} />) || ''
 

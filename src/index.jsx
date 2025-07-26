@@ -10,7 +10,7 @@ import * as serviceWorkerRegistration from './service-worker-registration'
 import {setAuthorAvatarsWhitelistedTokenAddresses} from '@plebbit/plebbit-react-hooks'
 
 // set up libp2pjs as default
-window.defaultPlebbitOptions = {libp2pJsClientsOptions: [{key: 'libp2pjs'}]}
+// window.defaultPlebbitOptions = {libp2pJsClientsOptions: [{key: 'libp2pjs'}]}
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
