@@ -1,4 +1,3 @@
-import assert from 'assert'
 import {useParams} from 'react-router-dom'
 
 // the timestamp the last time the user visited
@@ -51,9 +50,13 @@ const useTimeFilter = () => {
     timeFilterName = lastVisitTimeFilterName
   }
 
-  assert(!timeFilterName || typeof timeFilterName === 'string', `useTimeFilter timeFilterName argument '${timeFilterName}' not a string`)
+  if (timeFilterName && typeof timeFilterName !== 'string') {
+    throw new Error(`useTimeFilter timeFilterName argument '${timeFilterName}' not a string`)
+  }
   const timeFilterSeconds = timeFilterNamesToSeconds[timeFilterName]
-  assert(!timeFilterName || timeFilterName === 'all' || timeFilterSeconds !== undefined, `useTimeFilter no filter for timeFilterName '${timeFilterName}'`)
+  if (timeFilterName && timeFilterName !== 'all' && timeFilterSeconds === undefined) {
+    throw new Error(`useTimeFilter no filter for timeFilterName '${timeFilterName}'`)
+  }
   return {timeFilterSeconds, timeFilterNames}
 }
 

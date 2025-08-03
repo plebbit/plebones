@@ -4,7 +4,7 @@ import styles from './account-menu.module.css'
 import {useAccount, useAccounts, createAccount, setActiveAccount} from '@plebbit/plebbit-react-hooks'
 import {Link} from 'react-router-dom'
 import packageJson from '../../../../package.json'
-const commitRef = process?.env?.REACT_APP_COMMIT_REF?.slice(0, 7)
+const commitRef = import.meta.env.VITE_COMMIT_REF?.slice(0, 7)
 const version = commitRef || `v${packageJson.version}`
 
 const Menu = ({onMenuLinkClick}) => {

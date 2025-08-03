@@ -7,15 +7,18 @@
   "license": "GPL-2.0-only",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts build",
-    "build-netlify": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true REACT_APP_COMMIT_REF=$COMMIT_REF CI=false react-scripts build",
-    "test": "react-scripts test",
-    "analyze-bundle": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true react-scripts build && source-map-explorer 'build/static/js/*.js'",
+    "start": "yarn dev",
+    "dev": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) vite",
+    "build": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) GENERATE_SOURCEMAP=false vite build",
+    "build-netlify": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) GENERATE_SOURCEMAP=true vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "analyze-bundle": "cross-env GENERATE_SOURCEMAP=true vite build && source-map-explorer 'dist/assets/*.js'",
     "electron": "yarn electron:before && electron .",
     "electron:no-delete-data": "electron-rebuild && yarn electron:before:download-ipfs && electron .",
-    "electron:start": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && yarn electron\"",
-    "electron:start:no-delete-data": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && yarn electron:no-delete-data\"",
+    "electron:start": "electron:dev",
+    "electron:dev": "concurrently \"cross-env BROWSER=none yarn dev\" \"wait-on http://localhost:5173 && yarn electron\"",
+    "electron:dev:no-delete-data": "concurrently \"cross-env BROWSER=none yarn dev\" \"wait-on http://localhost:5173 && yarn electron:no-delete-data\"",
     "electron:build:linux": "electron-rebuild && electron-builder build --publish never -l",
     "electron:build:windows": "electron-rebuild && electron-builder build --publish never -w",
     "electron:build:mac": "electron-rebuild && electron-builder build --publish never -m",
@@ -41,8 +44,8 @@
     "json-stringify-pretty-compact": "4.0.0",
     "memoizee": "0.4.15",
     "mock-require": "3.0.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-i18next": "13.2.0",
     "react-router-dom": "6.14.1",
     "react-scripts": "5.0.1",
@@ -54,19 +57,30 @@
     "@capacitor/android": "3.6.0",
     "@capacitor/cli": "3.6.0",
     "@capacitor/core": "3.6.0",
-    "@electron/rebuild": "^3.6.0",
+    "@electron/rebuild": "3.6.0",
+    "@eslint/js": "9.30.1",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "@vitejs/plugin-react": "4.6.0",
     "concurrently": "8.0.1",
     "conventional-changelog-cli": "4.1.0",
     "cordova-res": "0.15.4",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
     "decompress": "4.2.1",
-    "electron": "28.2.3",
-    "electron-builder": "24.13.2",
+    "electron": "36.4.0",
+    "electron-builder": "26.0.12",
+    "eslint": "9.30.1",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "globals": "16.3.0",
     "husky": "4.3.8",
     "lint-staged": "12.3.8",
-    "prettier": "2.3.2",
+    "prettier": "3.6.2",
     "source-map-explorer": "2.5.3",
+    "vite": "7.0.4",
+    "vite-plugin-node-polyfills": "0.24.0",
+    "vite-plugin-pwa": "1.0.2",
     "wait-on": "7.0.1"
   },
   "main": "electron/main.js",
@@ -105,28 +119,6 @@
       "target": "AppImage",
       "category": "Network"
     }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      "chrome >= 67",
-      "edge >= 79",
-      "firefox >= 68",
-      "opera >= 54",
-      "safari >= 14"
-    ],
-    "development": [
-      "chrome >= 67",
-      "edge >= 79",
-      "firefox >= 68",
-      "opera >= 54",
-      "safari >= 14"
-    ]
   },
   "lint-staged": {
     "{src,electron}/**/*.{js,jsx}": [

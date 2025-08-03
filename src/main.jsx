@@ -1,28 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
+import './index.css'
 import App from './app'
 import './lib/init-translations'
 import {HashRouter as Router} from 'react-router-dom'
 import './index.css'
 import './themes.css'
 import {App as CapacitorApp} from '@capacitor/app'
-import * as serviceWorkerRegistration from './service-worker-registration'
 import {setAuthorAvatarsWhitelistedTokenAddresses} from '@plebbit/plebbit-react-hooks'
 
 // set up libp2pjs as default
 // window.defaultPlebbitOptions = {libp2pJsClientsOptions: [{key: 'libp2pjs'}]}
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
     <Router>
       <App />
     </Router>
-  </React.StrictMode>
+  </StrictMode>,
 )
-
-// set up PWA https://cra.link/PWA
-serviceWorkerRegistration.register()
 
 // add back button in android app
 CapacitorApp.addListener('backButton', ({canGoBack}) => {

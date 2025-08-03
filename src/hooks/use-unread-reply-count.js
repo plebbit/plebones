@@ -1,6 +1,5 @@
 import createStore from 'zustand'
 import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru/index.js'
-import assert from 'assert'
 import {useCallback} from 'react'
 
 const readReplyCountsDb = localForageLru.createInstance({name: `plebonesReadReplyCounts`, size: 2000})
@@ -58,7 +57,9 @@ const useUnreadReplyCount = (post) => {
 }
 
 export const incrementReadReplyCount = (commentCid) => {
-  assert(commentCid, `readReplyCountsStore.incrementReadReplyCount invalid commentCid argument '${commentCid}'`)
+  if (!commentCid) {
+    throw new Error(`readReplyCountsStore.incrementReadReplyCount invalid commentCid argument '${commentCid}'`)
+  }
   commentCid = commentCid?.substring(2, 14)
   let nextCount
   useReadReplyCountsStore.setState((state) => {
