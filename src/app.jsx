@@ -1,6 +1,7 @@
 import {Route, Routes, Outlet} from 'react-router-dom'
 import Home from './views/home'
 import HomeModal from './views/home-modal'
+import HomeCssSwitch from './views/home-css-switch'
 import Subscriptions from './views/subscriptions'
 import SubscriptionsCatalog from './views/subscriptions-catalog'
 import TextOnly from './views/text-only'
@@ -89,6 +90,7 @@ function App() {
           <Route path="/modal/p/:subplebbitAddress/c/:commentCid" element={<HomeModal />} />
           <Route path="/text-only/:sortType?" element={<TextOnly />} />
           <Route path="/board/:sortType?" element={<Board />} />
+          <Route path="/css-switch/:p?/:subplebbitAddress?/:c?/:commentCid?" element={<HomeCssSwitch />} />
 
           {/* not found */}
           <Route path="*" element={<NotFound />} />

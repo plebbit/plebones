@@ -1,0 +1,32 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.postViewWrapper {
+  /* position: absolute; */
+  /* try fixed temporarily until figure out how to scroll */
+  position: fixed;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* gpu hint for smooth transitions */
+  will-change: opacity, z-index;
+  /* optional fade when toggling */
+  /* transition: opacity 150ms ease; */
+}
+
+.vsible {
+  z-index: 2;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hidden {
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
