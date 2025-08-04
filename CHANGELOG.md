@@ -1,4 +1,52 @@
-## [0.1.15](https://github.com/plebbit/plebones/compare/v0.1.14...v0.1.15) (2024-5-5)
+## [0.1.17](https://github.com/plebbit/plebones/compare/v0.1.16...v0.1.17) (2025-08-04)
+
+
+### Bug Fixes
+
+* **electron:** auto restart script more reliable ([012b6a6](https://github.com/plebbit/plebones/commit/012b6a62a7e36eb6da233c776113b1f806b86e15))
+* **electron:** ipfs proxy should have error status code ([0f9e740](https://github.com/plebbit/plebones/commit/0f9e740cafdf9285e1d7b06009e57ee80b14f97d))
+* **post-tools:** fix comment moderation ([3eb18af](https://github.com/plebbit/plebones/commit/3eb18af09ecd13e9dd3279fdbaa017635436c41f))
+* **post:** deleted or removed replies weren't hidden ([1e84006](https://github.com/plebbit/plebones/commit/1e84006005a764c0d37b83be3dafa9b023427b04))
+* **submit:** dont pass zustand functions to publish options ([6ac4bf1](https://github.com/plebbit/plebones/commit/6ac4bf1ccc30a418eb00acffb1373c03d09272db))
+* **subplebbit-settings:** add support for publishing subplebbit edit ([a2754c0](https://github.com/plebbit/plebones/commit/a2754c0f247bad7a215ff2ea48702e87e39e19e2))
+
+
+### Features
+
+* auto generate wallets ([3b79ba1](https://github.com/plebbit/plebones/commit/3b79ba1ca7d29fa28cc0b7bcf4bafdf43732ab46))
+* **electron:** add http routers to electron ([e7ebc0a](https://github.com/plebbit/plebones/commit/e7ebc0a23c6d761f44779ef867aaa574bc5f2eba))
+* **post:** add labels to replies ([c446663](https://github.com/plebbit/plebones/commit/c44666360247d72e4d8abb2c0274e8e1ddb2fb62))
+* **post:** user is notified when a new nested reply appears ([721a831](https://github.com/plebbit/plebones/commit/721a831b6b6ff4f54e5abf47ad3d328f2302cc91))
+* real time updates for reply counts and upvote counts ([2f8c012](https://github.com/plebbit/plebones/commit/2f8c01233650c3c5df54cb0bce40822c34bb6689))
+* test css switch ([9866dcb](https://github.com/plebbit/plebones/commit/9866dcb0411259891b09fee9080082ace3240442))
+
+
+### Reverts
+
+* **post:** removed replies should display content for debugging ([9fffce9](https://github.com/plebbit/plebones/commit/9fffce981348c581e3b0ce0c5ab6f5a55b0b5aea))
+
+
+
+## [0.1.16](https://github.com/plebbit/plebones/compare/v0.1.15...v0.1.16) (2024-11-02)
+
+
+### Bug Fixes
+
+* **electron:** download url redirect status code changed ([32a922a](https://github.com/plebbit/plebones/commit/32a922ab1f03b1227dbff7f80113aeb59834f536))
+
+
+### Features
+
+* **subplebbit:** add created at and created by to subplebbit page ([a88d97c](https://github.com/plebbit/plebones/commit/a88d97c170e7125a27fbc935cedd8cb93a9ed4d8))
+
+
+### Reverts
+
+* **subplebbit:** remove created at it looks bad ([1785d32](https://github.com/plebbit/plebones/commit/1785d321596340e6bb72b15250055088fb2edac7))
+
+
+
+## [0.1.15](https://github.com/plebbit/plebones/compare/v0.1.14...v0.1.15) (2024-05-05)
 
 
 ### Features
@@ -16,7 +64,7 @@
 
 
 
-## [0.1.14](https://github.com/plebbit/plebones/compare/v0.1.13...v0.1.14) (2024-4-16)
+## [0.1.14](https://github.com/plebbit/plebones/compare/v0.1.13...v0.1.14) (2024-04-16)
 
 
 ### Features
@@ -25,7 +73,7 @@
 
 
 
-## [0.1.13](https://github.com/plebbit/plebones/compare/v0.1.12...v0.1.13) (2024-3-19)
+## [0.1.13](https://github.com/plebbit/plebones/compare/v0.1.12...v0.1.13) (2024-03-19)
 
 
 ### Bug Fixes
@@ -34,7 +82,7 @@
 
 
 
-## [0.1.12](https://github.com/plebbit/plebones/compare/v0.1.11...v0.1.12) (2024-3-12)
+## [0.1.12](https://github.com/plebbit/plebones/compare/v0.1.11...v0.1.12) (2024-03-12)
 
 
 ### Bug Fixes
@@ -49,7 +97,7 @@
 
 
 
-## [0.1.11](https://github.com/plebbit/plebones/compare/v0.1.10...v0.1.11) (2024-2-25)
+## [0.1.11](https://github.com/plebbit/plebones/compare/v0.1.10...v0.1.11) (2024-02-25)
 
 
 ### Bug Fixes
@@ -71,7 +119,7 @@
 
 
 
-## [0.1.10](https://github.com/plebbit/plebones/compare/v0.1.9...v0.1.10) (2024-1-27)
+## [0.1.10](https://github.com/plebbit/plebones/compare/v0.1.9...v0.1.10) (2024-01-27)
 
 
 ### Bug Fixes
@@ -97,7 +145,7 @@
 
 
 
-## [0.1.8](https://github.com/plebbit/plebones/compare/v0.1.7...v0.1.8) (2023-12-7)
+## [0.1.8](https://github.com/plebbit/plebones/compare/v0.1.7...v0.1.8) (2023-12-07)
 
 
 ### Bug Fixes
@@ -155,7 +203,7 @@
 
 
 
-## [0.1.6](https://github.com/plebbit/plebones/compare/v0.1.5...v0.1.6) (2023-9-24)
+## [0.1.6](https://github.com/plebbit/plebones/compare/v0.1.5...v0.1.6) (2023-09-24)
 
 
 ### Bug Fixes
@@ -175,7 +223,7 @@
 
 
 
-## [0.1.5](https://github.com/plebbit/plebones/compare/v0.1.4...v0.1.5) (2023-9-17)
+## [0.1.5](https://github.com/plebbit/plebones/compare/v0.1.4...v0.1.5) (2023-09-17)
 
 
 ### Features
@@ -190,23 +238,23 @@
 
 
 
-## [0.1.4](https://github.com/plebbit/plebones/compare/v0.1.3...v0.1.4) (2023-9-16)
+## [0.1.4](https://github.com/plebbit/plebones/compare/v0.1.3...v0.1.4) (2023-09-16)
 
 
 
-## [0.1.3](https://github.com/plebbit/plebones/compare/v0.1.2...v0.1.3) (2023-8-29)
+## [0.1.3](https://github.com/plebbit/plebones/compare/v0.1.2...v0.1.3) (2023-08-29)
 
 
 
-## [0.1.2](https://github.com/plebbit/plebones/compare/v0.1.1...v0.1.2) (2023-8-25)
+## [0.1.2](https://github.com/plebbit/plebones/compare/v0.1.1...v0.1.2) (2023-08-25)
 
 
 
-## [0.1.1](https://github.com/plebbit/plebones/compare/v0.1.0...v0.1.1) (2023-8-20)
+## [0.1.1](https://github.com/plebbit/plebones/compare/v0.1.0...v0.1.1) (2023-08-20)
 
 
 
-# 0.1.0 (2023-8-19)
+# 0.1.0 (2023-08-19)
 
 
 
