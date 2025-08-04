@@ -8,7 +8,6 @@ import startIpfs from './start-ipfs.js'
 import './start-plebbit-rpc.js'
 import {URL, fileURLToPath} from 'node:url'
 import contextMenu from 'electron-context-menu'
-// prettier-ignore
 import packageJson from '../package.json' with {type: 'json'}
 const dirname = path.join(path.dirname(fileURLToPath(import.meta.url)))
 
