@@ -9,8 +9,8 @@
   "scripts": {
     "start": "yarn dev",
     "dev": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) vite",
-    "build": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) GENERATE_SOURCEMAP=false vite build",
-    "build-netlify": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) GENERATE_SOURCEMAP=true vite build",
+    "build": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) vite build",
+    "build-netlify": "cross-env VITE_COMMIT_REF=$(git rev-parse HEAD) GENERATE_SOURCEMAP=true node --max-old-space-size=4096 ./node_modules/.bin/vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "analyze-bundle": "cross-env GENERATE_SOURCEMAP=true vite build && source-map-explorer 'dist/assets/*.js'",
