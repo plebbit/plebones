@@ -12,6 +12,7 @@ on:
 jobs:
   linux:
     runs-on: ubuntu-20.04
+    timeout-minutes: 60
     permissions:
       contents: write
     steps:
@@ -42,6 +43,7 @@ jobs:
 
   mac:
     runs-on: macos-13
+    timeout-minutes: 60
     permissions:
       contents: write
     steps:
@@ -77,6 +79,7 @@ jobs:
 
   windows:
     runs-on: windows-2022
+    timeout-minutes: 60
     permissions:
       contents: write
     steps:
@@ -105,6 +108,7 @@ jobs:
 
   android:
     runs-on: ubuntu-20.04
+    timeout-minutes: 60
     permissions:
       contents: write
     steps:
