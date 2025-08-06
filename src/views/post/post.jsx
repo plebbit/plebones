@@ -167,7 +167,7 @@ const ReplyQuote = ({commentCid}) => {
   const tooLong = content.length > 60
   if (!isOpen && tooLong) {
     content = content.substring(0, 60).trim()
-    ellipsis = <span className={styles.quoteEllipsis}>.....</span>
+    ellipsis = <span className={styles.quoteEllipsis}>..... [+]</span>
   }
   const open = (event) => {
     if (isOpen || !tooLong) {
@@ -185,7 +185,8 @@ const ReplyQuote = ({commentCid}) => {
             <span className={styles.replyAuthor}>{shortAuthorAddress}</span>
           </div>
           <span className={[styles.replyContent, !isOpen ? styles.quoteClosed : undefined].join(' ')}>
-            {content} {ellipsis}
+            {content}
+            {ellipsis}
           </span>
         </div>
       </div>
