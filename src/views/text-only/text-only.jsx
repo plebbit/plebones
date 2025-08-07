@@ -10,11 +10,14 @@ const lastVirtuosoStates = {}
 const Loading = () => 'loading...'
 const NoPosts = () => 'no posts'
 
+// show own pending posts at the top for 12 hours
+const accountComments = {newerThan: 60 * 60 * 12}
+
 function TextOnly() {
   const params = useParams()
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, accountComments})
 
   let Footer
   if (feed?.length === 0) {

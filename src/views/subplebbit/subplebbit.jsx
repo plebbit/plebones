@@ -81,6 +81,9 @@ const lastVirtuosoStates = {}
 
 const NoPosts = () => 'no posts'
 
+// show own pending posts at the top for 12 hours
+const accountComments = {newerThan: 60 * 60 * 12}
+
 function Subplebbit() {
   const params = useParams()
   const subplebbitAddress = params.subplebbitAddress
@@ -89,7 +92,7 @@ function Subplebbit() {
   const {timeFilterSeconds} = useTimeFilter()
   // single sub feeds only need time filter for sort type top and controversial
   const newerThan = sortType === 'topAll' || sortType === 'controversialAll' ? timeFilterSeconds : undefined
-  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, newerThan})
+  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, newerThan, accountComments})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer

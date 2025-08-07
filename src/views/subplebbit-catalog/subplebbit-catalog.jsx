@@ -34,6 +34,9 @@ const columnWidth = 180
 const NoSubscriptions = () => 'no subscriptions'
 const NoPosts = () => 'no image posts'
 
+// show own pending posts at the top for 12 hours
+const accountComments = {newerThan: 60 * 60 * 12}
+
 function Catalog() {
   const windowWidth = useWindowWidth()
   const columnCount = Math.floor(windowWidth / columnWidth)
@@ -47,7 +50,7 @@ function Catalog() {
   // postPerPage based on columnCount for optimized feed, dont change value after first render
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), [])
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage, filter: utils.catalogFilter, newerThan})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage, filter: utils.catalogFilter, newerThan, accountComments})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   // split feed into rows

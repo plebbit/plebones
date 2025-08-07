@@ -9,11 +9,14 @@ const lastVirtuosoStates = {}
 
 const Loading = () => 'loading...'
 
+// show own pending posts at the top for 12 hours
+const accountComments = {newerThan: 60 * 60 * 12}
+
 function Board() {
   const params = useParams()
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'active'
-  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {feed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, accountComments})
 
   const Footer = hasMore ? Loading : undefined
 

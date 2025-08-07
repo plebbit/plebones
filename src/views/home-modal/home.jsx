@@ -11,13 +11,16 @@ const lastVirtuosoStates = {}
 
 const NoPosts = () => 'no posts'
 
+// show own pending posts at the top for 12 hours
+const accountComments = {newerThan: 60 * 60 * 12}
+
 function Home() {
   const params = useParams()
   // dont load the feed if the user loads the post page directly
   const isFirstLocationAndIsPost = useLocation().key === 'default' && params.commentCid
   const subplebbitAddresses = useDefaultSubplebbitAddresses()
   const sortType = params?.sortType || 'hot'
-  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType})
+  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, accountComments})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer

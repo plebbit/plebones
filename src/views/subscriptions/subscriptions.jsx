@@ -11,13 +11,16 @@ const lastVirtuosoStates = {}
 const NoSubscriptions = () => 'no subscriptions'
 const NoPosts = () => 'no posts'
 
+// show own pending posts at the top for 12 hours
+const accountComments = {newerThan: 60 * 60 * 12}
+
 function Subscriptions() {
   const params = useParams()
   const account = useAccount()
   const subplebbitAddresses = account?.subscriptions
   const sortType = params?.sortType || 'hot'
   const {timeFilterSeconds} = useTimeFilter()
-  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds})
+  const {feed, updatedFeed, hasMore, loadMore} = useFeed({subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds, accountComments})
   const loadingStateString = useFeedStateString(subplebbitAddresses) || 'loading...'
 
   let Footer

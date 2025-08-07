@@ -87,7 +87,11 @@ const FeedPost = ({post, updatedPost, index}) => {
 
   const mediaType = utils.getCommentLinkMediaType(post?.link)
 
-  const internalLink = `/p/${post?.subplebbitAddress}/c/${post?.cid}`
+  let internalLink = `/p/${post?.subplebbitAddress}/c/${post?.cid}`
+  // post is pending
+  if (!post?.cid && post?.index !== undefined) {
+    internalLink = `/profile/${post?.index}`
+  }
 
   const {blocked: hidden} = useBlock({cid: post?.cid})
 
@@ -172,7 +176,7 @@ const FeedPost = ({post, updatedPost, index}) => {
           </div>
           <div className={styles.footer}>
             <Link to={internalLink} className={[styles.button, styles.replyCount].join(' ')}>
-              {updatedPost?.replyCount} comments <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
+              {updatedPost?.replyCount || 0} comments <span className={styles.unreadReplyCount}>{unreadReplyCountText}</span>
             </Link>
           </div>
         </div>
