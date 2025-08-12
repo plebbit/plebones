@@ -41,7 +41,7 @@ const Reply = ({reply}) => {
 }
 
 const BoardPost = ({post, index}) => {
-  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  const mediaType = utils.getCommentMediaType(post)
 
   const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
   const externalLink = !mediaType && post?.link && <Link to={post?.link}>{post?.link}</Link>
@@ -51,7 +51,7 @@ const BoardPost = ({post, index}) => {
       flattenCommentsPages(post.replies)
         .splice(0, 5)
         .map((reply) => <Reply reply={reply} />),
-    [post.replies]
+    [post.replies],
   )
 
   return (

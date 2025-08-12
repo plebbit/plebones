@@ -16,11 +16,21 @@ const getCommentLinkMediaTypeNoCache = (link) => {
   if (mime?.startsWith('video')) return 'video'
   if (mime?.startsWith('audio')) return 'audio'
 }
-export const getCommentLinkMediaType = memoize(getCommentLinkMediaTypeNoCache, {max: 1000})
+const getCommentLinkMediaType = memoize(getCommentLinkMediaTypeNoCache, {max: 1000})
+
+export const getCommentMediaType = (comment) => {
+  if (!comment?.link) return
+  if (comment.linkHtmlTagName === 'img') return 'image'
+  if (comment.linkHtmlTagName === 'video') return 'video'
+  if (comment.linkHtmlTagName === 'audio') return 'audio'
+  // never cache getCommentMediaType, only cache getCommentLinkMediaType
+  // which uses extName because it's slow
+  return getCommentLinkMediaType(comment.link)
+}
 
 // plebones catalog is image/video only, not including thumbnail urls
 export const catalogFilter = (comment) => {
-  const mediaType = getCommentLinkMediaType(comment?.link)
+  const mediaType = getCommentMediaType(comment)
   return mediaType === 'image' || mediaType === 'video'
 }
 
@@ -37,7 +47,7 @@ export const alertChallengeVerificationFailed = (challengeVerification, publicat
     console.warn(challengeVerification, publication)
 
     alert(
-      `p/${publication?.subplebbitAddress} challenge error: ${[...Object.values(challengeVerification?.challengeErrors || {}), challengeVerification?.reason].join(' ')}`
+      `p/${publication?.subplebbitAddress} challenge errors: ${[...Object.values(challengeVerification?.challengeErrors || {}), challengeVerification?.reason].join(' ')}`,
     )
   } else {
     console.log(challengeVerification, publication)
@@ -45,7 +55,7 @@ export const alertChallengeVerificationFailed = (challengeVerification, publicat
 }
 
 const utils = {
-  getCommentLinkMediaType,
+  getCommentMediaType,
   catalogFilter,
   getFormattedTime,
   alertChallengeVerificationFailed,

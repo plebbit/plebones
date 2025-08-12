@@ -6,7 +6,7 @@ import PostTools from '../../../components/post-tools'
 import {useBlock} from '@plebbit/plebbit-react-hooks'
 
 const PostMedia = ({post}) => {
-  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  const mediaType = utils.getCommentMediaType(post)
   if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }

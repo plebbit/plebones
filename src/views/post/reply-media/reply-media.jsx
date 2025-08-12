@@ -109,7 +109,7 @@ const ReplyMedia = ({reply}) => {
   if (!reply?.link) {
     return ''
   }
-  const mediaType = utils.getCommentLinkMediaType(reply?.link)
+  const mediaType = utils.getCommentMediaType(reply)
   if (mediaType === 'image') {
     return <ImageModal url={reply?.link} />
   }

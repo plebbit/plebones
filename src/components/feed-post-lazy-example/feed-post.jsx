@@ -46,7 +46,7 @@ const FeedPost = ({post, index}) => {
     hostname = new URL(post?.link).hostname.replace(/^www\./, '')
   } catch (e) {}
 
-  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  const mediaType = utils.getCommentMediaType(post)
 
   const internalLink = `/p/${post.subplebbitAddress}/c/${post.cid}`
   const externalLink = !mediaType && post?.link

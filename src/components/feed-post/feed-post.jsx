@@ -85,7 +85,7 @@ const FeedPost = ({post, updatedPost, index}) => {
     hostname = new URL(post?.link).hostname.replace(/^www\./, '')
   } catch (e) {}
 
-  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  const mediaType = utils.getCommentMediaType(post)
 
   let internalLink = `/p/${post?.subplebbitAddress}/c/${post?.cid}`
   // post is pending

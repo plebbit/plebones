@@ -14,7 +14,8 @@ const Challenge = ({challenge, closeModal}) => {
   const votePreview = getVotePreview(publication)
 
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0)
-  const [answers, setAnswers] = useState([])
+  const defaultAnswers = challenges.map((challenge) => '') // init with empty strings for plebbit-js compatibility
+  const [answers, setAnswers] = useState(defaultAnswers)
   const onAnswersChange = (e) => {
     setAnswers((prevAnswers) => {
       const answers = [...prevAnswers]
@@ -36,6 +37,17 @@ const Challenge = ({challenge, closeModal}) => {
   // TODO: remove when done debugging caseInsensitive
   console.log(challenges[currentChallengeIndex])
 
+  let challengeComponent
+  if (challenges[currentChallengeIndex].type === 'image/png') {
+    challengeComponent = <img alt="challenge" className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`} />
+  } else {
+    challengeComponent = (
+      <div alt="challenge" className={styles.challengeText}>
+        {challenges[currentChallengeIndex]?.challenge}
+      </div>
+    )
+  }
+
   return (
     <div className={styles.challenge}>
       <div>
@@ -44,9 +56,7 @@ const Challenge = ({challenge, closeModal}) => {
       </div>
       {parentCommentPreview && <div>to: {parentCommentPreview}</div>}
       <div>{publicationPreview}</div>
-      <div className={styles.challengeMediaWrapper}>
-        <img alt="challenge" className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`} />
-      </div>
+      <div className={styles.challengeMediaWrapper}>{challengeComponent}</div>
       {challenges[currentChallengeIndex]?.caseInsensitive && <div>(case insensitive)</div>}
       <div>
         <input onKeyPress={onEnterKey} onChange={onAnswersChange} value={answers[currentChallengeIndex] || ''} className={styles.challengeInput} />
@@ -56,12 +66,8 @@ const Challenge = ({challenge, closeModal}) => {
           {currentChallengeIndex + 1} of {challenges?.length}
         </div>
         <span>
-          <button onClick={() => closeModal()}>cancel</button>
-          {challenges.length > 1 && (
-            <button disabled={!challenges[currentChallengeIndex - 1]} onClick={() => setCurrentChallengeIndex((prev) => prev - 1)}>
-              previous
-            </button>
-          )}
+          {!challenges[currentChallengeIndex - 1] && <button onClick={() => closeModal()}>cancel</button>}
+          {challenges[currentChallengeIndex - 1] && <button onClick={() => setCurrentChallengeIndex((prev) => prev - 1)}>previous</button>}
           {challenges[currentChallengeIndex + 1] && <button onClick={() => setCurrentChallengeIndex((prev) => prev + 1)}>next</button>}
           {!challenges[currentChallengeIndex + 1] && <button onClick={onSubmit}>submit</button>}
         </span>

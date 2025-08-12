@@ -12,7 +12,7 @@ const PostMedia = ({post}) => {
   if (!post?.link) {
     return <div className={styles.noMedia}></div>
   }
-  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  const mediaType = utils.getCommentMediaType(post)
   if (mediaType === 'image') {
     return (
       <div className={styles.mediaWrapper}>

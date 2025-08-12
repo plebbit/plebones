@@ -42,38 +42,12 @@ function SubplebbitSettings() {
   const {subplebbitAddress} = useParams()
   const subplebbit = useSubplebbit({subplebbitAddress})
   const subplebbitEditable = {
-    ...subplebbit,
-    // remove fields that cant be edited
-    posts: undefined,
-    clients: undefined,
-    state: undefined,
-    startedState: undefined,
-    updatingState: undefined,
-    createdAt: undefined,
-    updatedAt: undefined,
-    fetchedAt: undefined,
-    signature: undefined,
-    errors: undefined,
-    error: undefined,
-    encryption: undefined,
-    statsCid: undefined,
-    pubsubTopic: undefined,
-    lastPostCid: undefined,
-    lastCommentCid: undefined,
-    updateCid: undefined,
-    shortAddress: undefined,
-    postUpdates: undefined,
-    started: undefined,
-    raw: undefined,
-    ipnsName: undefined,
-    ipnsPubsubTopic: undefined,
-    ipnsPubsubTopicDhtKey: undefined,
-    pubsubTopicPeersCid: undefined,
+    ...subplebbit.editable,
     // could be useful to show public subplebbit.challenges data if private subplebbit.settings.challenges isn't defined
     challenges: !subplebbit?.settings ? subplebbit?.challenges : undefined,
   }
   // eslint-disable-next-line
-  const subplebbitJson = useMemo(() => stringify(subplebbitEditable), [subplebbit])
+  const subplebbitJson = useMemo(() => stringify(subplebbit.editable), [subplebbit])
 
   const [text, setText] = useState('')
   const editedSubplebbit = tryJsonParse(text) || {}

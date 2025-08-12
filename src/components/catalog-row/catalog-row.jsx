@@ -18,7 +18,7 @@ const getCatalogPostMediaDimensions = (post) => {
 }
 
 const CatalogPostMedia = ({post}) => {
-  const mediaType = utils.getCommentLinkMediaType(post?.link)
+  const mediaType = utils.getCommentMediaType(post)
   if (!mediaType) {
     return <div className={styles.noMedia}></div>
   }
