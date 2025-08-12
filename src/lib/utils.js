@@ -47,7 +47,7 @@ export const alertChallengeVerificationFailed = (challengeVerification, publicat
     console.warn(challengeVerification, publication)
 
     alert(
-      `p/${publication?.subplebbitAddress} challenge errors: ${[...Object.values(challengeVerification?.challengeErrors || {}), challengeVerification?.reason].join(' ')}`,
+      `p/${publication?.subplebbitAddress} challenge errors: ${[...Object.values(challengeVerification?.challengeErrors || {}), challengeVerification?.reason].join(' ')}`
     )
   } else {
     console.log(challengeVerification, publication)

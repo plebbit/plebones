@@ -13,7 +13,7 @@ const useDefaultSubplebbits = () => {
     ;(async () => {
       try {
         const multisub = await fetch(
-          'https://raw.githubusercontent.com/plebbit/lists/master/default-multisub.json',
+          'https://raw.githubusercontent.com/plebbit/lists/master/default-multisub.json'
           // { cache: 'no-cache' }
         ).then((res) => res.json())
         cache = multisub.subplebbits

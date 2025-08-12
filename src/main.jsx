@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')).render(
     <Router>
       <App />
     </Router>
-  </StrictMode>,
+  </StrictMode>
 )
 
 // add back button in android app

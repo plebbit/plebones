@@ -51,7 +51,7 @@ const BoardPost = ({post, index}) => {
       flattenCommentsPages(post.replies)
         .splice(0, 5)
         .map((reply) => <Reply reply={reply} />),
-    [post.replies],
+    [post.replies]
   )
 
   return (
