@@ -3,9 +3,6 @@
   margin: 0 0 2px 0;
 }
 
-.header {
-}
-
 .title {
   font-family: arial, verdana, helvetica, sans-serif;
   font-size: 19px;
@@ -30,12 +27,7 @@
   width: 41px;
 }
 
-.rules {
-  margin: 0;
-  padding-inline-start: 12px;
-}
-
-.description, .rules {
+.description {
   margin: 2px 0 0 0;
   font-size: 11px;
   word-break: break-word;

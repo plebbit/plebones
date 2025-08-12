@@ -3,7 +3,31 @@
   margin: 0 0 2px 0;
 }
 
+.scores {
+  font-size: 11px;
+}
+
 .scoreNumber {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
+}
+
+.title {
+  font-family: arial, verdana, helvetica, sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+  color: var(--light1);
+  word-break: break-word;
+}
+
+.avatar {
+  height: 15px;
+  position: absolute;
+  margin: 3px 0 0 2px;
+}
+
+.description {
+  margin: 2px 0 2px 0;
+  font-size: 11px;
+  word-break: break-word;
 }

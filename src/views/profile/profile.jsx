@@ -1,21 +1,35 @@
 import {useRef, useEffect} from 'react'
-import {useAccountComments, useAccount} from '@plebbit/plebbit-react-hooks'
+import {useAccountComments, useAccount, useAuthorAvatar} from '@plebbit/plebbit-react-hooks'
 import {Virtuoso} from 'react-virtuoso'
 import FeedPost from './feed-post'
 import styles from './profile.module.css'
 
 const ProfileInfo = () => {
   const account = useAccount()
+  const author = account.author
+  const adddress = author?.adddress
+  const description = author?.displayName
   const postScore = account?.karma?.postScore
   const replyScore = account?.karma?.replyScore
 
+  const {imageUrl: avatarUrl} = useAuthorAvatar({author})
+
   return (
     <div className={styles.info}>
-      <div>
-        <span className={styles.scoreNumber}>{postScore}</span> post karma
+      <div className={styles.header}>
+        <div className={styles.title}>
+          u/{account.author.address}
+          <img alt="" className={styles.avatar} src={avatarUrl} />
+        </div>
       </div>
-      <div>
-        <span className={styles.scoreNumber}>{replyScore}</span> reply karma
+      {description && <div className={styles.description}>{description}</div>}
+      <div className={styles.scores}>
+        <div>
+          <span className={styles.scoreNumber}>{postScore}</span> post karma
+        </div>
+        <div>
+          <span className={styles.scoreNumber}>{replyScore}</span> reply karma
+        </div>
       </div>
     </div>
   )
