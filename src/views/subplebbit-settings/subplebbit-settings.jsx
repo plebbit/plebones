@@ -5,6 +5,7 @@ import stringify from 'json-stringify-pretty-compact'
 import {useParams, useNavigate} from 'react-router-dom'
 import {alertChallengeVerificationFailed} from '../../lib/utils.js'
 import useChallenges from '../../hooks/use-challenges.js'
+import ChallengeBuilder from './challenge-builder'
 
 // don't publish props that haven't changed, saves bandwidth and avoids uneditable props
 const getEditedPropsOnly = (original, edited) => {
@@ -98,6 +99,7 @@ function SubplebbitSettings() {
 
   return (
     <div className={styles.settings}>
+      <ChallengeBuilder />
       <textarea onChange={(e) => setText(e.target.value)} autoCorrect="off" rows="24" value={text} />
       <button onClick={saveSubplebbit}>save</button>
       <button disabled={deleteButtonDisabled} onClick={_deleteSubplebbit}>

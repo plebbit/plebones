@@ -1,0 +1,390 @@
+.challenge {
+  padding: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--dark3);
+  max-width: 530px;
+}
+.challenge:not(:last-child) {
+  border-bottom: none;
+}
+
+.removeButton {
+  float: right;
+}
+
+.challengeTitle {
+  font-weight: bold;
+}
+
+.challengeOptions {
+  padding: 10px;
+}
+
+.challengeInput {
+  width: 100%;
+}
+
+.challengeOption {
+  padding-bottom: 4px;
+}
+.challengeOption:last-child {
+  padding-bottom: 0
+}
+
+.challengeExclude {
+  padding: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--dark3);
+}
+/* original css from node_modules/react-querybuilder/dist/query-builder.css
+
+:root {
+  --rqb-spacing: 0.5rem;
+  --rqb-border-width: 1px;
+  --rqb-branch-indent: var(--rqb-spacing);
+  --rqb-branch-width: var(--rqb-border-width);
+  --rqb-base-color: #004bb8;
+  --rqb-background-color: color-mix(in srgb, transparent, #004bb8 20%);
+  --rqb-border-color: #8081a2;
+  --rqb-border-style: solid;
+  --rqb-border-radius: 0.25rem;
+  --rqb-dnd-drop-indicator-color: rebeccapurple;
+  --rqb-dnd-drop-indicator-style: dashed;
+  --rqb-dnd-drop-indicator-width: 2px;
+  --rqb-dnd-drop-indicator-copy-color: #693;
+  --rqb-dnd-drop-indicator-copy-style: dashed;
+  --rqb-dnd-drop-indicator-copy-width: 2px;
+  --rqb-dnd-drop-indicator-group-color: #369;
+  --rqb-dnd-drop-indicator-group-style: dashed;
+  --rqb-dnd-drop-indicator-group-width: 2px;
+  --rqb-branch-color: var(--rqb-border-color);
+  --rqb-branch-radius: var(--rqb-border-radius);
+  --rqb-branch-style: var(--rqb-border-style)
+}
+
+.ruleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rqb-spacing);
+  padding: var(--rqb-spacing);
+  border-width: var(--rqb-border-width)
+}
+
+.ruleGroup .ruleGroup-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rqb-spacing)
+}
+
+.ruleGroup .ruleGroup-body:empty {
+  display: none
+}
+
+.ruleGroup .ruleGroup-header,
+.ruleGroup .rule {
+  display: flex;
+  gap: var(--rqb-spacing);
+  align-items: center
+}
+
+.ruleGroup .rule .rule-value:has(.rule-value-list-item) {
+  display: flex;
+  gap: var(--rqb-spacing);
+  align-items: baseline
+}
+
+.ruleGroup .rule.rule-hasSubQuery {
+  flex-wrap: wrap;
+  padding: var(--rqb-spacing);
+  border-width: var(--rqb-border-width)
+}
+
+.ruleGroup .rule.rule-hasSubQuery .ruleGroup-body {
+  flex-basis: 100%
+}
+
+.ruleGroup .betweenRules {
+  display: flex
+}
+
+.ruleGroup .shiftActions {
+  display: flex;
+  flex-direction: column
+}
+
+.ruleGroup .shiftActions>* {
+  padding: 0
+}
+
+.dndOver.rule,
+.dndOver.ruleGroup-header {
+  padding-bottom: var(--rqb-spacing)
+}
+
+.dndOver.betweenRules {
+  padding-top: var(--rqb-spacing)
+}
+
+.dndGroup.rule.dndOver,
+.dndGroup.ruleGroup:has(.ruleGroup-header.dndOver) {
+  padding: var(--rqb-spacing)
+}
+
+.queryBuilder-branches .ruleGroup-body {
+  margin-left: calc(2*var(--rqb-branch-indent))
+}
+
+.queryBuilder-branches .rule,
+.queryBuilder-branches .ruleGroup .ruleGroup {
+  position: relative
+}
+
+.queryBuilder-branches .rule::before,
+.queryBuilder-branches .rule::after,
+.queryBuilder-branches .ruleGroup .ruleGroup::before,
+.queryBuilder-branches .ruleGroup .ruleGroup::after {
+  content: "";
+  width: var(--rqb-branch-indent);
+  left: calc(-1*(var(--rqb-branch-indent) + var(--rqb-branch-width)));
+  border-radius: 0;
+  position: absolute
+}
+
+.queryBuilder-branches .rule::before,
+.queryBuilder-branches .ruleGroup .ruleGroup::before {
+  top: calc(-1*var(--rqb-spacing));
+  height: calc(50% + var(--rqb-spacing));
+  border-width: 0 0 var(--rqb-branch-width) var(--rqb-branch-width)
+}
+
+.queryBuilder-branches .rule::after,
+.queryBuilder-branches .ruleGroup .ruleGroup::after {
+  top: 50%;
+  height: 50%;
+  border-width: 0 0 0 var(--rqb-branch-width)
+}
+
+.queryBuilder-branches .rule:last-child::after,
+.queryBuilder-branches .ruleGroup .ruleGroup:last-child::after {
+  display: none
+}
+
+.queryBuilder-branches .rule-hasSubQuery::before,
+.queryBuilder-branches .rule-hasSubQuery::after,
+.queryBuilder-branches .ruleGroup .ruleGroup::before,
+.queryBuilder-branches .ruleGroup .ruleGroup::after {
+  left: calc(-1*(var(--rqb-branch-indent) + var(--rqb-branch-width) + var(--rqb-border-width)))
+}
+
+.queryBuilder-branches .rule-hasSubQuery::before,
+.queryBuilder-branches .ruleGroup .ruleGroup::before {
+  top: calc(-1*(var(--rqb-spacing) + var(--rqb-border-width)));
+  height: calc(50% + var(--rqb-spacing) + var(--rqb-border-width))
+}
+
+.queryBuilder-branches .rule-hasSubQuery::after,
+.queryBuilder-branches .ruleGroup .ruleGroup::after {
+  height: calc(50% + var(--rqb-border-width))
+}
+
+.queryBuilder-branches .betweenRules {
+  position: relative
+}
+
+.queryBuilder-branches .betweenRules::before {
+  content: "";
+  width: var(--rqb-branch-indent);
+  left: calc(-1*(var(--rqb-branch-indent) + var(--rqb-branch-width)));
+  border-radius: 0;
+  position: absolute;
+  top: calc(-1*var(--rqb-spacing));
+  height: calc(100% + var(--rqb-spacing));
+  border-width: 0 0 0 var(--rqb-branch-width)
+}
+
+.queryBuilder-justified .ruleGroup-combinators+.ruleGroup-addRule,
+.queryBuilder-justified .ruleGroup-combinators+.ruleGroup-addGroup,
+.queryBuilder-justified .ruleGroup-combinators+.ruleGroup-cloneGroup,
+.queryBuilder-justified .ruleGroup-combinators+.ruleGroup-lock,
+.queryBuilder-justified .ruleGroup-combinators+.ruleGroup-remove,
+.queryBuilder-justified .ruleGroup-combinators+.rule-cloneRule,
+.queryBuilder-justified .ruleGroup-combinators+.rule-lock,
+.queryBuilder-justified .ruleGroup-combinators+.rule-remove,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-addRule,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-addGroup,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-cloneGroup,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-lock,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-remove,
+.queryBuilder-justified .ruleGroup-notToggle+.rule-cloneRule,
+.queryBuilder-justified .ruleGroup-notToggle+.rule-lock,
+.queryBuilder-justified .ruleGroup-notToggle+.rule-remove,
+.queryBuilder-justified .shiftActions+.ruleGroup-addRule,
+.queryBuilder-justified .shiftActions+.ruleGroup-addGroup,
+.queryBuilder-justified .shiftActions+.ruleGroup-cloneGroup,
+.queryBuilder-justified .shiftActions+.ruleGroup-lock,
+.queryBuilder-justified .shiftActions+.ruleGroup-remove,
+.queryBuilder-justified .shiftActions+.rule-cloneRule,
+.queryBuilder-justified .shiftActions+.rule-lock,
+.queryBuilder-justified .shiftActions+.rule-remove,
+.queryBuilder-justified .queryBuilder-dragHandle+.ruleGroup-addRule,
+.queryBuilder-justified .queryBuilder-dragHandle+.ruleGroup-addGroup,
+.queryBuilder-justified .queryBuilder-dragHandle+.ruleGroup-cloneGroup,
+.queryBuilder-justified .queryBuilder-dragHandle+.ruleGroup-lock,
+.queryBuilder-justified .queryBuilder-dragHandle+.ruleGroup-remove,
+.queryBuilder-justified .queryBuilder-dragHandle+.rule-cloneRule,
+.queryBuilder-justified .queryBuilder-dragHandle+.rule-lock,
+.queryBuilder-justified .queryBuilder-dragHandle+.rule-remove,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-addRule,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-addGroup,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-cloneGroup,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-lock,
+.queryBuilder-justified .ruleGroup-notToggle+.ruleGroup-remove,
+.queryBuilder-justified .ruleGroup-notToggle+.rule-cloneRule,
+.queryBuilder-justified .ruleGroup-notToggle+.rule-lock,
+.queryBuilder-justified .ruleGroup-notToggle+.rule-remove,
+.queryBuilder-justified .ruleGroup-header+.ruleGroup-addRule,
+.queryBuilder-justified .ruleGroup-header+.ruleGroup-addGroup,
+.queryBuilder-justified .ruleGroup-header+.ruleGroup-cloneGroup,
+.queryBuilder-justified .ruleGroup-header+.ruleGroup-lock,
+.queryBuilder-justified .ruleGroup-header+.ruleGroup-remove,
+.queryBuilder-justified .ruleGroup-header+.rule-cloneRule,
+.queryBuilder-justified .ruleGroup-header+.rule-lock,
+.queryBuilder-justified .ruleGroup-header+.rule-remove,
+.queryBuilder-justified .rule-operators+.ruleGroup-addRule,
+.queryBuilder-justified .rule-operators+.ruleGroup-addGroup,
+.queryBuilder-justified .rule-operators+.ruleGroup-cloneGroup,
+.queryBuilder-justified .rule-operators+.ruleGroup-lock,
+.queryBuilder-justified .rule-operators+.ruleGroup-remove,
+.queryBuilder-justified .rule-operators+.rule-cloneRule,
+.queryBuilder-justified .rule-operators+.rule-lock,
+.queryBuilder-justified .rule-operators+.rule-remove,
+.queryBuilder-justified .rule-value+.ruleGroup-addRule,
+.queryBuilder-justified .rule-value+.ruleGroup-addGroup,
+.queryBuilder-justified .rule-value+.ruleGroup-cloneGroup,
+.queryBuilder-justified .rule-value+.ruleGroup-lock,
+.queryBuilder-justified .rule-value+.ruleGroup-remove,
+.queryBuilder-justified .rule-value+.rule-cloneRule,
+.queryBuilder-justified .rule-value+.rule-lock,
+.queryBuilder-justified .rule-value+.rule-remove,
+.queryBuilder-justified .control+.ruleGroup-addRule,
+.queryBuilder-justified .control+.ruleGroup-addGroup,
+.queryBuilder-justified .control+.ruleGroup-cloneGroup,
+.queryBuilder-justified .control+.ruleGroup-lock,
+.queryBuilder-justified .control+.ruleGroup-remove,
+.queryBuilder-justified .control+.rule-cloneRule,
+.queryBuilder-justified .control+.rule-lock,
+.queryBuilder-justified .control+.rule-remove,
+.queryBuilder-justified .chakra-select__wrapper+.ruleGroup-addRule,
+.queryBuilder-justified .chakra-select__wrapper+.ruleGroup-addGroup,
+.queryBuilder-justified .chakra-select__wrapper+.ruleGroup-cloneGroup,
+.queryBuilder-justified .chakra-select__wrapper+.ruleGroup-lock,
+.queryBuilder-justified .chakra-select__wrapper+.ruleGroup-remove,
+.queryBuilder-justified .chakra-select__wrapper+.rule-cloneRule,
+.queryBuilder-justified .chakra-select__wrapper+.rule-lock,
+.queryBuilder-justified .chakra-select__wrapper+.rule-remove,
+.queryBuilder-justified input[type=hidden]+.ruleGroup-addRule,
+.queryBuilder-justified input[type=hidden]+.ruleGroup-addGroup,
+.queryBuilder-justified input[type=hidden]+.ruleGroup-cloneGroup,
+.queryBuilder-justified input[type=hidden]+.ruleGroup-lock,
+.queryBuilder-justified input[type=hidden]+.ruleGroup-remove,
+.queryBuilder-justified input[type=hidden]+.rule-cloneRule,
+.queryBuilder-justified input[type=hidden]+.rule-lock,
+.queryBuilder-justified input[type=hidden]+.rule-remove {
+  margin-left: auto !important
+}
+
+.queryBuilder-justified .ruleGroup-addRule:first-child,
+.queryBuilder-justified .ruleGroup-addGroup:first-child {
+  margin-left: auto !important
+}
+
+.ruleGroup,
+.rule-hasSubQuery {
+  border-color: var(--rqb-border-color);
+  border-style: var(--rqb-border-style);
+  border-radius: var(--rqb-border-radius);
+  background: var(--rqb-background-color)
+}
+
+.ruleGroup .shiftActions>*,
+.rule-hasSubQuery .shiftActions>* {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer
+}
+
+.dndOver.rule,
+.dndOver.ruleGroup-header:not(.dndGroup .ruleGroup-header) {
+  border-bottom-width: var(--rqb-dnd-drop-indicator-width);
+  border-bottom-style: var(--rqb-dnd-drop-indicator-style);
+  border-bottom-color: var(--rqb-dnd-drop-indicator-color)
+}
+
+.dndOver.rule.dndCopy,
+.dndOver.ruleGroup-header:not(.dndGroup .ruleGroup-header).dndCopy {
+  border-bottom-width: var(--rqb-dnd-drop-indicator-copy-width);
+  border-bottom-style: var(--rqb-dnd-drop-indicator-copy-style);
+  border-bottom-color: var(--rqb-dnd-drop-indicator-copy-color)
+}
+
+.dndOver.betweenRules {
+  border-top-width: var(--rqb-dnd-drop-indicator-width);
+  border-top-style: var(--rqb-dnd-drop-indicator-style);
+  border-top-color: var(--rqb-dnd-drop-indicator-color)
+}
+
+.dndOver.betweenRules.dndCopy {
+  border-top-width: var(--rqb-dnd-drop-indicator-copy-width);
+  border-top-style: var(--rqb-dnd-drop-indicator-copy-style);
+  border-top-color: var(--rqb-dnd-drop-indicator-copy-color)
+}
+
+.dndGroup.rule.dndOver,
+.dndGroup.ruleGroup:has(>.ruleGroup-header.dndOver) {
+  border-width: var(--rqb-dnd-drop-indicator-group-width);
+  border-style: var(--rqb-dnd-drop-indicator-group-style);
+  border-color: var(--rqb-dnd-drop-indicator-group-color);
+  border-radius: var(--rqb-border-radius)
+}
+
+.dndGroup.rule.dndOver.dndCopy,
+.dndGroup.ruleGroup:has(>.ruleGroup-header.dndOver).dndCopy {
+  border-color: var(--rqb-dnd-drop-indicator-copy-color);
+  border-width: var(--rqb-dnd-drop-indicator-copy-width);
+  border-style: var(--rqb-dnd-drop-indicator-copy-style)
+}
+
+.ruleGroup.dndDragging,
+.rule.dndDragging {
+  opacity: .5
+}
+
+.ruleGroup .queryBuilder-dragHandle,
+.rule .queryBuilder-dragHandle {
+  cursor: move
+}
+
+.queryBuilder-branches .rule::before,
+.queryBuilder-branches .rule::after,
+.queryBuilder-branches .ruleGroup .ruleGroup::before,
+.queryBuilder-branches .ruleGroup .ruleGroup::after {
+  border-color: var(--rqb-branch-color);
+  border-style: var(--rqb-branch-style)
+}
+
+.queryBuilder-branches .rule:last-child::before,
+.queryBuilder-branches .ruleGroup .ruleGroup:last-child::before {
+  border-bottom-left-radius: var(--rqb-branch-radius)
+}
+
+.queryBuilder-branches .betweenRules {
+  position: relative
+}
+
+.queryBuilder-branches .betweenRules::before {
+  border-color: var(--rqb-branch-color);
+  border-style: var(--rqb-branch-style)
+}
+*/
