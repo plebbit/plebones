@@ -29,17 +29,9 @@ const NftAvatarPreview = ({avatar}) => {
 }
 
 const getNftMessageToSign = (authorAddress, timestamp, tokenAddress, tokenId) => {
-  let messageToSign = {}
-  // the property names must be in this order for the signature to match
-  // insert props one at a time otherwise babel/webpack will reorder
-  messageToSign.domainSeparator = 'plebbit-author-avatar'
-  messageToSign.authorAddress = authorAddress
-  messageToSign.timestamp = timestamp
-  messageToSign.tokenAddress = tokenAddress
-  messageToSign.tokenId = String(tokenId) // must be a type string, not number
   // use plain JSON so the user can read what he's signing
-  messageToSign = JSON.stringify(messageToSign)
-  return messageToSign
+  // property names must always be in this order for signature to match so don't use JSON.stringify
+  return `{"domainSeparator":"plebbit-author-avatar","authorAddress":"${authorAddress}","timestamp":${timestamp},"tokenAddress":"${tokenAddress}","tokenId":"${tokenId}"}`
 }
 
 const NftAvatarForm = ({account}) => {

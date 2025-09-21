@@ -2,15 +2,9 @@ import {useState} from 'react'
 import {useAccount, setAccount} from '@plebbit/plebbit-react-hooks'
 
 const getWalletMessageToSign = (authorAddress, timestamp) => {
-  let messageToSign = {}
-  // the property names must be in this order for the signature to match
-  // insert props one at a time otherwise babel/webpack will reorder
-  messageToSign.domainSeparator = 'plebbit-author-wallet'
-  messageToSign.authorAddress = authorAddress
-  messageToSign.timestamp = timestamp
   // use plain JSON so the user can read what he's signing
-  messageToSign = JSON.stringify(messageToSign)
-  return messageToSign
+  // property names must always be in this order for signature to match so don't use JSON.stringify
+  return `{"domainSeparator":"plebbit-author-wallet","authorAddress":"${authorAddress}","timestamp":${timestamp}}`
 }
 
 const CryptoWalletsForm = ({account}) => {
