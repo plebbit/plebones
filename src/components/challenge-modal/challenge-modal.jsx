@@ -34,12 +34,24 @@ const Challenge = ({challenge, closeModal}) => {
     else onSubmit()
   }
 
-  // TODO: remove when done debugging caseInsensitive
-  console.log(challenges[currentChallengeIndex])
-
   let challengeComponent
   if (challenges[currentChallengeIndex].type === 'image/png') {
     challengeComponent = <img alt="challenge" className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`} />
+  }
+  // make sure iframe url starts with https:// or not secure
+  else if (challenges[currentChallengeIndex].type === 'url/iframe' && challenges[currentChallengeIndex]?.challenge?.startsWith('https://')) {
+    challengeComponent = (
+      <iframe
+        height="100%"
+        width="100%"
+        frameborder="0"
+        credentialless
+        referrerpolicy="no-referrer"
+        title="challenge"
+        className={styles.challengeIframe}
+        src={challenges[currentChallengeIndex]?.challenge}
+      />
+    )
   } else {
     challengeComponent = (
       <div alt="challenge" className={styles.challengeText}>
