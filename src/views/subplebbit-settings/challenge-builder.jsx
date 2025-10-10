@@ -4,6 +4,7 @@ import {useState} from 'react'
 import createStore from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 import styles from './challenge-builder.module.css'
+import ChallengeExcludeGroups from './challenge-builder-exclude'
 
 // const challenges = {
 //   combinator: 'or',
@@ -42,7 +43,7 @@ import styles from './challenge-builder.module.css'
 
 // TODO think of api for pending approval
 
-const useChallengesStore = createStore(
+export const useChallengesStore = createStore(
   immer((setState, getState) => ({
     challengesTree: {
       combinator: 'and',
@@ -99,128 +100,6 @@ const useChallengesStore = createStore(
       }),
   }))
 )
-
-const excludeInputs = {
-  postScore: {
-    label: 'post score',
-    description: 'exclude if author post score is greater or equal',
-    default: 10,
-    placeholder: '',
-    component: 'number',
-  },
-  replyScore: {
-    label: 'post reply',
-    description: 'exclude if author reply score is greater or equal',
-    default: 10,
-    placeholder: '',
-    component: 'number',
-  },
-  firstCommentTimestamp: {
-    label: 'first comment timestamp',
-    description: 'exclude if author account age is greater or equal than now - first comment timestamp (in seconds)',
-    default: 60 * 60 * 24 * 30,
-    placeholder: '3600 (time in seconds)',
-    component: 'number',
-  },
-  publicationType: {
-    label: 'publication type',
-    // description: 'exclude post, reply, vote, etc',
-    default: {post: true, reply: true, vote: true, commentEdit: true, commentModeration: true},
-    component: 'publicationType',
-  },
-  role: {
-    label: 'role',
-    description: 'exclude challenge if author role equals one of the role',
-    default: ['owner', 'admin', 'moderator'],
-    placeholder: 'owner,admin,moderator,etc',
-    component: 'stringArray',
-  },
-  address: {
-    label: 'address',
-    description: 'exclude challenge if author address equals one of the addresses',
-    default: [],
-    placeholder: '12D...,12D...,etc',
-    component: 'stringArray',
-  },
-  rateLimit: {
-    label: 'rate limit',
-    description: 'exclude if publication per hour is lower than rate limit',
-    default: 3,
-    placeholder: '3',
-    component: 'number',
-  },
-}
-
-const ChallengeExcludeGroup = ({challenge, challengesTreePath, exclude, excludeIndex}) => {
-  const updateChallenge = useChallengesStore((state) => state.updateChallenge)
-  const removeExclude = () => updateChallenge(challengesTreePath, {exclude: challenge.exclude.filter((_, i) => i !== excludeIndex)})
-
-  return (
-    <div className={styles.challengeExclude}>
-      <button className={styles.removeButton} onClick={removeExclude}>
-        ✕
-      </button>
-      <details className={styles.challengeOption}>
-        <summary className={styles.challengeTitle}>exclude {excludeInputs.postScore.label}</summary>
-        <div>{excludeInputs.postScore.description}</div>
-        <input type="text" inputmode="numeric" defaultValue={exclude.postScore} />
-      </details>
-
-      <details className={styles.challengeOption}>
-        <summary className={styles.challengeTitle}>exclude {excludeInputs.replyScore.label}</summary>
-        <div>{excludeInputs.replyScore.description}</div>
-        <input type="text" inputmode="numeric" defaultValue={exclude.replyScore} />
-      </details>
-
-      <details className={styles.challengeOption}>
-        <summary className={styles.challengeTitle}>exclude {excludeInputs.firstCommentTimestamp.label}</summary>
-        <div>{excludeInputs.firstCommentTimestamp.description}</div>
-        <input type="text" inputmode="numeric" defaultValue={exclude.firstCommentTimestamp} />
-      </details>
-
-      <details className={styles.challengeOption}>
-        <summary className={styles.challengeTitle}>exclude {excludeInputs.publicationType.label}</summary>
-        <div>{excludeInputs.publicationType.description}</div>
-        <span>
-          {Object.keys(excludeInputs.publicationType.default).map((type) => (
-            <label>
-              <input type="checkbox" name={type} checked={exclude.publicationType?.[type]} />
-              {type}
-            </label>
-          ))}{' '}
-        </span>
-      </details>
-
-      <details className={styles.challengeOption}>
-        <summary className={styles.challengeTitle}>exclude {excludeInputs.role.label}</summary>
-        <div>{excludeInputs.role.description}</div>
-        <input type="text" placeholder={excludeInputs.role.placeholder} defaultValue={exclude.role} />
-      </details>
-
-      <details className={styles.challengeOption}>
-        <summary className={styles.challengeTitle}>exclude {excludeInputs.address.label}</summary>
-        <div>{excludeInputs.address.description}</div>
-        <input type="text" placeholder={excludeInputs.address.placeholder} defaultValue={exclude.address} />
-      </details>
-
-      <details className={styles.challengeOption}>
-        <summary className={styles.challengeTitle}>exclude {excludeInputs.rateLimit.label}</summary>
-        <div>{excludeInputs.rateLimit.description}</div>
-        <input type="text" inputmode="numeric" defaultValue={exclude.rateLimit} />
-      </details>
-    </div>
-  )
-}
-
-const ChallengeExclude = ({challenge, challengesTreePath}) => {
-  return (
-    <div>
-      {challenge.exclude?.map((exclude, i) => (
-        <ChallengeExcludeGroup challenge={challenge} challengesTreePath={challengesTreePath} exclude={exclude} excludeIndex={i} />
-      ))}
-    </div>
-  )
-}
 
 const ChallengeOptions = ({challenge, challengesTreePath}) => {
   const optionInputs = plebbitRpcChallenges?.[challenge?.name]?.optionInputs || {}
@@ -289,7 +168,7 @@ const Challenge = ({challengesTree, challengesTreePath}) => {
             could also be called 'group', 'nest', '+subchallenge', etc. */}
             <button onClick={() => appendChildChallenge(challengesTreePath, {name: '', exclude: []})}>split</button>
           </div>
-          <ChallengeExclude challenge={challenge} challengesTreePath={challengesTreePath} />
+          <ChallengeExcludeGroups challenge={challenge} challengesTreePath={challengesTreePath} />
         </div>
       )}
 
@@ -316,6 +195,8 @@ const ChallengeBuilder = () => {
   const challenges = challengesTree.challenges
   const appendChallenge = useChallengesStore((state) => state.appendChallenge)
   const updateChallenge = useChallengesStore((state) => state.updateChallenge)
+
+  console.log(challenges)
 
   return (
     <div>

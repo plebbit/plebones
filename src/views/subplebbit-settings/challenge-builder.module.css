@@ -32,12 +32,21 @@
   padding-bottom: 0
 }
 
-.challengeExclude {
+.challengeExcludeGroup {
   padding: 10px;
   border-width: 1px;
   border-style: solid;
   border-color: var(--dark3);
 }
+
+.challengeExclude {
+  padding-bottom: 4px;
+}
+
+.challengeExcludeRemoveButton {
+  opacity: 0.5;
+}
+
 /* original css from node_modules/react-querybuilder/dist/query-builder.css
 
 :root {
