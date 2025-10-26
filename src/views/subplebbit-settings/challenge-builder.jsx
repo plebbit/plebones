@@ -143,14 +143,33 @@ const Challenge = ({challengesTree, challengesTreePath}) => {
 
   const challengeNames = Object.keys(plebbitRpcChallenges || {})
 
+  const onChallengeMoreButton = (e) => {
+    if (e.target.value === 'challenge') {
+      appendChallenge(challengesTreePath, {name: '', exclude: []})
+    }
+    if (e.target.value === 'group') {
+      appendChildChallenge(challengesTreePath, {name: '', exclude: []})
+    }
+    if (e.target.value === 'exclude') {
+      appendExclude()
+    }
+    if (e.target.value === 'remove') {
+      removeChallenge(challengesTreePath)
+    }
+  }
+
   return (
     <div className={styles.challenge}>
-      <button className={styles.removeButton} onClick={() => removeChallenge(challengesTreePath)}>
-        ✕
-      </button>
-      {/*<div>challenge {challengesTreePath.join('-')} {challenge?.name}</div>*/}
       {isSingleChallenge && (
         <div>
+          <select onChange={onChallengeMoreButton} className={styles.challengeMoreButton} value="">
+            <option hidden value="">
+              ⋮
+            </option>
+            <option value="group">add challenge group</option>
+            <option value="exclude">add exclude group</option>
+            <option value="remove">remove challenge</option>
+          </select>
           <select onChange={(e) => updateChallenge(challengesTreePath, {name: e.target.value})} value={challenge.name || ''}>
             <option value="" disabled selected hidden>
               select challenge
@@ -162,24 +181,24 @@ const Challenge = ({challengesTree, challengesTreePath}) => {
             ))}
           </select>
           <ChallengeOptions challenge={challenge} challengesTreePath={challengesTreePath} />
-          <div>
-            <button onClick={appendExclude}>+exclude</button>
-            {/* the tree 'leaf' is 'split' into a 'node' with 2 'leaves', 
-            could also be called 'group', 'nest', '+subchallenge', etc. */}
-            <button onClick={() => appendChildChallenge(challengesTreePath, {name: '', exclude: []})}>split</button>
-          </div>
           <ChallengeExcludeGroups challenge={challenge} challengesTreePath={challengesTreePath} />
         </div>
       )}
 
       {!isSingleChallenge && (
         <div>
+          <select onChange={onChallengeMoreButton} className={styles.challengeMoreButton} value="">
+            <option hidden value="">
+              ⋮
+            </option>
+            <option value="challenge">add challenge</option>
+            <option value="remove">remove challenge group</option>
+          </select>
           <div>
             <select value={challenges.combinator} onChange={(e) => updateChallenge(challengesTreePath, {combinator: e.target.value})}>
               <option value="and">AND</option>
               <option value="or">OR</option>
             </select>
-            <button onClick={() => appendChallenge(challengesTreePath, {name: '', exclude: []})}>+challenge</button>
           </div>
           {challenges.map((challengesTree, i) => (
             <Challenge key={i} challengesTree={challengesTree} challengesTreePath={[...challengesTreePath, i]} />

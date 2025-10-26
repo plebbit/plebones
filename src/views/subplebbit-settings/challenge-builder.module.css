@@ -47,6 +47,28 @@
   opacity: 0.5;
 }
 
+.challengeMoreButton {
+  /* style the button */
+  width: 10px;
+  background-color: var(--dark1);
+  color: var(--light2);
+  font-weight: bold;
+
+  /* remove icon and border */
+  appearance: unset;
+  border: none;
+
+  /* align button right */
+  float: right;
+
+  /* align select options left */
+  direction: rtl;
+  text-align: left;
+
+  /* align button text center */
+  text-align-last: center;
+}
+
 /* original css from node_modules/react-querybuilder/dist/query-builder.css
 
 :root {

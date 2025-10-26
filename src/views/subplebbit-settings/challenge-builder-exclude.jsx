@@ -24,13 +24,6 @@ const excludeInputs = {
     placeholder: '3600 (time in seconds)',
     component: 'number',
   },
-  challenges: {
-    label: 'challenges',
-    description: 'exclude if all challenges with indexes passed, e.g. challenges: [0, 1] excludes if challenges at index 0 AND 1 passed',
-    default: [],
-    placeholder: '0,1,2,etc',
-    component: 'numberArray',
-  },
   publicationType: {
     label: 'publication type',
     // description: 'exclude post, reply, vote, etc',
@@ -51,13 +44,13 @@ const excludeInputs = {
     placeholder: '12D...,12D...,etc',
     component: 'stringArray',
   },
-  rateLimit: {
-    label: 'rate limit',
-    description: 'exclude if publication per hour is lower than rate limit',
-    default: 3,
-    placeholder: '3',
-    component: 'number',
-  },
+  // rateLimit: {
+  //   label: 'rate limit',
+  //   description: 'exclude if publication per hour is lower than rate limit',
+  //   default: 3,
+  //   placeholder: '3',
+  //   component: 'number',
+  // },
 }
 
 const ChallengeExcludeInput = ({challenge, challengesTreePath, excludeIndex, excludeName}) => {
@@ -128,7 +121,7 @@ const ChallengeExcludeInput = ({challenge, challengesTreePath, excludeIndex, exc
   return excludeInputComponent
 }
 
-export const ChallengeExcludeSelect = ({challenge, challengesTreePath, excludeIndex, excludeName}) => {
+export const ChallengeExcludeSelect = ({challenge, challengesTreePath, excludeIndex, excludeName, onChange}) => {
   const excludeGroupCurrentNames = Object.keys(challenge.exclude?.[excludeIndex] || {})
   const excludeGroupAvailableNames = Object.keys(excludeInputs).filter((name) => name === excludeName || !excludeGroupCurrentNames.includes(name))
 
@@ -140,6 +133,7 @@ export const ChallengeExcludeSelect = ({challenge, challengesTreePath, excludeIn
     group[e.target.value] = structuredClone(excludeInputs[e.target.value].default)
     excludeCopy[excludeIndex] = group
     updateChallenge(challengesTreePath, {exclude: excludeCopy})
+    onChange?.()
   }
 
   // all excludes already added
@@ -150,7 +144,7 @@ export const ChallengeExcludeSelect = ({challenge, challengesTreePath, excludeIn
   return (
     <select onChange={addChallengeExclude} value={excludeName || ''}>
       <option value="" disabled hidden>
-        +exclude
+        select exclude
       </option>
       {excludeGroupAvailableNames.map((name) => (
         <option key={name} value={name}>
@@ -194,13 +188,45 @@ const ChallengeExcludeGroup = ({challenge, challengesTreePath, excludeIndex}) =>
     <ChallengeExclude key={excludeName} challenge={challenge} challengesTreePath={challengesTreePath} excludeIndex={excludeIndex} excludeName={excludeName} />
   ))
 
+  const [challengeExcludeSelectCount, setChallengeExcludeSelectCount] = useState(1)
+  const incrementChallengeExcludeSelectCount = () => setChallengeExcludeSelectCount((previousCount) => previousCount + 1)
+  const decrementChallengeExcludeSelectCount = () => setChallengeExcludeSelectCount((previousCount) => previousCount - 1)
+
+  const challengeExcludeSelectComponents = []
+  while (challengeExcludeSelectComponents.length < challengeExcludeSelectCount) {
+    challengeExcludeSelectComponents.push(
+      <div>
+        <ChallengeExcludeSelect
+          key={challengeExcludeSelectComponents.length}
+          challenge={challenge}
+          challengesTreePath={challengesTreePath}
+          excludeIndex={excludeIndex}
+          onChange={decrementChallengeExcludeSelectCount}
+        />
+      </div>
+    )
+  }
+
+  const onChallengeMoreButton = (e) => {
+    if (e.target.value === 'exclude') {
+      incrementChallengeExcludeSelectCount()
+    }
+    if (e.target.value === 'remove') {
+      removeExclude()
+    }
+  }
+
   return (
     <div className={styles.challengeExcludeGroup}>
-      <button className={styles.removeButton} onClick={removeExclude}>
-        ✕
-      </button>
+      <select onChange={onChallengeMoreButton} className={styles.challengeMoreButton} value="">
+        <option hidden value="">
+          ⋮
+        </option>
+        <option value="exclude">add exclude</option>
+        <option value="remove">remove exclude group</option>
+      </select>
       {challengeExcludeComponents}
-      <ChallengeExcludeSelect challenge={challenge} challengesTreePath={challengesTreePath} excludeIndex={excludeIndex} />
+      {challengeExcludeSelectComponents}
     </div>
   )
 }
