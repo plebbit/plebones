@@ -1,47 +1,58 @@
 import DragAndDrop from './drag-and-drop'
-import plebbitRpcChallenges from './challenges-mock'
+import plebbitRpcSettings from './plebbit-rpc-settings-mock'
 import {useState} from 'react'
 import createStore from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 import styles from './challenge-builder.module.css'
-import ChallengeExcludeGroups from './challenge-builder-exclude'
+import ChallengeExclude from './challenge-builder-exclude'
 
-// const challenges = {
+// subplebbit.challenges = {
 //   combinator: 'or',
 //   challenges: [
 //     {
 //       name: 'whitelist',
-//       exclude: [{...}],
-//       etc...
+//       options: {},
+//       rateLimit: {
+//         name: 'age-and-score',
+//         options: {
+//           replyMultiplier: '2', // allow 2x more replies
+//           voteMultiplier: '4' // allow 4x more votes
+//         }
+//       }
 //     },
 //     {
-//       combinator: 'and',
-//       challenges: [
-//         {
-//           name: 'whitelist',
-//           exclude: [{...}],
-//           etc...
-//         },
-//         {
-//           name: 'mintpass',
-//           etc...
-//         }
-//       ]
-//       exclude: [{...}]
-//     }
+//       name: 'mintpass',
+//       options: {},
+//       pendingApproval: {
+//         exclude: [
+//           {
+//             name: 'age-and-score',
+//             options: {
+//               daysOld: '20',
+//               score: '10',
+//               replyMultiplier: '0.5' // make replies 2x as easy as posts to avoid pendingApproval
+//             }
+//           }
+//         ]
+//       }
+//     },
 //   ],
-//   exclude: [{...}]
+//   exclude: [
+//     {
+//       name: 'role',
+//       options: {
+//         roles: 'moderator,admin,owner'
+//       },
+//       rateLimit: {
+//         name: 'per-hour',
+//         options: {
+//           perHour: 50,
+//           commentModerationsPerHour: 100
+//         }
+//       }
+//     }
+//   ]
 // }
-
-// const challengeErrors = {
-//   0: undefined,
-//   1: {
-//     0: 'this is some error',
-//     1: undefined
-//   }
-// }
-
-// TODO think of api for pending approval
 
 export const useChallengesStore = createStore(
   immer((setState, getState) => ({
@@ -102,7 +113,7 @@ export const useChallengesStore = createStore(
 )
 
 const ChallengeOptions = ({challenge, challengesTreePath}) => {
-  const optionInputs = plebbitRpcChallenges?.[challenge?.name]?.optionInputs || {}
+  const optionInputs = plebbitRpcSettings?.challenges?.[challenge?.name]?.optionInputs || []
   const updateChallenge = useChallengesStore((state) => state.updateChallenge)
 
   if (!challenge?.name) {
@@ -134,6 +145,7 @@ const Challenge = ({challengesTree, challengesTreePath}) => {
   const challenges = challengesTree.challenges
   const challenge = !challenges ? challengesTree : undefined
   const isSingleChallenge = !!challenge
+  const {description} = plebbitRpcSettings?.challenges?.[challenge?.name] || {}
 
   const appendChildChallenge = useChallengesStore((state) => state.appendChildChallenge)
   const appendChallenge = useChallengesStore((state) => state.appendChallenge)
@@ -141,7 +153,7 @@ const Challenge = ({challengesTree, challengesTreePath}) => {
   const removeChallenge = useChallengesStore((state) => state.removeChallenge)
   const appendExclude = () => updateChallenge(challengesTreePath, {exclude: [...(challenge.exclude || []), {}]})
 
-  const challengeNames = Object.keys(plebbitRpcChallenges || {})
+  const challengeNames = Object.keys(plebbitRpcSettings?.challenges || {})
 
   const onChallengeMoreButton = (e) => {
     if (e.target.value === 'challenge') {
@@ -167,21 +179,25 @@ const Challenge = ({challengesTree, challengesTreePath}) => {
               ⋮
             </option>
             <option value="group">add challenge group</option>
-            <option value="exclude">add exclude group</option>
+            <option value="exclude">add exclude</option>
             <option value="remove">remove challenge</option>
           </select>
-          <select onChange={(e) => updateChallenge(challengesTreePath, {name: e.target.value})} value={challenge.name || ''}>
-            <option value="" disabled selected hidden>
-              select challenge
-            </option>
-            {challengeNames.map((challengeName) => (
-              <option key={challengeName} value={challengeName}>
-                {challengeName}
+          {!challenge.name && (
+            <select onChange={(e) => updateChallenge(challengesTreePath, {name: e.target.value})} value={challenge.name || ''}>
+              <option value="" disabled selected hidden>
+                select challenge
               </option>
-            ))}
-          </select>
+              {challengeNames.map((challengeName) => (
+                <option key={challengeName} value={challengeName}>
+                  {challengeName}
+                </option>
+              ))}
+            </select>
+          )}
+          {challenge.name && <div className={styles.challengeTitle}>{challenge.name}</div>}
+          {description && <div>{description}</div>}
           <ChallengeOptions challenge={challenge} challengesTreePath={challengesTreePath} />
-          <ChallengeExcludeGroups challenge={challenge} challengesTreePath={challengesTreePath} />
+          <ChallengeExclude challenge={challenge} challengesTreePath={challengesTreePath} />
         </div>
       )}
 
