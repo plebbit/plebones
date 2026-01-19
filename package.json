@@ -36,7 +36,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@floating-ui/react": "0.24.8",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#a3f2b2a5dd5257669b47ad4338ca4a584b30e73b",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#b9fd09e2018b37c8c2598430d2d34a2da37647b2",
     "electron-context-menu": "3.3.0",
     "electron-is-dev": "2.0.0",
     "ext-name": "5.0.0",
