@@ -42,7 +42,7 @@ jobs:
           allowUpdates: true
 
   mac:
-    runs-on: macos-13
+    runs-on: macOS-15
     timeout-minutes: 60
     permissions:
       contents: write
