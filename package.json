@@ -1,6 +1,6 @@
 {
   "name": "plebones",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "bare bones gui client for plebbit",
   "type": "module",
   "author": "Esteban Abaroa",
