@@ -1,3 +1,16 @@
+# Changelog
+
+## [0.1.20](https://github.com/plebbit/plebones/compare/v0.1.18...v0.1.20) (2026-01-27)
+
+### Features
+
+* add automated versioning with release-it on push to master ([adeb818](https://github.com/plebbit/plebones/commit/adeb818bebe2690f70b124eb47b27fd48f8df167))
+
+### Bug Fixes
+
+* upgrade Capacitor 3.6.0 to 6.x for Android CI ([a96ef5f](https://github.com/plebbit/plebones/commit/a96ef5f8dd3d8e83dd36f0696cdd91a17964ca8e))
+* use 'with' instead of 'assert' for import attributes ([f38caba](https://github.com/plebbit/plebones/commit/f38caba0bce5fdc410127e861f5dd55c4cae232c))
+
 ## [0.1.17](https://github.com/plebbit/plebones/compare/v0.1.16...v0.1.17) (2025-08-04)
 
 
@@ -255,6 +268,3 @@
 
 
 # 0.1.0 (2023-08-19)
-
-
-
