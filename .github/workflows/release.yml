@@ -26,8 +26,6 @@ jobs:
         with:
           node-version: 22
       - run: yarn install --frozen-lockfile
-      # make sure the ipfs executable is executable
-      - run: node electron/download-ipfs && sudo chmod +x bin/linux/ipfs
       - run: CI='' yarn build
       - run: yarn electron:build:linux
       - run: ls dist
@@ -64,8 +62,6 @@ jobs:
       - run: pip install setuptools
 
       - run: yarn install --frozen-lockfile
-      # make sure the ipfs executable is executable
-      - run: node electron/download-ipfs && sudo chmod +x bin/mac/ipfs
       - run: CI='' yarn build
       - run: yarn electron:build:mac
       - run: ls dist

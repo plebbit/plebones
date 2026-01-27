@@ -7,6 +7,7 @@ import proxyServer from './proxy-server.js'
 import tcpPortUsed from 'tcp-port-used'
 import EnvPaths from 'env-paths'
 import {fileURLToPath} from 'url'
+import {path as kuboPath} from 'kubo'
 const dirname = path.join(path.dirname(fileURLToPath(import.meta.url)))
 const envPaths = EnvPaths('plebbit', {suffix: false})
 
@@ -30,17 +31,9 @@ const startIpfs = async () => {
   let ipfsPath = path.join(process.resourcesPath, 'bin', ipfsFileName)
   let ipfsDataPath = path.join(envPaths.data, 'ipfs')
 
-  // test launching the ipfs binary in dev mode
-  // they must be downloaded first using `yarn electron:build`
+  // in dev mode, use the kubo binary directly from the npm package
   if (isDev) {
-    let binFolderName = 'win'
-    if (process.platform === 'linux') {
-      binFolderName = 'linux'
-    }
-    if (process.platform === 'darwin') {
-      binFolderName = 'mac'
-    }
-    ipfsPath = path.join(dirname, '..', 'bin', binFolderName, ipfsFileName)
+    ipfsPath = kuboPath()
     ipfsDataPath = path.join(dirname, '..', '.plebbit', 'ipfs')
   }
 
