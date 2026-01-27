@@ -48,7 +48,6 @@
     "i18next-http-backend": "2.2.1",
     "javascript-time-ago": "2.5.9",
     "json-stringify-pretty-compact": "4.0.0",
-    "kubo": "0.39.0",
     "memoizee": "0.4.15",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -60,6 +59,7 @@
     "use-debounce": "9.0.4"
   },
   "devDependencies": {
+    "kubo": "0.39.0",
     "@capacitor/android": "^6.0.0",
     "@capacitor/cli": "^6.0.0",
     "@capacitor/core": "^6.0.0",

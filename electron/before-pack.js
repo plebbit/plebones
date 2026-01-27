@@ -4,6 +4,7 @@ import {path as kuboPath} from 'kubo'
 import fs from 'fs-extra'
 import path from 'path'
 import {fileURLToPath} from 'url'
+import {execSync} from 'child_process'
 
 const ipfsClientsPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'bin')
 
@@ -23,6 +24,11 @@ export const downloadIpfsClients = async () => {
   fs.copyFileSync(kuboBinaryPath, destBinPath)
   if (process.platform !== 'win32') {
     fs.chmodSync(destBinPath, 0o755)
+  }
+
+  // strip debug symbols to reduce binary size (115MB -> ~50MB)
+  if (process.platform === 'linux') {
+    execSync(`strip "${destBinPath}"`)
   }
 }
 

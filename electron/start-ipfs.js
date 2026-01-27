@@ -7,7 +7,6 @@ import proxyServer from './proxy-server.js'
 import tcpPortUsed from 'tcp-port-used'
 import EnvPaths from 'env-paths'
 import {fileURLToPath} from 'url'
-import {path as kuboPath} from 'kubo'
 const dirname = path.join(path.dirname(fileURLToPath(import.meta.url)))
 const envPaths = EnvPaths('plebbit', {suffix: false})
 
@@ -33,6 +32,7 @@ const startIpfs = async () => {
 
   // in dev mode, use the kubo binary directly from the npm package
   if (isDev) {
+    const {path: kuboPath} = await import('kubo')
     ipfsPath = kuboPath()
     ipfsDataPath = path.join(dirname, '..', '.plebbit', 'ipfs')
   }
