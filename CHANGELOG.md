@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.21](https://github.com/plebbit/plebones/compare/v0.1.20...v0.1.21) (2026-01-27)
+
+### Bug Fixes
+
+* trigger release workflow via workflow_run instead of tag push ([bb23b81](https://github.com/plebbit/plebones/commit/bb23b81a639fc7802ef20d874c8a9c2f4924bca5))
+
 ## [0.1.20](https://github.com/plebbit/plebones/compare/v0.1.18...v0.1.20) (2026-01-27)
 
 ### Features
