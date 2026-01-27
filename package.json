@@ -33,7 +33,7 @@
     "changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0"
   },
   "dependencies": {
-    "@capacitor/app": "1.1.1",
+    "@capacitor/app": "^6.0.0",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
@@ -60,9 +60,9 @@
     "use-debounce": "9.0.4"
   },
   "devDependencies": {
-    "@capacitor/android": "3.6.0",
-    "@capacitor/cli": "3.6.0",
-    "@capacitor/core": "3.6.0",
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
     "@electron/rebuild": "4.0.2",
     "@eslint/js": "9.30.1",
     "@release-it/conventional-changelog": "10.0.4",
