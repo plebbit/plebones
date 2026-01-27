@@ -33,6 +33,16 @@ jobs:
       - run: yarn electron:build:linux
       - run: ls dist
 
+      # verify executable works
+      - name: Install xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+      - name: Verify AppImage executable
+        run: |
+          chmod +x dist/plebones-*.AppImage
+          xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" \
+            node scripts/verify-executable.js "$(ls dist/plebones-*.AppImage | head -1)"
+        timeout-minutes: 5
+
       # publish version release
       - run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
@@ -74,6 +84,17 @@ jobs:
       - run: yarn electron:build:mac
       - run: ls dist
 
+      # verify executable works
+      - name: Verify macOS executable
+        run: |
+          DMG_FILE=$(ls dist/plebones-*.dmg | head -1)
+          hdiutil attach "$DMG_FILE" -nobrowse -quiet
+          APP_PATH="/Volumes/plebones/plebones.app/Contents/MacOS/plebones"
+          node scripts/verify-executable.js "$APP_PATH" || EXIT_CODE=$?
+          hdiutil detach "/Volumes/plebones" -quiet || true
+          exit ${EXIT_CODE:-0}
+        timeout-minutes: 5
+
       # publish version release
       - run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
@@ -107,6 +128,14 @@ jobs:
       - run: yarn build
       - run: yarn electron:build:windows
       - run: dir dist
+
+      # verify executable works
+      - name: Verify Windows executable
+        run: |
+          $exePath = Get-ChildItem -Path dist -Filter "plebones-*.exe" | Where-Object { $_.Name -notmatch "Setup" } | Select-Object -First 1 -ExpandProperty FullName
+          node scripts/verify-executable.js $exePath
+        timeout-minutes: 5
+        shell: pwsh
 
       # publish version release
       - run: node scripts/release-body > release-body.txt
