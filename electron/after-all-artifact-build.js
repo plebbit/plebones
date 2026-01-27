@@ -3,7 +3,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 import {execSync} from 'child_process'
-import packageJson from '../package.json' assert {type: 'json'}
+import packageJson from '../package.json' with {type: 'json'}
 import {fileURLToPath} from 'url'
 const rootPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const distFolderPath = path.resolve(rootPath, 'dist')
