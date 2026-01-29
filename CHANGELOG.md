@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.22](https://github.com/plebbit/plebones/compare/v0.1.21...v0.1.22) (2026-01-29)
+
+### Bug Fixes
+
+* reduce AppImage size by moving kubo to devDependencies and stripping binary ([6ba7e49](https://github.com/plebbit/plebones/commit/6ba7e494f41264499789f6da080609791aa81a1c))
+* update AndroidManifest.xml for AGP 8.x and Android 12+ compatibility ([dd2c1c2](https://github.com/plebbit/plebones/commit/dd2c1c2cea978bc38454b91819689bde05de333d))
+
 ## [0.1.21](https://github.com/plebbit/plebones/compare/v0.1.20...v0.1.21) (2026-01-27)
 
 ### Bug Fixes
