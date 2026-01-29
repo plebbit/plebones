@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.23](https://github.com/plebbit/plebones/compare/v0.1.22...v0.1.23) (2026-01-29)
+
+### Bug Fixes
+
+* update getShortAddress calls to use object parameter ([7d2f69f](https://github.com/plebbit/plebones/commit/7d2f69f59ad3250828d02a97211ca61931ee23c4))
+
 ## [0.1.22](https://github.com/plebbit/plebones/compare/v0.1.21...v0.1.22) (2026-01-29)
 
 ### Bug Fixes
