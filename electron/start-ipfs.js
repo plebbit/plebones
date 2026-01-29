@@ -26,15 +26,14 @@ const spawnAsync = (...args) =>
   })
 
 const startIpfs = async () => {
-  const ipfsFileName = process.platform == 'win32' ? 'ipfs.exe' : 'ipfs'
-  let ipfsPath = path.join(process.resourcesPath, 'bin', ipfsFileName)
-  let ipfsDataPath = path.join(envPaths.data, 'ipfs')
+  // Use kubo package directly - in production it's unpacked from ASAR
+  const {path: kuboPath} = await import('kubo')
+  let ipfsPath = kuboPath()
+  const ipfsDataPath = isDev ? path.join(dirname, '..', '.plebbit', 'ipfs') : path.join(envPaths.data, 'ipfs')
 
-  // in dev mode, use the kubo binary directly from the npm package
-  if (isDev) {
-    const {path: kuboPath} = await import('kubo')
-    ipfsPath = kuboPath()
-    ipfsDataPath = path.join(dirname, '..', '.plebbit', 'ipfs')
+  // In production, the binary is unpacked from ASAR to app.asar.unpacked
+  if (!isDev && ipfsPath.includes('app.asar')) {
+    ipfsPath = ipfsPath.replace('app.asar', 'app.asar.unpacked')
   }
 
   if (!fs.existsSync(ipfsPath)) {
