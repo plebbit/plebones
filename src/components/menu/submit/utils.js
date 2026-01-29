@@ -32,7 +32,7 @@ export const useDefaultAndSubscriptionsSubplebbits = () => {
       subplebbits[subplebbitAddressParam] = {address: subplebbitAddressParam, displayAddress: subplebbitAddressParam}
     }
     for (const address of account.subscriptions) {
-      subplebbits[address] = {address, displayAddress: getShortAddress(address)}
+      subplebbits[address] = {address, displayAddress: getShortAddress({address})}
     }
     for (const subplebbit of defaultSubplebbits) {
       if (!subplebbit.address) {
@@ -40,7 +40,7 @@ export const useDefaultAndSubscriptionsSubplebbits = () => {
       }
       subplebbits[subplebbit.address] = {address: subplebbit.address, displayAddress: subplebbit.address}
       if (!subplebbit.address.includes('.')) {
-        subplebbits[subplebbit.address].displayAddress = getShortAddress(subplebbit.address)
+        subplebbits[subplebbit.address].displayAddress = getShortAddress({address: subplebbit.address})
         if (subplebbit.title) {
           subplebbits[subplebbit.address].displayAddress += ` ${subplebbit.title}`
         }
