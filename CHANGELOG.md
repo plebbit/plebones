@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.25](https://github.com/plebbit/plebones/compare/v0.1.24...v0.1.25) (2026-01-29)
+
+### Bug Fixes
+
+* **build:** include parent folder in HTML zip for bitsocial-cli compatibility ([fd81030](https://github.com/plebbit/plebones/commit/fd81030d4c2f5c45056162eb232ee85aa57025f9))
+
 ## [0.1.24](https://github.com/plebbit/plebones/compare/v0.1.23...v0.1.24) (2026-01-29)
 
 ## [0.1.23](https://github.com/plebbit/plebones/compare/v0.1.22...v0.1.23) (2026-01-29)
