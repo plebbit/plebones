@@ -18,14 +18,51 @@ export default {
       /^\/\.plebbit$/,
       /^\/dist$/,
       /^\/bin$/,
+      /^\/out$/,
+      /^\/squashfs-root$/,
+      /^\/original-assets$/,
+      /^\/scripts$/,
       /\.map$/,
       /\.md$/,
-      /\.git/
+      /\.git/,
+      /\.ts$/,
+      /\.test\.js$/,
+      /\.spec\.js$/,
+      /tsconfig\.json$/,
+      /\.eslintrc/,
+      /\.prettierrc/,
+      /CHANGELOG/
     ]
   },
 
   rebuildConfig: {
     force: true
+  },
+
+  hooks: {
+    postPackage: async (config, options) => {
+      const { execSync } = await import('child_process');
+      const globPkg = await import('glob');
+      const globSync = globPkg.sync || globPkg.default?.sync;
+
+      for (const result of options.outputPaths) {
+        // Strip .node files (native modules)
+        const nodeFiles = globSync('**/*.node', { cwd: result, absolute: true });
+        for (const file of nodeFiles) {
+          try {
+            execSync(`strip --strip-debug "${file}"`, { stdio: 'pipe' });
+          } catch (e) { /* ignore failures */ }
+        }
+
+        // Strip kubo binary (executable files without extensions)
+        const kuboFiles = globSync('**/kubo/kubo/**/!(*.*)' , { cwd: result, absolute: true });
+        for (const file of kuboFiles) {
+          try {
+            execSync(`strip --strip-debug "${file}"`, { stdio: 'pipe' });
+          } catch (e) { /* ignore failures */ }
+        }
+      }
+    }
   },
 
   makers: [
@@ -59,16 +96,6 @@ export default {
         options: {
           categories: ['Network'],
           genericName: 'Plebbit Client'
-        }
-      }
-    },
-    {
-      name: '@electron-forge/maker-deb',
-      platforms: ['linux'],
-      config: {
-        options: {
-          maintainer: 'Esteban Abaroa',
-          categories: ['Network']
         }
       }
     }
