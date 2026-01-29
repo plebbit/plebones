@@ -49,7 +49,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.previoustag.outputs.tag }}
-          artifacts: 'out/make/AppImage/x64/plebones*.AppImage'
+          artifacts: 'out/make/AppImage/x64/plebones*.AppImage,out/make/plebones-html-*.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"

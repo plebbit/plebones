@@ -62,6 +62,30 @@ export default {
           } catch (e) { /* ignore failures */ }
         }
       }
+    },
+
+    postMake: async (config, makeResults) => {
+      // Only create HTML archive on Linux (to avoid duplicates across platforms)
+      if (process.platform !== 'linux') {
+        return makeResults;
+      }
+
+      const fs = await import('fs');
+      const path = await import('path');
+      const { spawnSync } = await import('child_process');
+      const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+
+      const buildFolder = path.resolve('.', 'build');
+      const outputFile = path.resolve('.', 'out', 'make', `plebones-html-${packageJson.version}.zip`);
+
+      // Create zip of the built HTML files
+      const result = spawnSync('zip', ['-r', outputFile, '.'], { cwd: buildFolder, stdio: 'inherit' });
+      if (result.status !== 0) {
+        throw new Error(`Failed to create HTML archive: zip exited with code ${result.status}`);
+      }
+      console.log(`Created HTML archive: ${outputFile}`);
+
+      return makeResults;
     }
   },
 
