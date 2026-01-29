@@ -71,15 +71,28 @@ export default {
       }
 
       const fs = await import('fs');
+      const fsPromises = await import('fs/promises');
       const path = await import('path');
       const { spawnSync } = await import('child_process');
       const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
       const buildFolder = path.resolve('.', 'build');
-      const outputFile = path.resolve('.', 'out', 'make', `plebones-html-${packageJson.version}.zip`);
+      const folderName = `plebones-html-${packageJson.version}`;
+      const tempFolder = path.resolve('.', 'out', 'make', folderName);
+      const outputFile = path.resolve('.', 'out', 'make', `${folderName}.zip`);
 
-      // Create zip of the built HTML files
-      const result = spawnSync('zip', ['-r', outputFile, '.'], { cwd: buildFolder, stdio: 'inherit' });
+      // Copy build folder to temp folder with correct name
+      await fsPromises.cp(buildFolder, tempFolder, { recursive: true });
+
+      // Create zip from parent directory so folder name is included
+      const result = spawnSync('zip', ['-r', `${folderName}.zip`, folderName], {
+        cwd: path.resolve('.', 'out', 'make'),
+        stdio: 'inherit'
+      });
+
+      // Clean up temp folder
+      await fsPromises.rm(tempFolder, { recursive: true });
+
       if (result.status !== 0) {
         throw new Error(`Failed to create HTML archive: zip exited with code ${result.status}`);
       }
