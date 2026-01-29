@@ -28,19 +28,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Install squashfs-tools for AppImage
+        run: sudo apt-get update && sudo apt-get install -y squashfs-tools
       - run: yarn install --frozen-lockfile
-      - run: CI='' yarn build
-      - run: yarn electron:build:linux
-      - run: ls dist
+      - run: yarn electron:make:linux
+      - run: ls -la out/make/AppImage/x64/
 
       # verify executable works
       - name: Install xvfb
-        run: sudo apt-get update && sudo apt-get install -y xvfb
+        run: sudo apt-get install -y xvfb
       - name: Verify AppImage executable
         run: |
-          chmod +x dist/plebones-*.AppImage
+          chmod +x out/make/AppImage/x64/plebones-*.AppImage
           xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" \
-            node scripts/verify-executable.js "$(ls dist/plebones-*.AppImage | head -1)"
+            node scripts/verify-executable.js "$(ls out/make/AppImage/x64/plebones-*.AppImage | head -1)"
         timeout-minutes: 5
 
       # publish version release
@@ -48,7 +49,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.previoustag.outputs.tag }}
-          artifacts: 'dist/plebones*.AppImage,dist/plebones-html*.zip'
+          artifacts: 'out/make/AppImage/x64/plebones*.AppImage'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"
@@ -80,14 +81,13 @@ jobs:
       - run: pip install setuptools
 
       - run: yarn install --frozen-lockfile
-      - run: CI='' yarn build
-      - run: yarn electron:build:mac
-      - run: ls dist
+      - run: yarn electron:make:mac
+      - run: ls -la out/make/
 
       # verify executable works
       - name: Verify macOS executable
         run: |
-          DMG_FILE=$(ls dist/plebones-*.dmg | head -1)
+          DMG_FILE=$(ls out/make/*.dmg | head -1)
           hdiutil attach "$DMG_FILE" -nobrowse -quiet
           APP_PATH="/Volumes/plebones/plebones.app/Contents/MacOS/plebones"
           node scripts/verify-executable.js "$APP_PATH" || EXIT_CODE=$?
@@ -100,7 +100,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.previoustag.outputs.tag }}
-          artifacts: 'dist/plebones*.dmg'
+          artifacts: 'out/make/*.dmg'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"
@@ -125,14 +125,18 @@ jobs:
         with:
           node-version: 22
       - run: yarn install --frozen-lockfile
-      - run: yarn build
-      - run: yarn electron:build:windows
-      - run: dir dist
+      - run: yarn electron:make:windows
+      - run: Get-ChildItem -Path out/make -Recurse
+        shell: pwsh
 
       # verify executable works
       - name: Verify Windows executable
         run: |
-          $exePath = Get-ChildItem -Path dist -Filter "plebones-*.exe" | Where-Object { $_.Name -notmatch "Setup" } | Select-Object -First 1 -ExpandProperty FullName
+          $exePath = Get-ChildItem -Path "out/make/squirrel.windows/x64" -Filter "*.exe" | Where-Object { $_.Name -notmatch "Setup" } | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $exePath) {
+            # Fall back to Setup.exe if no other exe found
+            $exePath = Get-ChildItem -Path "out/make/squirrel.windows/x64" -Filter "*Setup*.exe" | Select-Object -First 1 -ExpandProperty FullName
+          }
           node scripts/verify-executable.js $exePath
         timeout-minutes: 5
         shell: pwsh
@@ -142,7 +146,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.previoustag.outputs.tag }}
-          artifacts: 'dist/plebones*.exe'
+          artifacts: 'out/make/squirrel.windows/x64/*.exe,out/make/zip/win32/x64/*.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"
