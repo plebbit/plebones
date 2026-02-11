@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.27](https://github.com/plebbit/plebones/compare/v0.1.26...v0.1.27) (2026-02-11)
+
+### Bug Fixes
+
+* **build:** auto-detect native modules for Electron ABI rebuild ([3704762](https://github.com/plebbit/plebones/commit/3704762ca871e48e73f170627491ac44b80d7f75))
+
 ## [0.1.26](https://github.com/plebbit/plebones/compare/v0.1.25...v0.1.26) (2026-02-11)
 
 ### Bug Fixes
