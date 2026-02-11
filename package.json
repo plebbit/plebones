@@ -37,7 +37,6 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@floating-ui/react": "0.24.8",
-    "@plebbit/plebbit-js": "https://github.com/plebbit/plebbit-js#8e7d818688d0b4aab2ce6271b271167a4eb75225",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
     "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#df3cb6901f63054870dc127cd7565c98617c2a4f",
     "electron-context-menu": "3.3.0",
@@ -98,9 +97,6 @@
     "wait-on": "7.0.1"
   },
   "main": "electron/main.js",
-  "resolutions": {
-    "@plebbit/plebbit-js": "https://github.com/plebbit/plebbit-js#8e7d818688d0b4aab2ce6271b271167a4eb75225"
-  },
   "lint-staged": {
     "{src,electron}/**/*.{js,jsx}": [
       "prettier --write"
