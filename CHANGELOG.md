@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.26](https://github.com/plebbit/plebones/compare/v0.1.25...v0.1.26) (2026-02-11)
+
+### Bug Fixes
+
+* **deps:** remove direct @plebbit/plebbit-js dependency and resolutions ([5c1502c](https://github.com/plebbit/plebones/commit/5c1502cf38215c219883471f3dca1df2d17c586f))
+
 ## [0.1.25](https://github.com/plebbit/plebones/compare/v0.1.24...v0.1.25) (2026-01-29)
 
 ### Bug Fixes
