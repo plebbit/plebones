@@ -1,3 +1,22 @@
+import { readdirSync, existsSync } from 'fs';
+import { join } from 'path';
+
+// @electron/rebuild's dep walker doesn't reach transitive native modules.
+// Scan node_modules for all packages with binding.gyp so they get rebuilt for Electron's ABI.
+function findNativeModules(dir = 'node_modules', prefix = '') {
+    const result = [];
+    for (const entry of readdirSync(dir)) {
+        if (entry.startsWith('.')) continue;
+        const fullPath = join(dir, entry);
+        if (entry.startsWith('@')) {
+            result.push(...findNativeModules(fullPath, entry + '/'));
+        } else if (existsSync(join(fullPath, 'binding.gyp'))) {
+            result.push(prefix + entry);
+        }
+    }
+    return result;
+}
+
 export default {
   packagerConfig: {
     name: 'plebones',
@@ -36,7 +55,8 @@ export default {
   },
 
   rebuildConfig: {
-    force: true
+    force: true,
+    extraModules: findNativeModules()
   },
 
   hooks: {
